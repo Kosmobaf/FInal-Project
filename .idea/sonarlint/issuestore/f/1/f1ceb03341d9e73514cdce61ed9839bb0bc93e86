@@ -1,21 +1,0 @@
-
-M
-java:S1128
-"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8÷À¼‰˜/
-N
-java:S1128"1Remove this unused import 'java.util.Properties'.(¬µŽ²8÷À¼‰˜/
-R
-java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úýÿÿÿÿ8÷À¼‰˜/
-P
-java:S1128"3Remove this unused import 'java.io.BufferedReader'.(€é²Å8øÀ¼‰˜/
-Q
-java:S1128"4Remove this unused import 'java.io.FileInputStream'.(˜³ÉÓ8øÀ¼‰˜/
-Q
-java:S1128"/Remove this unused import 'java.io.FileReader'.(Â¡¢äþÿÿÿÿ8øÀ¼‰˜/
-N
-java:S1128	"1Remove this unused import 'java.util.Comparator'.(î¹ó¹8øÀ¼‰˜/
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8øÀ¼‰˜/
-X	java:S125"<This block of commented-out lines of code should be removed.(˜ˆÏŒ8ÿÀ¼‰˜/
-G
-java:S1068"*Remove this unused "LOGGER" private field.(µÕ­–8Á¼‰˜/

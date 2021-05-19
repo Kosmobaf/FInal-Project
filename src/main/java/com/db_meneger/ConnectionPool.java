@@ -1,5 +1,7 @@
 package com.db_meneger;
-
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.sql.DataSource;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -26,27 +28,16 @@ public class ConnectionPool {
     }
 
     public Connection getConnection(){
-        /*Context ctx;
+        Context ctx = null;
         Connection c = null;
+        DataSource ds = null;
         try {
             ctx = new InitialContext();
-            DataSource ds = (DataSource)ctx.lookup("java:comp/env/jdbc/pool");
+            ds = (DataSource)ctx.lookup("java:comp/env/jdbc/provider");
             c = ds.getConnection();
-        } catch (NamingException | SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return c;*/
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            return DriverManager.getConnection("jdbc:mysql://localhost:3306/provider", "root", "root");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return c;
     }
-
 }

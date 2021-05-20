@@ -10,15 +10,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
-public class UserDAO {
+public class  UserDAO {
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
     private static final String SQL_INSERT_USER =
             "INSERT INTO users (login,password,typeUser,cash) VALUES (?,?,?,?)";
     public static final String SQL_FIND_USER_BY_LOGIN =
             "SELECT * FROM users WHERE login LIKE (?)";
+    public static final String SQL_DELETE_BY_LOGIN = "DELETE FROM users WHERE login=?";
 
 
-    public void insertUser(User user) {
+    public static void insertUser(User user) {
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_USER)) {
@@ -33,7 +34,7 @@ public class UserDAO {
         }
     }
 
-    public User getUser(String userName) {
+    public static User getUserByUserName(String userName) {
         ResultSet resultSet = null;
         try (Connection connection = DBManager.getInstance().getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
@@ -46,31 +47,23 @@ public class UserDAO {
                         resultSet.getString(Fields.USER__TYPE),
                         resultSet.getDouble(Fields.USER__CASH)
                 );
-                //TODO зробити повернення листа
             }
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                LOGGER.severe(e.getMessage());
-            }
+            DBManager.close(resultSet);
         }
         return null;
     }
 
 
-    public void deleteUser(String userName) {
-        String query = "DELETE FROM users WHERE login=?";
+    public static void deleteUserByName(String userName) {
         try (Connection connection = DBManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BY_LOGIN)) {
             preparedStatement.setString(1, userName);
-            preparedStatement.executeQuery();
+            preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("can`t delate user" + userName);
+            System.out.println("can`t delate user -" + userName);
             LOGGER.severe(e.getMessage());
         }
     }

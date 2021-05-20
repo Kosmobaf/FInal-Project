@@ -54,12 +54,11 @@ public class User extends Entity {
         this.cash = cash;
     }
 
-    public User(String login, String password, String typeUser, Double cash) {
+    public User(String login, String password, String typeUser) {
         super();
         this.login = login;
         this.password = password;
         this.typeUser = typeUser;
-        this.cash = cash;
     }
 
     public User() {

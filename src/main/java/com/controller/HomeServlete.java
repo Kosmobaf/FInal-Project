@@ -2,7 +2,7 @@ package com.controller;
 
 
 
-import com.sql.DBManager;
+import com.dao.UserDAO;
 import com.entity.User;
 
 import javax.servlet.ServletException;
@@ -15,9 +15,8 @@ public class HomeServlete extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = request.getRequestURI();
-        DBManager.getInstance().insertUser(new User("vadim","12346","user"));
-        DBManager.getInstance().deleteUser(DBManager.getInstance().getUser("vadim").getLogin());
-        System.out.println(DBManager.getInstance().getAllServicesAndTariff());
+        UserDAO.insertUser(new User("vadim","12346","user"));
+        UserDAO.deleteUserByName(UserDAO.getUserByUserName("vadim").getLogin());
         if (url.equals("/")) {
                 request.getRequestDispatcher("WEB-INF/view/index.jsp").forward(request, response);
 

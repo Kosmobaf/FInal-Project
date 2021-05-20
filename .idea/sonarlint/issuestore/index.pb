@@ -9,8 +9,6 @@ c
 3src/main/webapp/WEB-INF/properties/log4j.properties,7\3\731b46aa7508cef733ec0be96643a0859a8a45d3
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
-=
-db-create.sql,b\9\b95be46045c1657543c21dd84e34d7ce34ddaa9a
 [
 +src/main/java/com/db_meneger/DBManager.java,f\5\f537171fe639b5283910b7bc5b9a028985ee651d
 T

@@ -39,7 +39,7 @@ public final class DBManager {
         }
         return connection;
     }
-    public void close(AutoCloseable closeable){
+    public static void close(AutoCloseable closeable){
         try {
             closeable.close();
         }
@@ -47,7 +47,7 @@ public final class DBManager {
             LOGGER.severe(e.getMessage());
         }
     }
-    public void rollbackAndCloseConnection(Connection connection){
+    public static void rollbackAndCloseConnection(Connection connection){
         try {
             connection.rollback();
             connection.close();

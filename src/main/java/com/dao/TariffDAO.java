@@ -9,10 +9,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class TariffDAO {
+    private static final Logger LOGGER = Logger.getLogger(TariffDAO.class.getName());
 
-    public List<Tariff> getAllTariffForOneService(String service) {
+    public static List<Tariff> getAllTariffForOneService(String service) {
         List<Tariff> tariffList = new ArrayList<>();
         String query = "SELECT * FROM tariff WHERE nameService = ?";
         ResultSet resultSet = null;

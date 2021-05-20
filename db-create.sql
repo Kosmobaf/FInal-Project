@@ -12,13 +12,13 @@ CREATE TABLE if NOT EXISTS provider.users
 CREATE TABLE if NOT EXISTS provider.services
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    nameService VARCHAR(255) NOT NULL
+    nameService VARCHAR(255) NOT NULL UNIQUE
 
 );
 CREATE TABLE if NOT EXISTS provider.tariff
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    nameService VARCHAR(255)   NOT NULL,
+    id_service  INT(255)   NOT NULL ,
     nameTariff  VARCHAR(255)   NOT NULL,
     cost        DOUBLE(255, 2) NOT NULL
 );
@@ -35,21 +35,21 @@ INSERT INTO provider.services (`id`, `nameService`)
 VALUES (2, 'internet');
 INSERT INTO provider.services (`id`, `nameService`)
 VALUES (3, 'cabel');
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (1, 'internet', 'min', 100.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (2, 'internet', 'middle', 200.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (3, 'internet', 'max', 300.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (4, 'telephone', 'hour', 100.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (5, 'telephone', 'day', 110.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (6, 'telephone', 'holiday', 120.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (7, 'telephone', 'manths', 150.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (8, 'cabel', 'low', 250.00);
-INSERT INTO provider.tariff (`id`, `nameService`, `nameTariff`, `cost`)
-VALUES (9, 'cabel', 'fast', 300.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (1, 2, 'min', 100.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (2, 2, 'middle', 200.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (3, 2, 'max', 300.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (4, 1, 'hour', 100.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (5, 1, 'day', 110.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (6, 1, 'holiday', 120.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (7, 1, 'manths', 150.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (8, 3, 'low', 250.00);
+INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
+VALUES (9, 3, 'fast', 300.00);

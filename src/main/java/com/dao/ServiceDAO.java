@@ -9,8 +9,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ServiceDAO {
+    private static final Logger LOGGER = Logger.getLogger(ServiceDAO.class.getName());
     public List<Service> getAllServicesAndTariff() {
         List<Service> serviceList = new ArrayList<>();
         String query = "SELECT * FROM services nameService ";
@@ -19,8 +21,8 @@ public class ServiceDAO {
              Statement statement = connection.createStatement()) {
             resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
-                serviceList.add(new Service(resultSet.getString("nameService"),
-                        getAllTariffForOneService(resultSet.getString("nameService"))));
+                serviceList.add((Service) new Object());
+                //TODO зробити
             }
             return serviceList;
         } catch (SQLException e) {

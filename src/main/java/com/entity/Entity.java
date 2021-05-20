@@ -8,6 +8,9 @@ public abstract class Entity implements Serializable {
 
     private Long id;
 
+    protected Entity() {
+    }
+
     public Long getId() {
         return id;
     }
@@ -16,4 +19,7 @@ public abstract class Entity implements Serializable {
         this.id = id;
     }
 
+    protected Entity(Long id) {
+        this.id = id;
+    }
 }

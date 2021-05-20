@@ -6,7 +6,14 @@ public class User extends Entity {
     private String typeUser;
     private Double cash;
 
-    @Override
+    public User(Long id, String login, String password, String typeUser, Double cash) {
+        super(id);
+        this.login = login;
+        this.password = password;
+        this.typeUser = typeUser;
+        this.cash = cash;
+    }
+        @Override
     public String toString() {
         return "User{" +
                 "login='" + login + '\'' +
@@ -48,6 +55,7 @@ public class User extends Entity {
     }
 
     public User(String login, String password, String typeUser, Double cash) {
+        super();
         this.login = login;
         this.password = password;
         this.typeUser = typeUser;
@@ -55,5 +63,6 @@ public class User extends Entity {
     }
 
     public User() {
+        super();
     }
 }

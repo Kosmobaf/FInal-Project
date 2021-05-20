@@ -1,7 +1,5 @@
 package com.entity;
 
-import java.util.Objects;
-
 public class Tariff extends Entity {
     private String nameTariff;
     private Double cost;

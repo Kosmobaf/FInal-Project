@@ -1,17 +1,12 @@
-package com.db_meneger;
+package com.sql;
 
-import com.entity.Services;
+import com.entity.Service;
 import com.entity.Tariff;
 import com.entity.User;
 
-import javax.ejb.Singleton;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 public final class DBManager {
@@ -65,8 +60,8 @@ public final class DBManager {
                         resultSet.getString("login"),
                         resultSet.getString("password"),
                         resultSet.getString("typeUser"),
-                        resultSet.getDouble("cash"),
-                        new ArrayList<>());
+                        resultSet.getDouble("cash")
+                );
                 //TODO зробити повернення листа
             }
         } catch (SQLException e) {
@@ -96,18 +91,18 @@ public final class DBManager {
         }
     }
 
-    public List<Services> getAllServicesAndTariff() {
-        List<Services> servicesList = new ArrayList<>();
+    public List<Service> getAllServicesAndTariff() {
+        List<Service> serviceList = new ArrayList<>();
         String query = "SELECT * FROM services nameService ";
         ResultSet resultSet = null;
         try (Connection connection = ConnectionPool.getInstance().getConnection();
              Statement statement = connection.createStatement()) {
             resultSet = statement.executeQuery(query);
             if (resultSet.next()) {
-                servicesList.add(new Services(resultSet.getString("nameService"),
+                serviceList.add(new Service(resultSet.getString("nameService"),
                         getAllTariffForOneService(resultSet.getString("nameService"))));
             }
-            return servicesList;
+            return serviceList;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         } finally {

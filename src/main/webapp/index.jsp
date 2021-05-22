@@ -10,7 +10,7 @@
 </head>
 <body>
 <br/>
-<a href="${pageContext.request.contextPath}/login.jsp">Please log in</a>
+<a href="${pageContext.request.contextPath}/login.jsp">Перехід на вхід</a>
 <br>
 </body>
 </html>

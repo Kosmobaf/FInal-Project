@@ -10,8 +10,8 @@
 <h1>Вход в систему</h1><br/>
 <form method="post" action="${pageContext.request.contextPath}/login">
 
-    <input type="text" name="name"><br/>
-    <input type="password" name="pass"><br/><br/>
+    <input type="text" name="login"><br/>
+    <input type="password" name="password"><br/><br/>
     <input class="button" type="submit" value="Войти">
 
 </form>

@@ -11,7 +11,6 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-
         if (login == null || login.equals("") || password == null || password.equals("")) {
             //System.out.println("Not");
             return "/login.jsp";

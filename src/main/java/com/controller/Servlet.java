@@ -33,7 +33,6 @@ public class Servlet extends HttpServlet {
                       HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
-        //response.getWriter().print("Hello from servlet");
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -44,14 +43,14 @@ public class Servlet extends HttpServlet {
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
-        path = path.replaceAll(".*/coffee/" , "");
+
+        path = path.replaceAll(".*/provider/" , "");
         Command command = commands.getOrDefault(path ,
                 (r)->"/index.jsp");
         System.out.println(command.getClass().getName());
         String page = command.execute(request);
-        //request.getRequestDispatcher(page).forward(request,response);
         if(page.contains("redirect:")){
-            response.sendRedirect(page.replace("redirect:", "/coffee"));
+            response.sendRedirect(page.replace("redirect:", "/provider"));
         }else {
             request.getRequestDispatcher(page).forward(request, response);
         }

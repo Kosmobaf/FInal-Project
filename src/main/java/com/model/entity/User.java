@@ -4,6 +4,9 @@ import com.model.Role;
 import com.model.Status;
 
 public class User extends Entity {
+    public User() {
+    }
+
     private String login;
     private String password;
     private Role role;

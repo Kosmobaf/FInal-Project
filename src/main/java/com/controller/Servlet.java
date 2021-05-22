@@ -2,6 +2,7 @@ package com.controller;
 
 
 import com.controller.command.Command;
+import com.controller.command.GetAllUsersCommand;
 import com.controller.command.LogOutCommand;
 import com.controller.command.LoginCommand;
 
@@ -27,6 +28,8 @@ public class Servlet extends HttpServlet {
                 new LogOutCommand());
         commands.put("login",
                 new LoginCommand());
+        commands.put("getAllUsers",
+                new GetAllUsersCommand());
     }
 
     public void doGet(HttpServletRequest request,

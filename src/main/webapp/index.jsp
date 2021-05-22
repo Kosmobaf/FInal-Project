@@ -8,7 +8,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Internet Provider</title>
 </head>
+
 <body>
+<h1>Вход в систему</h1><br/>
 <br/>
 <a href="${pageContext.request.contextPath}/login.jsp">Перехід на вхід</a>
 <br>

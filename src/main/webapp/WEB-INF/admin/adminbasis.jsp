@@ -7,6 +7,8 @@
 <body>
 
 <h1>Hello ADMIN!</h1>
+
+<p> <a href="${pageContext.request.contextPath}/getAllUsers">Get all Users</a></p>
 <a href="${pageContext.request.contextPath}/logout">Logout</a>
 </body>
 </html>

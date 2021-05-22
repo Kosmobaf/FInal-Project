@@ -1,19 +1,26 @@
-package com.model.dao;
+package com.model.dao.impl;
 
 import com.model.Fields;
 import com.model.Role;
 import com.model.Status;
 import com.model.builder.UserBuilder;
+import com.model.dao.UserDao;
 import com.model.entity.User;
-import com.model.db.DBManager;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Logger;
 
-public class UserDAO {
+public class UserDAO implements UserDao {
+    private final Connection connection;
+
+    public UserDAO(Connection connection) {
+        this.connection = connection;
+    }
+
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
     private static final String SQL_INSERT_USER =
             "INSERT INTO users (login,password,typeUser,cash) VALUES (?,?,?,?,?)";
@@ -22,10 +29,9 @@ public class UserDAO {
     public static final String SQL_DELETE_BY_LOGIN =
             "DELETE FROM users WHERE login=?";
 
-
-    public static void insertUser(User user) {
-        try (Connection connection = DBManager.getInstance().getConnection();
-             PreparedStatement preparedStatement =
+@Override
+    public void create(User user) {
+        try (PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_USER)) {
             //TODO добавити транзакцію
             preparedStatement.setString(1, user.getLogin());
@@ -40,10 +46,9 @@ public class UserDAO {
         }
     }
 
-    public static User getUserByLogin(String login) {
+    public  User getUserByLogin(String login) {
         ResultSet resultSet = null;
-        try (Connection connection = DBManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -59,16 +64,13 @@ public class UserDAO {
         } catch (SQLException e) {
             System.out.println("user not found");
             LOGGER.severe(e.getMessage());
-        } finally {
-            DBManager.close(resultSet);
         }
         return null;
     }
 
 
-    public static void deleteUserByName(String userName) {
-        try (Connection connection = DBManager.getInstance().getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BY_LOGIN)) {
+    public void deleteUserByName(String userName) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_BY_LOGIN)) {
             preparedStatement.setString(1, userName);
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -76,5 +78,32 @@ public class UserDAO {
             LOGGER.severe(e.getMessage());
         }
         System.out.println("User deleted");
+    }
+
+
+
+    @Override
+    public User findById(int id) {
+        return null;
+    }
+
+    @Override
+    public List<User> findAll() {
+        return null;
+    }
+
+    @Override
+    public void update(User entity) {
+
+    }
+
+    @Override
+    public void delete(int id) {
+
+    }
+
+    @Override
+    public void close() {
+
     }
 }

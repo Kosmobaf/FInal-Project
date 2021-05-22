@@ -1,5 +1,7 @@
 package com.model.db;
 
+import com.model.dao.impl.ConnectionPoolHolder;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,17 +11,13 @@ import java.util.Objects;
 import java.util.logging.Logger;
 
 public class CreateDataBase {
-    private final DBManager dbManager;
     private static final String PATH_TO_DB_CREATE = "db-create.sql";
     private static final Logger LOGGER = Logger.getLogger(CreateDataBase.class.getName());
 
-    public CreateDataBase(DBManager dbManager) {
-        this.dbManager = dbManager;
-    }
 
     public void createDB() {
-        try (Statement statement = Objects.requireNonNull(dbManager.getConnection()).
-                createStatement()) {
+        try (Statement statement = Objects.requireNonNull(ConnectionPoolHolder.getDataSource().getConnection().
+                createStatement())) {
             for (String s : getScenario()) {
                 statement.executeUpdate(s);
             }

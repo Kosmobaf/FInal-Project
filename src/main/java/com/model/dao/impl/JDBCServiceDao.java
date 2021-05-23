@@ -3,10 +3,6 @@ import com.model.dao.ServiceDao;
 import com.model.entity.Service;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,7 +21,7 @@ public class JDBCServiceDao implements ServiceDao {
     }
 
     @Override
-    public Service findById(int id) {
+    public Service findById(long id) {
         return null;
     }
 
@@ -35,17 +31,19 @@ public class JDBCServiceDao implements ServiceDao {
     }
 
     @Override
-    public void update(Service entity) {
+    public void update(long id) {
 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 
     @Override
-    public void close() {
+    public void close(AutoCloseable autoCloseable) {
 
     }
+
+
 }

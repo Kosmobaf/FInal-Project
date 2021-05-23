@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class TariffDAO implements TariffDao {
+public class JDBCTariffDao implements TariffDao {
     private Connection connection;
 
-    public TariffDAO(Connection connection)  {
+    public JDBCTariffDao(Connection connection)  {
         this.connection = connection;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(TariffDAO.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(JDBCTariffDao.class.getName());
 
     public  List<Tariff> getAllTariffForOneService(String service) {
         List<Tariff> tariffList = new ArrayList<>();
-        String query = "SELECT * FROM tariff WHERE nameService = ?";
+        String query = "SELECT * FROM tariff WHERE id_service = ?";
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, service);
@@ -51,7 +51,7 @@ public class TariffDAO implements TariffDao {
     }
 
     @Override
-    public Tariff findById(int id) {
+    public Tariff findById(long id) {
         return null;
     }
 
@@ -61,17 +61,19 @@ public class TariffDAO implements TariffDao {
     }
 
     @Override
-    public void update(Tariff entity) {
+    public void update(long id) {
 
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(long id) {
 
     }
 
     @Override
-    public void close() {
+    public void close(AutoCloseable autoCloseable) {
 
     }
+
+
 }

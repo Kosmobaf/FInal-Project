@@ -28,11 +28,11 @@ public class JDBCDaoFactory extends DaoFactory {
 
     @Override
     public TariffDao createTariffDao() {
-        return new TariffDAO(getConnection());
+        return new JDBCTariffDao(getConnection());
     }
 
     @Override
     public UserDao createUserDao() {
-        return new UserDAO(getConnection());
+        return new JDBCUserDao(getConnection());
     }
 }

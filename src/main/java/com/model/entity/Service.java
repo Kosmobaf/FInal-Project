@@ -25,4 +25,9 @@ public class Service extends Entity {
 
     public Service() {
     }
+
+    public Service(Long id, String nameService) {
+        super(id);
+        this.nameService = nameService;
+    }
 }

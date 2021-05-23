@@ -2,11 +2,21 @@ package com.model.dao;
 
 import java.util.List;
 
-public interface GenericDao<T> extends AutoCloseable {
+
+public interface GenericDao<T> {
     void create (T entity);
-    T findById(int id);
+    T findById(long id);
     List<T> findAll();
     void update(T entity);
-    void delete(int id);
-    void close();
+    void delete(long id);
+
+    default void close(AutoCloseable autoCloseable) {
+        try {
+            if (autoCloseable != null) {
+                autoCloseable.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

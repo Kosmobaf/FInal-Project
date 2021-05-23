@@ -18,6 +18,7 @@ public final class Fields {
     public static final String USER__STATUS = "status";
 
     public static final String TARIFF__NAME_TARIFF = "nameTariff";
+    public static final String TARIFF__ID_SERVICE = "id_service";
     public static final String TARIFF__COST = "cost";
 
     public static final String SERVICES__NAME_SERVICE = "nameService";

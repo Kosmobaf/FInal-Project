@@ -1,79 +1,109 @@
 package com.model.dao.impl;
 
 import com.model.dao.TariffDao;
+import com.model.dao.mapper.TariffMapper;
+import com.model.dao.mapper.UserMapper;
 import com.model.entity.Tariff;
+import com.model.entity.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class JDBCTariffDao implements TariffDao {
-    private Connection connection;
+    private final Connection connection;
 
-    public JDBCTariffDao(Connection connection)  {
+    public JDBCTariffDao(Connection connection) {
         this.connection = connection;
     }
 
     private static final Logger LOGGER = Logger.getLogger(JDBCTariffDao.class.getName());
+    private static final String SQL_INSERT_TARIFF =
+            "INSERT INTO tariff (nameTariff, id_service, cost) VALUES (?,?,?)";
+    public static final String SQL_FIND_TARIFF_BY_ID =
+            "SELECT * FROM tariff WHERE id LIKE (?)";
+    public static final String SQL_FIND_ALL_TARIFFS =
+            "SELECT * FROM tariff";
+    public static final String SQL_UPDATE_TARIFFS =
+            "UPDATE tariff SET nameTariff = ?, id_service = ?, cost = ? WHERE id = ?";
+    public static final String SQL_DELETE_TARIFF_BY_ID =
+            "DELETE FROM tariff WHERE id=?";
 
-    public  List<Tariff> getAllTariffForOneService(String service) {
-        List<Tariff> tariffList = new ArrayList<>();
-        String query = "SELECT * FROM tariff WHERE id_service = ?";
+    @Override
+    public void create(Tariff tariff) {
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(SQL_INSERT_TARIFF)) {
+            preparedStatement.setString(1, tariff.getNameTariff());
+            preparedStatement.setLong(2, tariff.getIdService());
+            preparedStatement.setDouble(3, tariff.getCost());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        }
+    }
+
+    @Override
+    public Tariff findById(long id) {
         ResultSet resultSet = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, service);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_TARIFF_BY_ID)) {
+            preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                tariffList.add(new Tariff(resultSet.getString(""), resultSet.getDouble("cost")));
+                TariffMapper tariffMapper = new TariffMapper();
+                return tariffMapper.extractFromResultSet(resultSet);
             }
-            return tariffList;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         } finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-            } catch (SQLException e) {
-                LOGGER.severe(e.getMessage());
-            }
+            close(resultSet);
         }
         return null;
     }
 
     @Override
-    public void create(Tariff entity) {
-
-    }
-
-    @Override
-    public Tariff findById(long id) {
-        return null;
-    }
-
-    @Override
     public List<Tariff> findAll() {
+        ResultSet resultSet = null;
+        List<Tariff> tariffList = new ArrayList<>();
+        try (Statement st = connection.createStatement()) {
+            resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS));
+            TariffMapper tariffMapper = new TariffMapper();
+            while (resultSet.next()) {
+                tariffList.add(tariffMapper.extractFromResultSet(resultSet));
+            }
+            return tariffList;
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        } finally {
+            close(resultSet);
+        }
+        //TODO що має бути щоб не вертати нул ?
         return null;
     }
 
     @Override
-    public void update(long id) {
+    public void update(Tariff tariff) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TARIFFS)) {
+            preparedStatement.setString(1, tariff.getNameTariff());
+            preparedStatement.setLong(2, tariff.getIdService());
+            preparedStatement.setDouble(3, tariff.getCost());
+            preparedStatement.setLong(3, tariff.getId());
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.out.println("can`t update tariff -" + tariff.getId());
+            LOGGER.severe(e.getMessage());
+        }
+        System.out.println("Tariff update");
 
     }
 
     @Override
     public void delete(long id) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_TARIFF_BY_ID)) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        }
     }
-
-    @Override
-    public void close(AutoCloseable autoCloseable) {
-
-    }
-
-
 }

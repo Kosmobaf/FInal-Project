@@ -1,10 +1,7 @@
 package com.controller;
 
 
-import com.controller.command.Command;
-import com.controller.command.GetAllUsersCommand;
-import com.controller.command.LogOutCommand;
-import com.controller.command.LoginCommand;
+import com.controller.command.*;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -19,7 +16,7 @@ import java.util.Map;
 public class Servlet extends HttpServlet {
     private Map<String, Command> commands = new HashMap<>();
 
-    public void init(ServletConfig servletConfig){
+    public void init(ServletConfig servletConfig) {
 
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
@@ -30,6 +27,8 @@ public class Servlet extends HttpServlet {
                 new LoginCommand());
         commands.put("getAllUsers",
                 new GetAllUsersCommand());
+        commands.put("getFileServices",
+                new GetFileServicesCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -47,14 +46,14 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        path = path.replaceAll(".*/provider/" , "");
-        Command command = commands.getOrDefault(path ,
-                (r)->"/index.jsp");
+        path = path.replaceAll(".*/provider/", "");
+        Command command = commands.getOrDefault(path,
+                (r, b) -> "/index.jsp");
         System.out.println(command.getClass().getName());
-        String page = command.execute(request);
-        if(page.contains("redirect:")){
+        String page = command.execute(request,response);
+        if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/provider"));
-        }else {
+        } else {
             request.getRequestDispatcher(page).forward(request, response);
         }
     }

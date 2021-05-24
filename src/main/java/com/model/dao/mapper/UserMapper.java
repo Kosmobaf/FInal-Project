@@ -24,11 +24,4 @@ public class UserMapper implements ObjectMapper<User> {
         builder.setStatus(Status.valueOf(rs.getString(Fields.USER__STATUS)));
         return builder.getResult();
     }
-
-    @Override
-    public User makeUnique(Map<Long, User> cache,
-                           User user) {
-        cache.putIfAbsent(user.getId(), user);
-        return cache.get(user.getId());
-    }
 }

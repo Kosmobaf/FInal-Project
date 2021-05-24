@@ -54,12 +54,13 @@ public class JDBCUserDao implements UserDao {
                 UserMapper userMapper = new UserMapper();
                 return userMapper.extractFromResultSet(resultSet);
             }
+            return null;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        return null;
     }
 
     @Override
@@ -86,11 +87,10 @@ public class JDBCUserDao implements UserDao {
             return userList;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        //TODO що має бути щоб не вертати нул ?
-        return null;
     }
 
     @Override

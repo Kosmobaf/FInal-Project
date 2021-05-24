@@ -15,9 +15,4 @@ public class ServiceMapper implements ObjectMapper<Service>{
                 rs.getString(Fields.SERVICES__NAME_SERVICE)
         );
     }
-
-    @Override
-    public Service makeUnique(Map<Long, Service> cache, Service teacher) {
-        return null;
-    }
 }

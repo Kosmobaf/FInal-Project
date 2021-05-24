@@ -8,7 +8,9 @@
 <body>
 
 <h1>Hello USER!</h1>
+
 <a href="${pageContext.request.contextPath}/getFileServices">download file</a>
+
 <a href="${pageContext.request.contextPath}/logout">Logout</a>
 </body>
 </html>

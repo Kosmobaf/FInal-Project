@@ -17,9 +17,4 @@ public class TariffMapper implements ObjectMapper<Tariff>{
                 rs.getDouble(Fields.TARIFF__COST)
         );
     }
-
-    @Override
-    public Tariff makeUnique(Map<Long, Tariff> cache, Tariff tariff) {
-        return null;
-    }
 }

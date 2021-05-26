@@ -99,7 +99,7 @@ public class JDBCUserDao implements UserDao {
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getRole().getName());
             preparedStatement.setBigDecimal(4, entity.getCash());
-            preparedStatement.setLong(6, entity.getId());
+            preparedStatement.setLong(5, entity.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());

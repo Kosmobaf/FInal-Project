@@ -1,7 +1,7 @@
 package com.model.service;
 
+import com.model.bean.UserOrderBean;
 import com.model.dao.DaoFactory;
-import com.model.dto.ServiceDto;
 import com.model.entity.Service;
 import com.model.entity.Tariff;
 
@@ -16,8 +16,8 @@ public class ServiceService {
     DaoFactory daoFactory = DaoFactory.getInstance();
     private static final Logger LOGGER = Logger.getLogger(ServiceService.class.getName());
 
-    public List<ServiceDto> getServicesDto() {
-        List<Service> serviceList = daoFactory.createServiceDao().findAll();
+    public List<UserOrderBean> getServicesDto() {
+        /*List<Service> serviceList = daoFactory.createServiceDao().findAll();
         List<Tariff> tariffList = daoFactory.createTariffDao().findAll();
         List<ServiceDto> serviceDto = new ArrayList<>();
         for (Service service : serviceList) {
@@ -31,14 +31,13 @@ public class ServiceService {
                     service.getId(),
                     service.getNameService(),
                     tariffList1));
-        }
-        return serviceDto;
+        }*/
+        return null;
     }
-
 
     public void exportServicesToFile() {
 
-        File file = new File("Services.txt");
+        /*File file = new File("Services.txt");
         file.delete();
         try {
             file.createNewFile();
@@ -56,6 +55,6 @@ public class ServiceService {
             }
         } catch (IOException e) {
             LOGGER.severe(e.getMessage());
-        }
+        }*/
     }
 }

@@ -1,13 +1,11 @@
 package com.model.service;
 
 import com.model.dao.DaoFactory;
-import com.model.dao.impl.JDBCUserDao;
 import com.model.dto.ServiceDto;
 import com.model.entity.Service;
 import com.model.entity.Tariff;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ public class ServiceService {
         for (Service service : serviceList) {
             List<Tariff> tariffList1 = new ArrayList<>();
             for (Tariff tariff : tariffList) {
-                if (tariff.getIdService() == service.getId()) {
+                if (tariff.getService().getId() == service.getId()) {
                     tariffList1.add(tariff);
                 }
             }

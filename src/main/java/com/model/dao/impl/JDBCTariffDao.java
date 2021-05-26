@@ -35,8 +35,8 @@ public class JDBCTariffDao implements TariffDao {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_TARIFF)) {
             preparedStatement.setString(1, tariff.getNameTariff());
-            preparedStatement.setLong(2, tariff.getIdService());
-            preparedStatement.setDouble(3, tariff.getCost());
+            preparedStatement.setLong(2, tariff.getService().getId());
+            preparedStatement.setBigDecimal(3, tariff.getCost());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
@@ -85,8 +85,8 @@ public class JDBCTariffDao implements TariffDao {
     public void update(Tariff tariff) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TARIFFS)) {
             preparedStatement.setString(1, tariff.getNameTariff());
-            preparedStatement.setLong(2, tariff.getIdService());
-            preparedStatement.setDouble(3, tariff.getCost());
+            preparedStatement.setLong(2, tariff.getService().getId());
+            preparedStatement.setBigDecimal(3, tariff.getCost());
             preparedStatement.setLong(3, tariff.getId());
             preparedStatement.execute();
         } catch (SQLException e) {

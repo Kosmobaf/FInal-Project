@@ -1,6 +1,7 @@
 package com.model.dao.mapper;
 
 import com.model.Fields;
+import com.model.entity.Service;
 import com.model.entity.Tariff;
 
 import java.sql.ResultSet;
@@ -12,9 +13,15 @@ public class TariffMapper implements ObjectMapper<Tariff>{
     public Tariff extractFromResultSet(ResultSet rs) throws SQLException {
         return new Tariff(
                 rs.getLong(Fields.ENTITY__ID),
-                rs.getLong(Fields.TARIFF__ID_SERVICE),
+                new Service(), //rs.getString(Fields.TARIFF__ID_SERVICE),
                 rs.getString(Fields.TARIFF__NAME_TARIFF),
-                rs.getDouble(Fields.TARIFF__COST)
+                rs.getBigDecimal(Fields.TARIFF__COST)
         );
+    }
+
+    @Override
+    public Tariff makeUnique(Map<Long, Tariff> cache, Tariff entity) {
+        cache.putIfAbsent(entity.getId(), entity);
+        return cache.get(entity.getId());
     }
 }

@@ -4,12 +4,13 @@ import com.model.service.ServiceService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 
 public class GetFileServicesCommand implements Command {
-    private final int ARBITARY_SIZE = 1048;
+    private final String filePath = "C:\\Program Files\\apache-tomcat-9.0.46\\apache-tomcat-9.0.46\\bin\\";
+    private final String fileName = "Services.txt";
 
     @Override
     public String execute(HttpServletRequest req, HttpServletResponse resp) {
@@ -19,14 +20,13 @@ public class GetFileServicesCommand implements Command {
         resp.setContentType("text/plain");
         resp.setHeader("Content-disposition", "attachment; filename=Services.txt");
 
-        try (InputStream in = req.getServletContext().getResourceAsStream("/META-INF/Services.txt");
+        try (FileInputStream inputStream = new FileInputStream(filePath + fileName);
              OutputStream out = resp.getOutputStream()) {
 
-            byte[] buffer = new byte[ARBITARY_SIZE];
 
             int numBytesRead;
-            while ((numBytesRead = in.read(buffer)) > 0) {
-                out.write(buffer, 0, numBytesRead);
+            while ((numBytesRead = inputStream.read()) != -1) {
+                out.write(numBytesRead);
             }
         } catch (IOException e) {
             e.printStackTrace();

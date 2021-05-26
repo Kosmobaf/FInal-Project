@@ -1,39 +1,27 @@
 package com.model.entity;
 
+import java.math.BigDecimal;
+
 public class Tariff extends Entity {
-    long idService;
-
-    public long getIdService() {
-        return idService;
-    }
-
-    public Tariff(Long id, long idService, String nameTariff, Double cost) {
-        super(id);
-        this.idService = idService;
-        this.nameTariff = nameTariff;
-        this.cost = cost;
-    }
+    Service service;
 
     private String nameTariff;
 
-    private Double cost;
+    private BigDecimal cost;
 
-    public Tariff(String nameTariff, Double cost) {
+    public Tariff(Long id, Service service, String nameTariff, BigDecimal cost) {
+        super(id);
+        this.service = service;
         this.nameTariff = nameTariff;
         this.cost = cost;
     }
 
-    public void setIdService(long idService) {
-        this.idService = idService;
+    public Service getService() {
+        return service;
     }
 
-    @Override
-    public String toString() {
-        return "Tariff{" +
-                "idService=" + idService +
-                ", nameTariff='" + nameTariff + '\'' +
-                ", cost=" + cost +
-                '}';
+    public void setService(Service service) {
+        this.service = service;
     }
 
     public String getNameTariff() {
@@ -44,11 +32,11 @@ public class Tariff extends Entity {
         this.nameTariff = nameTariff;
     }
 
-    public Double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

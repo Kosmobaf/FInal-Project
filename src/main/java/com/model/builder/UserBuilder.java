@@ -4,12 +4,14 @@ import com.model.Role;
 import com.model.Status;
 import com.model.entity.User;
 
+import java.math.BigDecimal;
+
 public class UserBuilder {
     private long id;
     private String login;
     private String password;
     private Role role;
-    private Double cash;
+    private BigDecimal cash;
     private Status status;
 
     public void setId(Long id) {
@@ -28,7 +30,7 @@ public class UserBuilder {
         this.role = role;
     }
 
-    public void setCash(Double cash) {
+    public void setCash(BigDecimal cash) {
         this.cash = cash;
     }
 

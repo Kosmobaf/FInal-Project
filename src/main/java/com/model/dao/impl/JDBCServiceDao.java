@@ -72,7 +72,9 @@ public class JDBCServiceDao implements ServiceDao {
         } finally {
             close(resultSet);
         }
-        //TODO що має бути щоб не вертати нул ?
+        //TODO переробити  дабл
+        //TODO що має бути щоб не вертати нул ? перерробити мабуть сущності
+
         return null;
     }
 

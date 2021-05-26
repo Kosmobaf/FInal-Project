@@ -1,7 +1,5 @@
 package com.controller.command;
 
-import com.model.dao.impl.ConnectionPoolHolder;
-import com.model.db.CreateDataBase;
 import com.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;

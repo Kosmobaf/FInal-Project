@@ -1,15 +1,12 @@
 package com.model.entity;
 
 
+import java.util.List;
+
 public class Service extends Entity {
     private String nameService;
-
-    @Override
-    public String toString() {
-        return "Services{" +
-                "nameService='" + nameService + '\'' +
-                '}';
-    }
+    private Tariff tariff;
+    private List<Tariff> tariffList;
 
     public String getNameService() {
         return nameService;
@@ -19,15 +16,29 @@ public class Service extends Entity {
         this.nameService = nameService;
     }
 
-    public Service(String nameService) {
+    public Tariff getTariff() {
+        return tariff;
+    }
+
+    public void setTariff(Tariff tariff) {
+        this.tariff = tariff;
+    }
+
+    public List<Tariff> getTariffList() {
+        return tariffList;
+    }
+
+    public void setTariffList(List<Tariff> tariffList) {
+        this.tariffList = tariffList;
+    }
+
+    public Service(Long id, String nameService, Tariff tariff, List<Tariff> tariffList) {
+        super(id);
         this.nameService = nameService;
+        this.tariff = tariff;
+        this.tariffList = tariffList;
     }
 
     public Service() {
-    }
-
-    public Service(Long id, String nameService) {
-        super(id);
-        this.nameService = nameService;
     }
 }

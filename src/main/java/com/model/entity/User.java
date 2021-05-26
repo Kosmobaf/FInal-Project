@@ -3,6 +3,9 @@ package com.model.entity;
 import com.model.Role;
 import com.model.Status;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 public class User extends Entity {
     public User() {
     }
@@ -10,10 +13,19 @@ public class User extends Entity {
     private String login;
     private String password;
     private Role role;
-    private Double cash;
+    private BigDecimal cash;
     private Status status;
+    private List<Service> serviceList;
 
-    public User(Long id, String login, String password, Role role, Double cash, Status status) {
+    public List<Service> getServiceList() {
+        return serviceList;
+    }
+
+    public void setServiceList(List<Service> serviceList) {
+        this.serviceList = serviceList;
+    }
+
+    public User(Long id, String login, String password, Role role, BigDecimal cash, Status status) {
         super(id);
         this.login = login;
         this.password = password;
@@ -53,11 +65,11 @@ public class User extends Entity {
         this.role = role;
     }
 
-    public Double getCash() {
+    public BigDecimal getCash() {
         return cash;
     }
 
-    public void setCash(Double cash) {
+    public void setCash(BigDecimal cash) {
         this.cash = cash;
     }
 

@@ -1,22 +1,16 @@
 package com.model.builder;
 
 import com.model.Role;
-import com.model.Status;
+import com.model.entity.Entity;
 import com.model.entity.User;
 
 import java.math.BigDecimal;
 
-public class UserBuilder {
-    private long id;
+public class UserBuilder extends Entity {
     private String login;
     private String password;
     private Role role;
     private BigDecimal cash;
-    private Status status;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public void setLogin(String login) {
         this.login = login;
@@ -34,11 +28,7 @@ public class UserBuilder {
         this.cash = cash;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
     public User getResult() {
-        return new User(id, login, password, role, cash, status);
+        return new User(super.getId(), login, password, role, cash);
     }
 }

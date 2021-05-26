@@ -2,7 +2,6 @@ package com.model.dao.mapper;
 
 import com.model.Fields;
 import com.model.Role;
-import com.model.Status;
 import com.model.builder.UserBuilder;
 import com.model.entity.User;
 
@@ -21,13 +20,6 @@ public class UserMapper implements ObjectMapper<User> {
         builder.setPassword(rs.getString(Fields.USER__PASSWORD));
         builder.setRole(Role.valueOf(rs.getString(Fields.USER__ROLE)));
         builder.setCash(rs.getBigDecimal(Fields.USER__CASH));
-        builder.setStatus(Status.valueOf(rs.getString(Fields.USER__STATUS)));
         return builder.getResult();
-    }
-
-    @Override
-    public User makeUnique(Map<Long, User> cache, User entity) {
-        cache.putIfAbsent(entity.getId(), entity);
-        return cache.get(entity.getId());
     }
 }

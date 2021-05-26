@@ -2,10 +2,7 @@ package com.model.dao.impl;
 
 import com.model.dao.TariffDao;
 import com.model.dao.mapper.TariffMapper;
-import com.model.dao.mapper.UserMapper;
 import com.model.entity.Tariff;
-import com.model.entity.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +32,7 @@ public class JDBCTariffDao implements TariffDao {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_TARIFF)) {
             preparedStatement.setString(1, tariff.getNameTariff());
-            preparedStatement.setLong(2, tariff.getService().getId());
+            preparedStatement.setLong(2, tariff.getId_Services());
             preparedStatement.setBigDecimal(3, tariff.getCost());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -58,7 +55,7 @@ public class JDBCTariffDao implements TariffDao {
         } finally {
             close(resultSet);
         }
-        return null;
+        throw new RuntimeException();
     }
 
     @Override
@@ -77,24 +74,21 @@ public class JDBCTariffDao implements TariffDao {
         } finally {
             close(resultSet);
         }
-        //TODO що має бути щоб не вертати нул ?
-        return null;
+        throw new RuntimeException();
     }
 
     @Override
     public void update(Tariff tariff) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TARIFFS)) {
             preparedStatement.setString(1, tariff.getNameTariff());
-            preparedStatement.setLong(2, tariff.getService().getId());
+            preparedStatement.setLong(2, tariff.getId_Services());
             preparedStatement.setBigDecimal(3, tariff.getCost());
             preparedStatement.setLong(3, tariff.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            System.out.println("can`t update tariff -" + tariff.getId());
             LOGGER.severe(e.getMessage());
         }
-        System.out.println("Tariff update");
-
+        throw new RuntimeException();
     }
 
     @Override

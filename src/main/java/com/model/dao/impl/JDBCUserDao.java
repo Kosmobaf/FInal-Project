@@ -1,6 +1,5 @@
 package com.model.dao.impl;
 
-import com.model.Status;
 import com.model.dao.UserDao;
 import com.model.dao.mapper.UserMapper;
 import com.model.entity.User;
@@ -19,13 +18,13 @@ public class JDBCUserDao implements UserDao {
 
     private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class.getName());
     private static final String SQL_INSERT_USER =
-            "INSERT INTO users (login,password,typeUser,cash,status) VALUES (?,?,?,?,?)";
+            "INSERT INTO users (login,password,typeUser,cash) VALUES (?,?,?,?)";
     public static final String SQL_FIND_USER_BY_ID =
             "SELECT * FROM users WHERE id LIKE (?)";
     public static final String SQL_FIND_ALL_USERS =
             "SELECT * FROM users";
     public static final String SQL_UPDATE_USER =
-            "UPDATE users SET login = ?, password = ?, typeUser = ?, cash = ?,status= ? WHERE id = ?";
+            "UPDATE users SET login = ?, password = ?, typeUser = ?, cash = ? WHERE id = ?";
     public static final String SQL_DELETE_USER_BY_ID =
             "DELETE FROM users WHERE id=?";
 
@@ -37,7 +36,6 @@ public class JDBCUserDao implements UserDao {
             preparedStatement.setString(2, user.getPassword());
             preparedStatement.setString(3, user.getRole().getName());
             preparedStatement.setInt(4, 0);
-            preparedStatement.setString(5, Status.ACTIVE.getName());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
@@ -54,13 +52,13 @@ public class JDBCUserDao implements UserDao {
                 UserMapper userMapper = new UserMapper();
                 return userMapper.extractFromResultSet(resultSet);
             }
-            return null;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
-            throw new RuntimeException();
+
         } finally {
             close(resultSet);
         }
+        throw new RuntimeException();
     }
 
     @Override
@@ -87,10 +85,11 @@ public class JDBCUserDao implements UserDao {
             return userList;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
-            throw new RuntimeException();
+
         } finally {
             close(resultSet);
         }
+        throw new RuntimeException();
     }
 
     @Override
@@ -100,7 +99,6 @@ public class JDBCUserDao implements UserDao {
             preparedStatement.setString(2, entity.getPassword());
             preparedStatement.setString(3, entity.getRole().getName());
             preparedStatement.setBigDecimal(4, entity.getCash());
-            preparedStatement.setString(5, entity.getStatus().getName());
             preparedStatement.setLong(6, entity.getId());
             preparedStatement.execute();
         } catch (SQLException e) {

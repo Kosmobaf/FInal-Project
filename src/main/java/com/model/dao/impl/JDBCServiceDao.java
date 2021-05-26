@@ -53,7 +53,7 @@ public class JDBCServiceDao implements ServiceDao {
         } finally {
             close(resultSet);
         }
-        return null;
+        throw new RuntimeException();
     }
 
     @Override
@@ -72,10 +72,7 @@ public class JDBCServiceDao implements ServiceDao {
         } finally {
             close(resultSet);
         }
-        //TODO переробити  дабл
-        //TODO що має бути щоб не вертати нул ? перерробити мабуть сущності
-
-        return null;
+        throw new RuntimeException();
     }
 
     @Override

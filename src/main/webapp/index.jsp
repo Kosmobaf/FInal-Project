@@ -7,12 +7,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Internet Provider</title>
-    <style>
-        body { background: url(META-INF/3.jpg); }
+    <style type="text/css">
+        body {
+            background-image: url(META-INF/3.jpg);
+        }
     </style>
 </head>
 
-<body>
+<body >
 <h1>Вход в систему</h1><br/>
 <br/>
 <a href="${pageContext.request.contextPath}/login.jsp">Перехід на вхід</a>

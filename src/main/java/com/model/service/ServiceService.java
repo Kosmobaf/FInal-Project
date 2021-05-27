@@ -37,7 +37,7 @@ public class ServiceService {
 
     public void exportServicesToFile() {
 
-        /*File file = new File("Services.txt");
+        File file = new File("Services.txt");
         file.delete();
         try {
             file.createNewFile();
@@ -45,16 +45,21 @@ public class ServiceService {
             LOGGER.severe(e.getMessage());
         }
         try (PrintWriter writer = new PrintWriter(file)) {
-            for (ServiceDto dto : getServicesDto()) {
-                writer.println("Service: " + dto.getNameService());
-                writer.print("Tariff: ");
+            List<Service> serviceList = daoFactory.createServiceDao().findAll();
 
-                for (Tariff tariff : dto.getTariffList()) {
-                    writer.println(tariff.getNameTariff() + " - " + tariff.getCost() + " UAH");
+            for (Service service : serviceList) {
+                writer.println("Service: " + service.getNameService());
+                writer.println("-Tariff: ");
+                List<Tariff> tariffList = daoFactory.createTariffDao().findAll();
+                for (Tariff tariff : tariffList) {
+                    if (tariff.getId_Services().equals(service.getId())) {
+                        writer.println("         " + tariff.getNameTariff() + " - " + tariff.getCost() + " UAH");
+                    }
                 }
+                writer.println();
             }
         } catch (IOException e) {
             LOGGER.severe(e.getMessage());
-        }*/
+        }
     }
 }

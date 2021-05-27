@@ -13,4 +13,9 @@ public enum Role {
     public String getName() {
         return name().toLowerCase();
     }
+
+    @Override
+    public String toString() {
+        return super.toString().toLowerCase();
+    }
 }

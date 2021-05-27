@@ -1,6 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.Fields;
+import com.model.constants.Fields;
 import com.model.builder.UserBuilder;
 import com.model.entity.User;
 

@@ -1,6 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.Fields;
+import com.model.constants.Fields;
 import com.model.entity.Tariff;
 import java.sql.ResultSet;
 import java.sql.SQLException;

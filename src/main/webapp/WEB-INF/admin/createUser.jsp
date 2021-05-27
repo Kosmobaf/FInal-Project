@@ -6,8 +6,12 @@
 <body>
 <h1>
     <form method="post" action="${pageContext.request.contextPath}/createUser">
-        <input type="text" name="login">
-        <input type="password" name="password">
+        <label>
+            <input type="text" name="login">
+        </label>
+        <label>
+            <input type="password" name="password">
+        </label>
         <input class="button" type="submit" value="Створити">
     </form>
 </h1>

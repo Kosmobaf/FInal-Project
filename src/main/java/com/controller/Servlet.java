@@ -52,7 +52,7 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
 
-        path = path.replaceAll(".*/provider/", "");
+        path = path.replaceAll(".*/", "");
         Command command = commands.getOrDefault(path,
                 (r, b) -> "/index.jsp");
         System.out.println(command.getClass().getName());

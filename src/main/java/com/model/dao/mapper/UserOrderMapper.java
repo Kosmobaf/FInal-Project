@@ -1,6 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.Fields;
+import com.model.constants.Fields;
 import com.model.bean.UserOrderBean;
 import com.model.builder.UserOrderBeanBuilder;
 

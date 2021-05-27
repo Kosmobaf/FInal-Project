@@ -1,4 +1,4 @@
-package com.model;
+package com.model.constants;
 
 /**
  * Holder for fields names of DB tables.

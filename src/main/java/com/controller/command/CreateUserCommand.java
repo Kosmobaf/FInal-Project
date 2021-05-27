@@ -16,11 +16,11 @@ public class CreateUserCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         UserService service = new UserService();
         service.createUser(
-                (String)request.getSession().getAttribute(Fields.USER__LOGIN),
-                (String)request.getSession().getAttribute(Fields.USER__PASSWORD)
+                request.getParameter(Fields.USER__LOGIN),
+                request.getParameter(Fields.USER__PASSWORD)
         );
         userList = service.getAllUsers();
         request.getSession().setAttribute("userList", userList);
-        return "/WEB-INF/admin/allUsers.jsp";
+        return "/WEB-INF/admin/createUser.jsp";
     }
 }

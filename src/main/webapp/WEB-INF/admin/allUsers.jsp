@@ -4,7 +4,7 @@
 <head>
     <title>ADMIN THE BASIS</title>
     <style>
-        body { background: url(META-INF/3.jpg); }
+        body { background: url(../../META-INF/3.jpg); }
     </style>
 </head>
 <body>
@@ -23,7 +23,7 @@
     <hr/>
 </c:forEach>
 
-<a href="${pageContext.request.contextPath}/WEB-INF/admin/createUser.jsp">>Створити користувача</a>
+<a href="${pageContext.request.contextPath}/createUser">Створити користувача</a>
 
 <a href="${pageContext.request.contextPath}/logout">Вихід</a>
 </body>

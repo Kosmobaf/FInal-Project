@@ -13,7 +13,7 @@ public final class Fields {
 
     public static final String USER__LOGIN = "login";
     public static final String USER__PASSWORD = "password";
-    public static final String USER__ROLE = "role";
+    public static final String USER__ROLE = "typeUser";
     public static final String USER__CASH = "cash";
 
     public static final String TARIFF__NAME_TARIFF = "nameTariff";

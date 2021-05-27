@@ -33,6 +33,12 @@ public class Servlet extends HttpServlet {
                 new GetFileServicesCommand());
         commands.put("createUser",
                 new CreateUserCommand());
+        commands.put("getAllService",
+                new GetAllServiceCommand());
+        commands.put("addTariffWithService",
+                new AddTariffWithServiceCommand());
+        commands.put("getTariffList",
+                new GetTariffByServiceCommand());
         new CreateDataBase().createDB();
     }
 

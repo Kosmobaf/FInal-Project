@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Hello ADMIN!</h1>
+<h1>Привіт Адмін!</h1>
 
 <p> <a href="${pageContext.request.contextPath}/getAllUsers">Подивитись всіх користувачів</a></p>
 <a href="${pageContext.request.contextPath}/logout">Вихід</a>

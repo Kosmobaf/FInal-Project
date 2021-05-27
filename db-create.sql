@@ -50,26 +50,30 @@ CREATE TABLE users_orders
 );
 
 INSERT INTO provider.services (`id`, `nameService`)
-VALUES (1, 'telephone');
+VALUES (1, 'Telephone');
 INSERT INTO provider.services (`id`, `nameService`)
-VALUES (2, 'internet');
+VALUES (2, 'Internet');
 INSERT INTO provider.services (`id`, `nameService`)
-VALUES (3, 'cabel');
+VALUES (3, 'Cabel');
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (1, 2, 'min', 100.00);
+VALUES (1, 2, 'Min', 100.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (2, 2, 'middle', 200.00);
+VALUES (2, 2, 'Middle', 200.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (3, 2, 'max', 300.00);
+VALUES (3, 2, 'Max', 300.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (4, 1, 'hour', 100.00);
+VALUES (4, 1, 'Hour', 100.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (5, 1, 'day', 110.00);
+VALUES (5, 1, 'Day', 110.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (6, 1, 'holiday', 120.00);
+VALUES (6, 1, 'Holiday', 120.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (7, 1, 'months', 150.00);
+VALUES (7, 1, 'Months', 150.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (8, 3, 'low', 250.00);
+VALUES (8, 3, 'Low', 250.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
-VALUES (9, 3, 'fast', 300.00);
+VALUES (9, 3, 'Fast', 300.00);
+INSERT INTO users(id, login, password, typeUser, cash)
+VALUES (1, 'Admin@asd', 1, 'admin', 0);
+INSERT INTO users(id, login, password, typeUser, cash)
+VALUES (1, 'User@asd', 1, 'user', 0);

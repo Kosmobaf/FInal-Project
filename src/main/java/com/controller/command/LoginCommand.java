@@ -12,7 +12,7 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if (login == null || login.equals("") || password == null || password.equals("")) {
+        if (login == null || login.equals("") || password == null /*|| password.equals("")*/) {
             //System.out.println("Not");
             return "/login.jsp";
         }
@@ -29,6 +29,7 @@ public class LoginCommand implements Command {
             return "/WEB-INF/admin/adminbasis.jsp";
         } else if (login.contains("User")) {
             CommandUtility.setUserRole(request, Role.USER, login);
+            //TODO добавити щоб записсувалось в атрибути ід юсера під "idUser"
             return "/WEB-INF/user/userbasis.jsp";
         } else {
             CommandUtility.setUserRole(request, Role.UNKNOWN, login);

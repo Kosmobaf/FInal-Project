@@ -9,8 +9,12 @@ import java.math.BigDecimal;
 public class UserBuilder extends Entity {
     private String login;
     private String password;
-    private Role role;
+    private Role role = Role.USER;
     private BigDecimal cash;
+
+    public void setCash(BigDecimal cash) {
+        this.cash = cash;
+    }
 
     public void setLogin(String login) {
         this.login = login;
@@ -20,15 +24,13 @@ public class UserBuilder extends Entity {
         this.password = password;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = Role.valueOf(role.toUpperCase());
     }
 
-    public void setCash(BigDecimal cash) {
-        this.cash = cash;
-    }
+
 
     public User getResult() {
-        return new User(super.getId(), login, password, role, cash);
+        return new User(super.getId(), login, password, role.getName(), cash);
     }
 }

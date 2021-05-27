@@ -31,6 +31,8 @@ public class Servlet extends HttpServlet {
                 new GetAllUsersCommand());
         commands.put("getFileServices",
                 new GetFileServicesCommand());
+        commands.put("createUser",
+                new CreateUserCommand());
         new CreateDataBase().createDB();
     }
 

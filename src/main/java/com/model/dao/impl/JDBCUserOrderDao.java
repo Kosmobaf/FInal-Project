@@ -20,9 +20,19 @@ public class JDBCUserOrderDao implements UserOrderDao {
     private static final String SQL_INSERT_USERS_ORDERS =
             "INSERT INTO users_orders (user_id,tariff_id,isActive,dateAdd) VALUES (?,?,?,?)";
     public static final String SQL_FIND_USERS_ORDERS_BY_ID =
-            "SELECT * FROM users_orders WHERE id LIKE (?)";
+            "SELECT users_orders.id, users_orders.user_id, " +
+                    "users_orders.tariff_id, users_orders.isActive," +
+                    "users_orders.dateAdd, provider.tariff.nameTariff, " +
+                    "provider.services.nameService FROM users_orders " +
+                    "JOIN tariff ON users_orders.tariff_id = tariff.id " +
+                    "JOIN services ON tariff.id_service = services.id WHERE users_orders.id LIKE (?)";
     public static final String SQL_FIND_ALL_USERS_ORDERS =
-            "SELECT * FROM users_orders";
+            "SELECT users_orders .id, users_orders.user_id, " +
+                    "users_orders.tariff_id, users_orders.isActive," +
+                    "users_orders.dateAdd, provider.tariff.nameTariff, " +
+                    "provider.services.nameService FROM users_orders " +
+                    "JOIN tariff ON users_orders.tariff_id = tariff.id " +
+                    "JOIN services ON tariff.id_service = services.id";
     public static final String SQL_UPDATE_USERS_ORDERS =
             "UPDATE users_orders SET user_id = ?, tariff_id = ?, isActive = ?, dateAdd = ? WHERE id = ?";
     public static final String SQL_DELETE_USERS_ORDERS_BY_ID =
@@ -37,7 +47,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
             preparedStatement.setLong(1, bean.getUserId());
             preparedStatement.setLong(2, bean.getTariffId());
             preparedStatement.setBoolean(3, bean.isActive());
-            preparedStatement.setString(4,bean.getDateAdd());
+            preparedStatement.setString(4, bean.getDateAdd());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
@@ -93,7 +103,9 @@ public class JDBCUserOrderDao implements UserOrderDao {
         }
         throw new RuntimeException();
     }
-    public List<UserOrderBean> findAllByIdUser(Long id) {
+
+    @Override
+    public List<UserOrderBean> findAllUserOrdersByIdUser(Long id) {
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_ORDERS_BY_ID_USER)) {
             preparedStatement.setLong(1, id);
@@ -119,7 +131,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
             preparedStatement.setLong(1, bean.getUserId());
             preparedStatement.setLong(2, bean.getTariffId());
             preparedStatement.setBoolean(3, bean.isActive());
-            preparedStatement.setString(4,bean.getDateAdd());
+            preparedStatement.setString(4, bean.getDateAdd());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());

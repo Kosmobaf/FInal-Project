@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.model.Fields;
 import com.model.entity.User;
 import com.model.service.UserService;
 
@@ -8,14 +9,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetAllUsersCommand implements Command {
+public class CreateUserCommand implements Command {
     List<User> userList = new ArrayList<>();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         UserService service = new UserService();
+        service.createUser(
+                (String)request.getSession().getAttribute(Fields.USER__LOGIN),
+                (String)request.getSession().getAttribute(Fields.USER__PASSWORD)
+        );
         userList = service.getAllUsers();
-        request.setAttribute("userList", userList);
+        request.getSession().setAttribute("userList", userList);
         return "/WEB-INF/admin/allUsers.jsp";
     }
 }

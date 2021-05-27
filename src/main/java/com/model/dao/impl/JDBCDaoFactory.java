@@ -1,9 +1,6 @@
 package com.model.dao.impl;
 
-import com.model.dao.DaoFactory;
-import com.model.dao.ServiceDao;
-import com.model.dao.TariffDao;
-import com.model.dao.UserDao;
+import com.model.dao.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
@@ -34,5 +31,10 @@ public class JDBCDaoFactory extends DaoFactory {
     @Override
     public UserDao createUserDao() {
         return new JDBCUserDao(getConnection());
+    }
+
+    @Override
+    public UserOrderDao createUserOrderDao() {
+        return new JDBCUserOrderDao(getConnection());
     }
 }

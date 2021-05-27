@@ -3,22 +3,28 @@
 <html>
 <head>
     <title>ADMIN THE BASIS</title>
+    <style>
+        body { background: url(META-INF/3.jpg); }
+    </style>
 </head>
 <body>
 
-<h1>List of Users </h1>
-<c:forEach var="user" items="${requestScope.userList}">
+<h1>Список користувачів</h1>
+<c:forEach var="user" items="${sessionScope.userList}">
     <ul>
         <li>
             Id: <c:out value="${user.id}"/>
             Login: <c:out value="${user.login}"/>
             Password: <c:out value="${user.password}"/>
+            TypeUser: <c:out value="${user.role.toString()}"/>
             Cash: <c:out value="${user.cash}"/>
-            Status: <c:out value="${user.status}"/>
         </li>
     </ul>
     <hr/>
 </c:forEach>
-<a href="${pageContext.request.contextPath}/logout">Logout</a>
+
+<a href="${pageContext.request.contextPath}/WEB-INF/admin/createUser.jsp">>Створити користувача</a>
+
+<a href="${pageContext.request.contextPath}/logout">Вихід</a>
 </body>
 </html>

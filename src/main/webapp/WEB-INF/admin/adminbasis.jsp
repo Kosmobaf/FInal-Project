@@ -3,12 +3,15 @@
 <html>
 <head>
     <title>ADMIN THE BASIS</title>
+    <style>
+        body { background: url(META-INF/3.jpg); }
+    </style>
 </head>
 <body>
 
 <h1>Hello ADMIN!</h1>
 
-<p> <a href="${pageContext.request.contextPath}/getAllUsers">Get all Users</a></p>
-<a href="${pageContext.request.contextPath}/logout">Logout</a>
+<p> <a href="${pageContext.request.contextPath}/getAllUsers">Подивитись всіх користувачів</a></p>
+<a href="${pageContext.request.contextPath}/logout">Вихід</a>
 </body>
 </html>

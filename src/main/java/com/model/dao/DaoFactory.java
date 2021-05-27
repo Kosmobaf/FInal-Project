@@ -12,6 +12,8 @@ public abstract class DaoFactory {
 
     public abstract UserDao createUserDao();
 
+    public abstract UserOrderDao createUserOrderDao();
+
 
     public static DaoFactory getInstance() {
         if (daoFactory == null) {

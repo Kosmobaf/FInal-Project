@@ -16,6 +16,8 @@ public class UserOrderMapper implements ObjectMapper<UserOrderBean>{
         builder.setTariffId(rs.getLong(Fields.USERS_SERVICES_TARIFF__TARIFF_ID));
         builder.setActive(rs.getBoolean(Fields.USERS_SERVICES_TARIFF__IS_ACTIVE));
         builder.setDateAdd(rs.getString(Fields.USERS_SERVICES_TARIFF__DATE_ADD));
+        builder.setNameTariff(rs.getString(Fields.TARIFF__NAME_TARIFF));
+        builder.setNameService(rs.getString(Fields.SERVICES__NAME_SERVICE));
         return builder.getResult();
     }
 }

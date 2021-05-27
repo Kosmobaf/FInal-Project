@@ -10,7 +10,7 @@ public class User extends Entity {
 
     private String login;
     private String password;
-    private Role role;
+    private Role role = Role.USER;
     private BigDecimal cash;
 
     @Override
@@ -43,8 +43,8 @@ public class User extends Entity {
         return role;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(String role) {
+        this.role = Role.valueOf(role.toUpperCase());
     }
 
     public BigDecimal getCash() {
@@ -55,11 +55,11 @@ public class User extends Entity {
         this.cash = cash;
     }
 
-    public User(Long id, String login, String password, Role role, BigDecimal cash) {
+    public User(Long id, String login, String password, String role, BigDecimal cash) {
         super(id);
         this.login = login;
         this.password = password;
-        this.role = role;
+        this.role = Role.valueOf(role.toUpperCase());
         this.cash = cash;
     }
 }

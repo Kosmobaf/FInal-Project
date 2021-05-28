@@ -15,6 +15,7 @@ public class GetAllServiceCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         ServiceService service = new ServiceService();
         serviceList = service.getAllService();
+
         request.getSession().setAttribute("serviceList", serviceList);
         return "/WEB-INF/user/showListServices.jsp";
     }

@@ -7,10 +7,10 @@
 <h1>
     <form method="post" action="${pageContext.request.contextPath}/createUser">
         <label>
-            <input type="text" name="login">
+            <input type="text" name="login" value="Логін">
         </label>
         <label>
-            <input type="password" name="password">
+            <input type="password" name="password" value="Пароль">
         </label>
         <input class="button" type="submit" value="Створити">
     </form>

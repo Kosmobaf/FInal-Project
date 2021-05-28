@@ -2,11 +2,8 @@ package com.model.constants;
 
 /**
  * Holder for fields names of DB tables.
- *
- * @author Lytvynuk V.
- *
  */
-public final class Fields {
+public final class TableName {
 
     // entities
     public static final String ENTITY__ID = "id";
@@ -25,7 +22,7 @@ public final class Fields {
     //bean
     public static final String USERS_SERVICES_TARIFF__USER_ID = "user_id";
     public static final String USERS_SERVICES_TARIFF__TARIFF_ID = "tariff_id";
-    public static final String USERS_SERVICES_TARIFF__IS_ACTIVE = "isActive";
+    public static final String USERS_SERVICES_TARIFF__STATUS = "status";
     public static final String USERS_SERVICES_TARIFF__DATE_ADD = "dateAdd";
 
 }

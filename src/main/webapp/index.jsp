@@ -14,10 +14,10 @@
     </style>
 </head>
 
-<body >
-<h1>Вход в систему</h1><br/>
+<body>
+<h1>Головна сторінка</h1><br/>
 <br/>
-<a href="${pageContext.request.contextPath}/login.jsp">Перехід на вхід</a>
-<br>
+<h3><a href="${pageContext.request.contextPath}/login.jsp">Вхід до особистого кабінету</a></h3>
+
 </body>
 </html>

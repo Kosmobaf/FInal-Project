@@ -1,6 +1,6 @@
 package com.controller.command;
 
-import com.model.constants.Fields;
+import com.model.constants.TableName;
 import com.model.entity.User;
 import com.model.service.UserService;
 
@@ -14,11 +14,11 @@ public class CreateUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        if (request.getParameter(Fields.USER__LOGIN) != null) {
+        if (request.getParameter(TableName.USER__LOGIN) != null) {
             UserService service = new UserService();
             service.createUser(
-                    request.getParameter(Fields.USER__LOGIN),
-                    request.getParameter(Fields.USER__PASSWORD)
+                    request.getParameter(TableName.USER__LOGIN),
+                    request.getParameter(TableName.USER__PASSWORD)
             );
             userList = service.getAllUsers();
             request.getSession().setAttribute("userList", userList);

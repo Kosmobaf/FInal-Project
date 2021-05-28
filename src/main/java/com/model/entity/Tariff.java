@@ -5,14 +5,14 @@ import java.math.BigDecimal;
 public class Tariff extends Entity {
 
     private String nameTariff;
-    private Long id_Services;
+    private Long idServices;
     private BigDecimal cost;
 
     @Override
     public String toString() {
         return "Tariff{" +
                 "nameTariff='" + nameTariff + '\'' +
-                ", id_Services=" + id_Services +
+                ", id_Services=" + idServices +
                 ", cost=" + cost +
                 '}';
     }
@@ -25,12 +25,12 @@ public class Tariff extends Entity {
         this.nameTariff = nameTariff;
     }
 
-    public Long getId_Services() {
-        return id_Services;
+    public Long getIdServices() {
+        return idServices;
     }
 
-    public void setId_Services(Long id_Services) {
-        this.id_Services = id_Services;
+    public void setIdServices(Long idServices) {
+        this.idServices = idServices;
     }
 
     public BigDecimal getCost() {
@@ -41,10 +41,10 @@ public class Tariff extends Entity {
         this.cost = cost;
     }
 
-    public Tariff(Long id, String nameTariff, Long id_Services, BigDecimal cost) {
+    public Tariff(Long id, String nameTariff, Long idServices, BigDecimal cost) {
         super(id);
         this.nameTariff = nameTariff;
-        this.id_Services = id_Services;
+        this.idServices = idServices;
         this.cost = cost;
     }
 

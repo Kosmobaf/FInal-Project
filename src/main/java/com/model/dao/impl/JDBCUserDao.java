@@ -68,6 +68,7 @@ public class JDBCUserDao implements UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER_BY_ID)) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
+
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         }
@@ -78,13 +79,16 @@ public class JDBCUserDao implements UserDao {
     public List<User> findAll() {
         ResultSet resultSet = null;
         List<User> userList = new ArrayList<>();
+
         try (Statement st = connection.createStatement()) {
             resultSet = st.executeQuery((SQL_FIND_ALL_USERS));
+
             UserMapper userMapper = new UserMapper();
             while (resultSet.next()) {
                 userList.add(userMapper.extractFromResultSet(resultSet));
             }
             return userList;
+
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
 
@@ -114,10 +118,12 @@ public class JDBCUserDao implements UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 UserMapper userMapper = new UserMapper();
                 return userMapper.extractFromResultSet(resultSet);
             }
+
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
 

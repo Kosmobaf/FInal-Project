@@ -46,7 +46,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
                      connection.prepareStatement(SQL_INSERT_USERS_ORDERS)) {
             preparedStatement.setLong(1, bean.getUserId());
             preparedStatement.setLong(2, bean.getTariffId());
-            preparedStatement.setBoolean(3, bean.isActive());
+            preparedStatement.setString(3, bean.getStatus());
             preparedStatement.setString(4, bean.getDateAdd());
             preparedStatement.execute();
         } catch (SQLException e) {
@@ -83,7 +83,6 @@ public class JDBCUserOrderDao implements UserOrderDao {
         }
     }
 
-
     @Override
     public List<UserOrderBean> findAll() {
         ResultSet resultSet = null;
@@ -110,12 +109,15 @@ public class JDBCUserOrderDao implements UserOrderDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_ORDERS_BY_ID_USER)) {
             preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
+
             List<UserOrderBean> beans = new ArrayList<>();
             UserOrderMapper orderMapper = new UserOrderMapper();
+
             while (resultSet.next()) {
                 beans.add(orderMapper.extractFromResultSet(resultSet));
             }
             return beans;
+
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
 
@@ -130,12 +132,11 @@ public class JDBCUserOrderDao implements UserOrderDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USERS_ORDERS)) {
             preparedStatement.setLong(1, bean.getUserId());
             preparedStatement.setLong(2, bean.getTariffId());
-            preparedStatement.setBoolean(3, bean.isActive());
+            preparedStatement.setString(3, bean.getStatus());
             preparedStatement.setString(4, bean.getDateAdd());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         }
     }
-
 }

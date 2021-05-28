@@ -5,8 +5,6 @@ import com.model.Role;
 import java.math.BigDecimal;
 
 public class User extends Entity {
-    public User() {
-    }
 
     private String login;
     private String password;
@@ -55,11 +53,44 @@ public class User extends Entity {
         this.cash = cash;
     }
 
-    public User(Long id, String login, String password, String role, BigDecimal cash) {
-        super(id);
-        this.login = login;
-        this.password = password;
-        this.role = Role.valueOf(role.toUpperCase());
-        this.cash = cash;
+
+    /**
+    * Use pattern Builder
+     */
+    public static class Builder extends Entity {
+        private User newUser;
+
+        public Builder() {
+            newUser = new User();
+        }
+
+        public Builder id(Long id) {
+            newUser.setId(id);
+            return this;
+        }
+
+        public Builder cash(BigDecimal cash) {
+            newUser.cash = cash;
+            return this;
+        }
+
+        public Builder login(String login) {
+            newUser.login = login;
+            return this;
+        }
+
+        public Builder password(String password) {
+            newUser.password = password;
+            return this;
+        }
+
+        public Builder role(String role) {
+            newUser.role = Role.valueOf(role.toUpperCase());
+            return this;
+        }
+
+        public User build() {
+            return newUser;
+        }
     }
 }

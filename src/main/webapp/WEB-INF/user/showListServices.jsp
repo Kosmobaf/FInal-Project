@@ -8,19 +8,21 @@
 <body>
 
 <h1>Список послуг</h1>
-<c:forEach var="service" items="${sessionScope.serviceList}">
+<h2>
+<c:forEach var="order" items="${sessionScope.serviceList}">
     <ul>
         <li>
             <form method="post" action="${pageContext.request.contextPath}/getTariffList" >
                 <label>
-                    <input type="number" hidden name="idService" value="${service.id}">
+                    <input type="number" hidden name="idService" value="${order.id}">
                 </label>
-                <input type="submit" name="service" value="<c:out value="${service.nameService}"/>">
+                <input type="submit" name="service" value="<c:out value="${order.nameService}"/>">
             </form>
         </li>
     </ul>
     <hr/>
 </c:forEach>
-<a href="${pageContext.request.contextPath}/logout "> Logout</a>
+</h2>
+<a href="${pageContext.request.contextPath}/logout "> Вихід</a>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.constants.Fields;
-import com.model.builder.UserBuilder;
+import com.model.constants.TableName;
 import com.model.entity.User;
 
 import java.sql.ResultSet;
@@ -12,12 +11,13 @@ public class UserMapper implements ObjectMapper<User> {
 
     @Override
     public User extractFromResultSet(ResultSet rs) throws SQLException {
-        UserBuilder builder = new UserBuilder();
-        builder.setId(rs.getLong(Fields.ENTITY__ID));
-        builder.setLogin(rs.getString(Fields.USER__LOGIN));
-        builder.setPassword(rs.getString(Fields.USER__PASSWORD));
-        builder.setRole(rs.getString(Fields.USER__ROLE));
-        builder.setCash(rs.getBigDecimal(Fields.USER__CASH));
-        return builder.getResult();
+
+        return new User.Builder().
+                id(rs.getLong(TableName.ENTITY__ID)).
+                login(rs.getString(TableName.USER__LOGIN)).
+                password(rs.getString(TableName.USER__PASSWORD)).
+                role(rs.getString(TableName.USER__ROLE)).
+                cash(rs.getBigDecimal(TableName.USER__CASH)).
+                build();
     }
 }

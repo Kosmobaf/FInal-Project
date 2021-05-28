@@ -12,9 +12,9 @@ public class AddTariffWithServiceCommand implements Command {
         TariffService service = new TariffService();
 
         service.addTariff(
-                (Long)request.getSession().getAttribute("idTariff"),
-                (Long)request.getSession().getAttribute("idUser"));
+                Long.valueOf(request.getParameter("idTariff")),
+                (Long) request.getSession().getAttribute("idUser"));
         //TODO добавити повідомлення якщо не достатньо коштів і послуга заблокована
-        return "/WEB-INF/user/userbasis.jsp.jsp";
+        return "/WEB-INF/user/userbasis.jsp";
     }
 }

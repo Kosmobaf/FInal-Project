@@ -8,18 +8,20 @@
 <body>
 
 <h1>Список тарифів</h1>
-<c:forEach var="service" items="${sessionScope.tariffList}">
+<h2>
+<c:forEach var="order" items="${sessionScope.tariffList}">
     <ul>
         <li>
             <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
-                <input type="number" hidden name="idTariff" value="${service.id}">
-                <input type="number" hidden name="idUser" value="${service.id}">
-                <input type="submit" name="<c:out value="${service.nameTariff}"/>">
+                <input type="number" hidden name="idTariff" value="${order.id}">
+                <input type="number" hidden name="idUser" value="${order.id}">
+                <input type="submit" name="tariff" value="<c:out value="${order.nameTariff}"/>">
             </form>
         </li>
     </ul>
     <hr/>
 </c:forEach>
+</h2>
 <a href="${pageContext.request.contextPath}/logout ">  Logout</a>
 </body>
 </html>

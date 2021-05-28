@@ -1,7 +1,6 @@
 package com.model.service;
 
 import com.model.bean.UserOrderBean;
-import com.model.builder.UserBuilder;
 import com.model.dao.DaoFactory;
 import com.model.entity.User;
 
@@ -15,8 +14,8 @@ public class UserService {
         return daoFactory.createUserDao().findAll();
     }
 
-    public List<UserOrderBean> getUserOrders(Long id) {
-        return daoFactory.createUserOrderDao().findAllUserOrdersByIdUser(id);
+    public List<UserOrderBean> getUserOrders(Long idUser) {
+        return daoFactory.createUserOrderDao().findAllUserOrdersByIdUser(idUser);
     }
 
     public User getUser(Long id) {
@@ -24,15 +23,16 @@ public class UserService {
     }
 
     public void createUser(String login, String password) {
-        UserBuilder builder = new UserBuilder();
-        builder.setLogin(login);
-        builder.setPassword(password);
-        daoFactory.createUserDao().create(
-                builder.getResult());
+        User user = new User.Builder().
+                login(login).
+                password(password).
+                build();
+
+        daoFactory.createUserDao().create(user);
     }
 
-    /*
-    Show Optional
+    /**
+     * Show Optional
      */
     public boolean userIsExist(String login, String password) {
 
@@ -45,7 +45,15 @@ public class UserService {
         return false;
     }
 
-    public Long getUserId(String login) {
+    public long getUserId(String login) {
+
         return daoFactory.createUserDao().findByLogin(login).getId();
+    }
+
+    public List<UserOrderBean> getOrdersForUser(String login) {
+        List<UserOrderBean> userOrderBeans;
+        long id = daoFactory.createUserDao().findByLogin(login).getId();
+        userOrderBeans = daoFactory.createUserOrderDao().findAllUserOrdersByIdUser(id);
+        return userOrderBeans;
     }
 }

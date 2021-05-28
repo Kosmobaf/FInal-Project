@@ -7,8 +7,6 @@ import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 public class LoginCommand implements Command {
 
@@ -16,17 +14,14 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-        if (login == null || login.equals("") || password == null /*|| password.equals("")*/) {
-            //System.out.println("Not");
+        if (login == null || login.equals("") || password == null || password.equals("")) {
             return "/login.jsp";
         }
         System.out.println(login + " " + password);
-        //System.out.println("Yes!");
-        //todo: check login with DB
 
-        if (CommandUtility.checkUserIsLogged(request, login)) {
+       /* if (CommandUtility.checkUserIsLogged(request, login)) {
             return "/WEB-INF/error.jsp";
-        }
+        }*/
 
         if (login.contains("Admin")) {
             CommandUtility.setUserRole(request, Role.ADMIN, login);
@@ -38,7 +33,6 @@ public class LoginCommand implements Command {
             Long idUser = service.getUserId(login);
             request.getSession().setAttribute("idUser", idUser);
             CommandUtility.setUserRole(request, Role.USER, login);
-            //TODO добавити щоб записсувалось в атрибути ід юсера під "idUser"
             return "/WEB-INF/user/userbasis.jsp";
 
         }

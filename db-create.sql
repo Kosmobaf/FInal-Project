@@ -37,10 +37,10 @@ CREATE TABLE users_orders
 (
     id        INT AUTO_INCREMENT
         PRIMARY KEY,
-    user_id   INT                  NULL,
-    tariff_id INT                  NULL,
-    isActive  TINYINT(1) DEFAULT 0 NULL,
-    dateAdd   DATETIME             NULL,
+    user_id   INT          NOT NULL,
+    tariff_id INT          NOT NULL,
+    status    VARCHAR(255) NOT NULL,
+    dateAdd   DATETIME     NOT NULL,
     CONSTRAINT user_id
         UNIQUE (user_id, tariff_id),
     CONSTRAINT users_orders_tariff_id_fk

@@ -76,4 +76,4 @@ VALUES (9, 3, 'Fast', 300.00);
 INSERT INTO users(id, login, password, typeUser, cash)
 VALUES (1, 'Admin@asd', 1, 'admin', 0);
 INSERT INTO users(id, login, password, typeUser, cash)
-VALUES (1, 'User@asd', 1, 'user', 0);
+VALUES (2, 'User@asd', 1, 'user', 0);

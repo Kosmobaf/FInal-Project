@@ -39,7 +39,6 @@ public class Servlet extends HttpServlet {
                 new AddTariffWithServiceCommand());
         commands.put("getTariffList",
                 new GetTariffByServiceCommand());
-        new CreateDataBase().createDB();
     }
 
     public void doGet(HttpServletRequest request,

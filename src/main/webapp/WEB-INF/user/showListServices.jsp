@@ -11,7 +11,7 @@
 <c:forEach var="service" items="${sessionScope.serviceList}">
     <ul>
         <li>
-            <form action="${pageContext.request.contextPath}/getTariffList" method="get">
+            <form method="post" action="${pageContext.request.contextPath}/getTariffList" >
                 <label>
                     <input type="number" hidden name="idService" value="${service.id}">
                 </label>
@@ -21,6 +21,6 @@
     </ul>
     <hr/>
 </c:forEach>
-<a href="${pageContext.request.contextPath}/logout ">  Logout</a>
+<a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>
 </html>

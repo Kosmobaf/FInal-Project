@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>Список послуг</h1>
+<h1>Список тарифів</h1>
 <c:forEach var="service" items="${sessionScope.tariffList}">
     <ul>
         <li>

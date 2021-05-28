@@ -1,13 +1,9 @@
 package com.controller.command;
 
-import com.model.entity.Service;
-import com.model.service.ServiceService;
 import com.model.service.TariffService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AddTariffWithServiceCommand implements Command {
 
@@ -15,7 +11,10 @@ public class AddTariffWithServiceCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         TariffService service = new TariffService();
 
-        service.addTariff((Long)request.getSession().getAttribute("idTariff"));
+        service.addTariff(
+                (Long)request.getSession().getAttribute("idTariff"),
+                (Long)request.getSession().getAttribute("idUser"));
+        //TODO добавити повідомлення якщо не достатньо коштів і послуга заблокована
         return "/WEB-INF/user/userbasis.jsp.jsp";
     }
 }

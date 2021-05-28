@@ -2,9 +2,13 @@ package com.controller.command;
 
 
 import com.model.Role;
+import com.model.entity.User;
+import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginCommand implements Command {
 
@@ -27,14 +31,22 @@ public class LoginCommand implements Command {
         if (login.contains("Admin")) {
             CommandUtility.setUserRole(request, Role.ADMIN, login);
             return "/WEB-INF/admin/adminbasis.jsp";
-        } else if (login.contains("User")) {
+        }
+
+        UserService service = new UserService();
+        if (service.userIsExist(login, password)) {
+            Long idUser = service.getUserId(login);
+            request.getSession().setAttribute("idUser", idUser);
             CommandUtility.setUserRole(request, Role.USER, login);
             //TODO добавити щоб записсувалось в атрибути ід юсера під "idUser"
             return "/WEB-INF/user/userbasis.jsp";
-        } else {
+
+        }
+        /*else {
             CommandUtility.setUserRole(request, Role.UNKNOWN, login);
             return "/login.jsp";
-        }
+        }*/
+        return "/login.jsp";
     }
 
 }

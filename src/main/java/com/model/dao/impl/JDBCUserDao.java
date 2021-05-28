@@ -21,6 +21,8 @@ public class JDBCUserDao implements UserDao {
             "INSERT INTO users (login,password,typeUser,cash) VALUES (?,?,?,?)";
     public static final String SQL_FIND_USER_BY_ID =
             "SELECT * FROM users WHERE id LIKE (?)";
+    public static final String SQL_FIND_USER_BY_LOGIN =
+            "SELECT * FROM users WHERE login LIKE (?)";
     public static final String SQL_FIND_ALL_USERS =
             "SELECT * FROM users";
     public static final String SQL_UPDATE_USER =
@@ -104,5 +106,24 @@ public class JDBCUserDao implements UserDao {
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         }
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        ResultSet resultSet = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
+            preparedStatement.setString(1, login);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                UserMapper userMapper = new UserMapper();
+                return userMapper.extractFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+
+        } finally {
+            close(resultSet);
+        }
+        throw new RuntimeException();
     }
 }

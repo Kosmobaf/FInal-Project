@@ -14,7 +14,8 @@ public class GetTariffByServiceCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         TariffService tariff = new TariffService();
-        tariffList = tariff.getAllTariffByService((Long)request.getSession().getAttribute("idService"));
+        tariffList = tariff.getAllTariffByService(
+                Long.getLong(request.getParameter("idService")));
         request.getSession().setAttribute("tariffList", tariffList);
         return "/WEB-INF/user/showListTariff.jsp";
     }

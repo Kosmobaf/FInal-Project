@@ -17,10 +17,10 @@ public class UserOrderBean extends Entity {
 
     @Override
     public String toString() {
-        return "UserOrderTariffBean{" +
-                "user_id=" + userId +
-                ", tariff_id=" + tariffId +
-                ", isActive=" + status +
+        return "UserOrderBean{" +
+                "userId=" + userId +
+                ", tariffId=" + tariffId +
+                ", status=" + status +
                 ", nameService='" + nameService + '\'' +
                 ", nameTariff='" + nameTariff + '\'' +
                 ", dateAdd='" + dateAdd + '\'' +

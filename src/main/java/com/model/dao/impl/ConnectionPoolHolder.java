@@ -1,7 +1,5 @@
 package com.model.dao.impl;
 
-import com.model.db.CreateDataBase;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;

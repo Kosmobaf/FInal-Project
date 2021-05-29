@@ -1,7 +1,7 @@
 <Context>
 
     <Resource name="jdbc/provider" auth="Container" type="javax.sql.DataSource"
-              maxActive="50" maxIdle="30" maxWait="10000"
+              maxTotal="500" maxIdle="30" maxWaitMillis="10000"
               username="root" password="root"
               driverClassName="com.mysql.cj.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/provider?useUnicode=true&amp;serverTimezone=UTC"/>

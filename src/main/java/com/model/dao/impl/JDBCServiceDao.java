@@ -1,4 +1,5 @@
 package com.model.dao.impl;
+
 import com.model.dao.ServiceDao;
 import com.model.dao.mapper.ServiceMapper;
 import com.model.entity.Service;
@@ -93,6 +94,15 @@ public class JDBCServiceDao implements ServiceDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

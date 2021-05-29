@@ -30,6 +30,7 @@ public class Servlet extends HttpServlet {
         commands.put("getAllService", new GetAllServiceCommand());
         commands.put("addTariffWithService", new AddTariffWithServiceCommand());
         commands.put("getTariffList", new GetTariffByServiceCommand());
+        commands.put("getListOrdersForUser", new GetListOrdersForUserCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -54,7 +55,7 @@ public class Servlet extends HttpServlet {
         System.out.println(command.getClass().getName());
         String page = command.execute(request, response);
         if (page.contains("redirect:")) {
-            response.sendRedirect(page.replace("redirect:", "provider/"));
+            response.sendRedirect(page.replace("redirect:", "/provider"));
         } else {
             request.getRequestDispatcher(page).forward(request, response);
         }

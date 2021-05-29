@@ -2,6 +2,8 @@ package com.model.service;
 
 import com.model.bean.UserOrderBean;
 import com.model.dao.DaoFactory;
+import com.model.dao.UserDao;
+import com.model.dao.UserOrderDao;
 import com.model.entity.User;
 
 import java.util.List;
@@ -11,49 +13,81 @@ public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<User> getAllUsers() {
-        return daoFactory.createUserDao().findAll();
+        try {
+            try (UserDao userDao = daoFactory.createUserDao()) {
+                return userDao.findAll();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 
     public List<UserOrderBean> getUserOrders(Long idUser) {
-        return daoFactory.createUserOrderDao().findAllUserOrdersByIdUser(idUser);
+        try (UserOrderDao userOrderDao = daoFactory.createUserOrderDao()) {
+            return userOrderDao.findAllOrdersByIdUser(idUser);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 
     public User getUser(Long id) {
-        return daoFactory.createUserDao().findById(id);
+        try (UserDao dao = daoFactory.createUserDao()) {
+
+            return dao.findById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
+
     }
 
     public void createUser(String login, String password) {
-        User user = new User.Builder().
-                login(login).
-                password(password).
-                build();
+        try (UserDao dao = daoFactory.createUserDao()) {
 
-        daoFactory.createUserDao().create(user);
+            User user = new User.Builder().
+                    login(login).
+                    password(password).
+                    build();
+
+            dao.create(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    /**
-     * Show Optional
-     */
+
     public boolean userIsExist(String login, String password) {
 
-        Optional<User> user = daoFactory.createUserDao().findAll().stream().
-                filter(user1 -> user1.getLogin().equals(login)).findFirst();
-        if (user.isPresent()) {
-            User user1 = user.get();
-            return password.equals(user1.getPassword());
+        try (UserDao dao = daoFactory.createUserDao()) {
+            Optional<User> user = dao.findAll().stream().
+                    filter(user1 -> user1.getLogin().equals(login)).findFirst();
+            if (user.isPresent()) {
+                User user1 = user.get();
+                return password.equals(user1.getPassword());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return false;
     }
 
-    public long getUserId(String login) {
-
-        return daoFactory.createUserDao().findByLogin(login).getId();
+    public long getUserId(String login) throws Exception {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.findByLogin(login).getId();
+        }
     }
 
-    public List<UserOrderBean> getOrdersForUser(String login) {
+    public List<UserOrderBean> getOrdersForUser(String login) throws Exception {
         List<UserOrderBean> userOrderBeans;
-        long id = daoFactory.createUserDao().findByLogin(login).getId();
-        userOrderBeans = daoFactory.createUserOrderDao().findAllUserOrdersByIdUser(id);
-        return userOrderBeans;
+        try (UserDao userDao = daoFactory.createUserDao();
+             UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
+
+            long id = userDao.findByLogin(login).getId();
+            userOrderBeans = orderDao.findAllOrdersByIdUser(id);
+
+            return userOrderBeans;
+        }
     }
 }

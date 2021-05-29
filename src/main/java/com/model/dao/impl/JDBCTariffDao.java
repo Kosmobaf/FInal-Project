@@ -3,6 +3,7 @@ package com.model.dao.impl;
 import com.model.dao.TariffDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.entity.Tariff;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,15 @@ public class JDBCTariffDao implements TariffDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
+        }
+    }
+
+    @Override
+    public void close() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -1,8 +1,11 @@
 package com.model.service;
 
 import com.model.dao.DaoFactory;
+import com.model.dao.ServiceDao;
+import com.model.dao.TariffDao;
 import com.model.entity.Service;
 import com.model.entity.Tariff;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,18 +27,17 @@ public class ServiceService {
 
         File file = new File(SERVICES_TXT);
         file.delete();
-        try {
+
+        try (PrintWriter writer = new PrintWriter(file);
+             ServiceDao serviceDao = daoFactory.createServiceDao();
+             TariffDao tariffDao = daoFactory.createTariffDao()) {
             file.createNewFile();
-        } catch (IOException e) {
-            LOGGER.severe(e.getMessage());
-        }
-        try (PrintWriter writer = new PrintWriter(file)) {
-            List<Service> serviceList = daoFactory.createServiceDao().findAll();
+            List<Service> serviceList = serviceDao.findAll();
 
             for (Service service : serviceList) {
                 writer.println(SERVICE + service.getNameService());
                 writer.println(TARIFF);
-                List<Tariff> tariffList = daoFactory.createTariffDao().findAll();
+                List<Tariff> tariffList = tariffDao.findAll();
 
                 for (Tariff tariff : tariffList) {
                     if (tariff.getIdServices().equals(service.getId())) {
@@ -44,12 +46,20 @@ public class ServiceService {
                 }
                 writer.println();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             LOGGER.severe(e.getMessage());
+            e.printStackTrace();
         }
     }
 
     public List<Service> getAllService() {
-        return daoFactory.createServiceDao().findAll();
+        try (ServiceDao dao = daoFactory.createServiceDao()) {
+            return dao.findAll();
+
+        } catch (Exception e) {
+            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 }

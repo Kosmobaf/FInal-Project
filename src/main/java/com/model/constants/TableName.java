@@ -3,10 +3,13 @@ package com.model.constants;
 /**
  * Holder for fields names of DB tables.
  */
+
 public final class TableName {
+
 
     // entities
     public static final String ENTITY__ID = "id";
+
 
     public static final String USER__LOGIN = "login";
     public static final String USER__PASSWORD = "password";
@@ -24,5 +27,6 @@ public final class TableName {
     public static final String USERS_SERVICES_TARIFF__TARIFF_ID = "tariff_id";
     public static final String USERS_SERVICES_TARIFF__STATUS = "status";
     public static final String USERS_SERVICES_TARIFF__DATE_ADD = "dateAdd";
+
 
 }

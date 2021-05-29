@@ -1,23 +1,28 @@
 package com.controller.command;
 
 import com.model.bean.UserOrderBean;
+import com.model.constants.Constants;
 import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 public class GetListOrdersForUserCommand implements Command {
-    List<UserOrderBean> list = new ArrayList<>();
+    private final UserService userService = new UserService();
+
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        UserService service = new UserService();
         String login = (String) request.getSession().getAttribute("login");
-        list = service.getOrdersForUser(login);
+        List<UserOrderBean> userOrderList = null;
+        try {
+            userOrderList = userService.getOrdersForUser(login);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        request.getSession().setAttribute("userOrderList", list);
-        return "/WEB-INF/user/userbasis.jsp";
+        request.getSession().setAttribute("userOrderList", userOrderList);
+        return Constants.WEB_INF_USER_USERBASIS_JSP;
     }
 }

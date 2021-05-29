@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.model.constants.Constants;
 import com.model.service.ServiceService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,12 +18,11 @@ public class GetFileServicesCommand implements Command {
 
         ServiceService service = new ServiceService();
         service.exportServicesToFile();
-        resp.setContentType("text/plain");
-        resp.setHeader("Content-disposition", "attachment; filename=Services.txt");
+        resp.setContentType(Constants.TEXT_PLAIN);
+        resp.setHeader(Constants.CONTENT_DISPOSITION, Constants.ATTACHMENT_FILENAME_SERVICES_TXT);
 
         try (FileInputStream inputStream = new FileInputStream(filePath + fileName);
              OutputStream out = resp.getOutputStream()) {
-
 
             int numBytesRead;
             while ((numBytesRead = inputStream.read()) != -1) {
@@ -31,6 +31,6 @@ public class GetFileServicesCommand implements Command {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "/WEB-INF/user/getFileServices.jsp";
+        return Constants.WEB_INF_USER_GET_FILE_SERVICES_JSP;
     }
 }

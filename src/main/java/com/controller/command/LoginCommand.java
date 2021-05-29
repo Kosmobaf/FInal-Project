@@ -2,7 +2,7 @@ package com.controller.command;
 
 
 import com.model.Role;
-import com.model.entity.User;
+import com.model.constants.Constants;
 import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,11 +30,9 @@ public class LoginCommand implements Command {
 
         UserService service = new UserService();
         if (service.userIsExist(login, password)) {
-            Long idUser = service.getUserId(login);
-            request.getSession().setAttribute("idUser", idUser);
+            request.getSession().setAttribute("login", login);
             CommandUtility.setUserRole(request, Role.USER, login);
-            return "/WEB-INF/user/userbasis.jsp";
-
+            return Constants.REDIRECT_GET_LIST_ORDERS_FOR_USER;
         }
         /*else {
             CommandUtility.setUserRole(request, Role.UNKNOWN, login);

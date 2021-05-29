@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.model.constants.Constants;
 import com.model.entity.Tariff;
 import com.model.service.TariffService;
 
@@ -9,16 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GetTariffByServiceCommand implements Command {
-    List<Tariff> tariffList = new ArrayList<>();
+    TariffService tariff = new TariffService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        TariffService tariff = new TariffService();
-
-        tariffList = tariff.getAllTariffByService(
-                Long.valueOf(request.getParameter("idService")));
+        List<Tariff> tariffList = new ArrayList<>();
+        try {
+            tariffList = tariff.getAllTariffByService(
+                    Long.valueOf(request.getParameter("idService")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         request.getSession().setAttribute("tariffList", tariffList);
-        return "/WEB-INF/user/showListTariff.jsp";
+        return Constants.WEB_INF_USER_SHOW_LIST_TARIFF_JSP;
     }
 }

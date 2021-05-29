@@ -27,8 +27,6 @@ Z
 *src/main/java/com/model/entity/Entity.java,1\0\10240d95a991ce241cc941e7a2a90addfd36d7f8
 \
 ,src/main/webapp/WEB-INF/admin/createUser.jsp,0\2\02cf5ebc730f3d1f9028b5ddde2f45dc14396927
-a
-1src/main/webapp/WEB-INF/user/showListServices.jsp,1\c\1cdac0820114b1c4340c8164dfee2c81de192166
 X
 (src/main/java/com/model/entity/User.java,d\4\d42b2d471a0e87e5e0a28908ad17e24aa77904bb
 =

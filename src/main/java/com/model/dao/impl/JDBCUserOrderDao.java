@@ -14,15 +14,17 @@ import java.util.logging.Logger;
 public class JDBCUserOrderDao implements UserOrderDao {
     private static final Logger LOGGER = Logger.getLogger(JDBCUserOrderDao.class.getName());
     private final Connection connection;
+
     public JDBCUserOrderDao(Connection connection) {
         this.connection = connection;
     }
 
-    public static final String SQL_FIND_TARIFF_BY_ID_USER = "SELECT users_orders.user_id, " +
-            "tariff.id_service, tariff.id,tariff.nameTariff,tariff.cost " +
-            "FROM users_orders " +
-            "JOIN tariff ON users_orders.tariff_id = tariff.id " +
-            "WHERE users_orders.user_id LIKE (?)";
+    public static final String SQL_FIND_ALL_TARIFF_BY_ID_USER =
+            "SELECT users_orders.user_id, " +
+                    "tariff.id_service, tariff.id,tariff.nameTariff,tariff.cost " +
+                    "FROM users_orders " +
+                    "JOIN tariff ON users_orders.tariff_id = tariff.id " +
+                    "WHERE users_orders.user_id LIKE (?)";
     private static final String SQL_INSERT_USERS_ORDERS =
             "INSERT INTO users_orders (user_id,tariff_id,status,dateAdd) VALUES (?,?,?,?)";
     public static final String SQL_FIND_USERS_ORDERS_BY_ID =
@@ -143,8 +145,9 @@ public class JDBCUserOrderDao implements UserOrderDao {
         ResultSet resultSet = null;
         List<Tariff> tariffs = new ArrayList<>();
 
-        try (Statement st = connection.createStatement()) {
-            resultSet = st.executeQuery(SQL_FIND_TARIFF_BY_ID_USER);
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_TARIFF_BY_ID_USER)) {
+            preparedStatement.setLong(1, idUser);
+            resultSet = preparedStatement.executeQuery();
             TariffMapper mapper = new TariffMapper();
             while (resultSet.next()) {
                 tariffs.add(mapper.extractFromResultSet(resultSet));

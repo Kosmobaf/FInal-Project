@@ -1,7 +1,6 @@
 package com.model.constants;
 
 public final class Constants {
-    public static final String WEB_INF_USER_GET_FILE_SERVICES_JSP = "/WEB-INF/user/getFileServices.jsp";
     public static final String TEXT_PLAIN = "text/plain";
     public static final String CONTENT_DISPOSITION = "Content-disposition";
     public static final String ATTACHMENT_FILENAME_SERVICES_TXT = "attachment; filename=Services.txt";

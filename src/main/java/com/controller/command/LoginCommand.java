@@ -19,9 +19,9 @@ public class LoginCommand implements Command {
         }
         System.out.println(login + " " + password);
 
-       /* if (CommandUtility.checkUserIsLogged(request, login)) {
+        if (CommandUtility.checkUserIsLogged(request, login)) {
             return "/WEB-INF/error.jsp";
-        }*/
+        }
 
         if (login.contains("Admin")) {
             CommandUtility.setUserRole(request, Role.ADMIN, login);
@@ -30,7 +30,9 @@ public class LoginCommand implements Command {
 
         UserService service = new UserService();
         if (service.userIsExist(login, password)) {
+
             request.getSession().setAttribute("login", login);
+            request.getSession().setAttribute("user",user);
             CommandUtility.setUserRole(request, Role.USER, login);
             return Constants.REDIRECT_GET_LIST_ORDERS_FOR_USER;
         }

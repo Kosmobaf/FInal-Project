@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class TariffService {
     public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     DaoFactory daoFactory = DaoFactory.getInstance();
+    UserService userService = new UserService();
 
     public TariffService() {
     }
@@ -43,8 +44,11 @@ public class TariffService {
                     .tariffId(idTariff)
                     .userId(idUser)
                     .dateAdd(date)
-                    .status(Status.ACTIVE.getName())
+                    .status(Status.BLOCKED.getName())
                     .build();
+            if (userService.withdrawCashFromUser(login, idTariff)) {
+                userOrderBean.setStatus(Status.ACTIVE.getName());
+            }
             orderDao.create(userOrderBean);
         }
     }

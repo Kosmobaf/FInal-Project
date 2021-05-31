@@ -9,19 +9,18 @@
 
 <h1>Список тарифів</h1>
 <h2>
-<c:forEach var="order" items="${sessionScope.tariffList}">
-    <ul>
-        <li>
-            <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
-                <input type="number" hidden name="idTariff" value="${order.id}">
-                <input type="number" hidden name="idUser" value="${order.id}">
-                <input type="submit" name="tariff" value="<c:out value="${order.nameTariff}"/>">
-            </form>
-        </li>
-    </ul>
-    <hr/>
-</c:forEach>
+    <c:forEach var="order" items="${sessionScope.tariffList}">
+        <ul>
+            <li>
+                <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
+                    <input type="number" hidden name="idTariff" value="${order.id}">
+                    <input type="submit" name="tariff" value="<c:out value="${order.nameTariff}"/>">
+                </form>
+            </li>
+        </ul>
+        <hr/>
+    </c:forEach>
 </h2>
-<a href="${pageContext.request.contextPath}/logout ">  Logout</a>
+<a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>
 </html>

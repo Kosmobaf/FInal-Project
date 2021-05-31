@@ -7,6 +7,7 @@ import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.math.BigDecimal;
 
 public class LoginCommand implements Command {
 
@@ -29,17 +30,14 @@ public class LoginCommand implements Command {
         }
 
         UserService service = new UserService();
-        if (service.userIsExist(login, password)) {
-
+        if (service.userExist(login, password)) {
+            BigDecimal cash = service.getUserCash(login);
             request.getSession().setAttribute("login", login);
-            request.getSession().setAttribute("user",user);
+            request.getSession().setAttribute("cash", cash);
             CommandUtility.setUserRole(request, Role.USER, login);
-            return Constants.REDIRECT_GET_LIST_ORDERS_FOR_USER;
+            return Constants.REDIRECT_USER_BASIS;
         }
-        /*else {
-            CommandUtility.setUserRole(request, Role.UNKNOWN, login);
-            return "/login.jsp";
-        }*/
+
         return "/login.jsp";
     }
 

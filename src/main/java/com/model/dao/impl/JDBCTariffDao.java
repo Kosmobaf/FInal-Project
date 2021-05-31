@@ -21,6 +21,8 @@ public class JDBCTariffDao implements TariffDao {
             "INSERT INTO tariff (nameTariff, id_service, cost) VALUES (?,?,?)";
     public static final String SQL_FIND_TARIFF_BY_ID =
             "SELECT * FROM tariff WHERE id LIKE (?)";
+    public static final String SQL_FIND_TARIFF_BY_NAME =
+            "SELECT * FROM tariff WHERE nameTariff LIKE (?)";
     public static final String SQL_FIND_ALL_TARIFFS =
             "SELECT * FROM tariff";
     public static final String SQL_UPDATE_TARIFFS =
@@ -109,5 +111,23 @@ public class JDBCTariffDao implements TariffDao {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Tariff findByName(String nameTariff) {
+        ResultSet resultSet = null;
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_TARIFF_BY_NAME)) {
+            preparedStatement.setString(1, nameTariff);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                TariffMapper tariffMapper = new TariffMapper();
+                return tariffMapper.extractFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        } finally {
+            close(resultSet);
+        }
+        throw new RuntimeException();
     }
 }

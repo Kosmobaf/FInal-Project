@@ -1,33 +1,17 @@
 
-Q
-!src/main/webapp/WEB-INF/error.jsp,9\c\9cff433cd6572c1c2e3dada266b0f79a25f33fa0
 [
 +src/main/java/com/model/dao/ServiceDAO.java,1\9\19b5ddb7bf0c0dca7823cdcfaa2d0ee4f213dd0e
 T
 $src/main/properties/log4j.properties,d\7\d789489fd2768aba2317355671f95de210837155
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 J
 WebAppInternetProvider.iml,6\5\65c4d6b1c20820f5701397a8181ae53c3a6f46a0
-\
-,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
-O
-src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 Q
 !src/main/java/com/model/Role.java,b\c\bc120b7878940cfca65e043d4b4e2e9601a0a4bb
 \
 ,src/main/webapp/WEB-INF/admin/adminbasis.jsp,1\5\15e83d606da1f56206e70e050da3149c49deec5c
-I
-src/main/webapp/login.jsp,8\5\85ee523d01e5e19376db640e846c91bbcb0a1c22
 Z
 *src/main/webapp/WEB-INF/admin/allUsers.jsp,e\2\e216067144771a9280cbc20c4aecd2b0123c3ec6
 ^
 .src/main/java/com/model/db/CreateDataBase.java,0\a\0ac91cb11c505a8e747fe030050f861f790e65ad
-Z
-*src/main/java/com/model/entity/Entity.java,1\0\10240d95a991ce241cc941e7a2a90addfd36d7f8
-\
-,src/main/webapp/WEB-INF/admin/createUser.jsp,0\2\02cf5ebc730f3d1f9028b5ddde2f45dc14396927
-X
-(src/main/java/com/model/entity/User.java,d\4\d42b2d471a0e87e5e0a28908ad17e24aa77904bb
 =
 db-create.sql,b\9\b95be46045c1657543c21dd84e34d7ce34ddaa9a

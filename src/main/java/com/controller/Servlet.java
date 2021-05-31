@@ -30,7 +30,10 @@ public class Servlet extends HttpServlet {
         commands.put("getAllService", new GetAllServiceCommand());
         commands.put("addTariffWithService", new AddTariffWithServiceCommand());
         commands.put("getTariffList", new GetTariffByServiceCommand());
-        commands.put("getListOrdersForUser", new GetListOrdersForUserCommand());
+        commands.put("userBasis", new UserBasisCommand());
+        commands.put("addCash", new AddCashCommand());
+        commands.put("deleteTariff", new DelateTariff());
+        commands.put("activateTariff", new ActivateTariffCommand());
     }
 
     public void doGet(HttpServletRequest request,

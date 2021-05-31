@@ -31,6 +31,6 @@ public class GetFileServicesCommand implements Command {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return Constants.REDIRECT_GET_LIST_ORDERS_FOR_USER;
+        return Constants.REDIRECT_USER_BASIS;
     }
 }

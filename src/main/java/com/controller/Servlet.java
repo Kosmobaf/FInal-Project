@@ -32,7 +32,7 @@ public class Servlet extends HttpServlet {
         commands.put("getTariffList", new GetTariffByServiceCommand());
         commands.put("userBasis", new UserBasisCommand());
         commands.put("addCash", new AddCashCommand());
-        commands.put("deleteTariff", new DelateTariff());
+        commands.put("deleteTariff", new DeleteTariff());
         commands.put("activateTariff", new ActivateTariffCommand());
     }
 

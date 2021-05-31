@@ -11,6 +11,5 @@ import java.util.List;
 public interface UserOrderDao extends GenericDao<UserOrderBean> {
     List<UserOrderBean> findAllOrdersByIdUser(Long id);
     List<Tariff> findAllTariffByIdUser(long idUser);
-    void withdrawCashAndChangeStatus(UserOrderBean bean, User user);
-    UserOrderBean findByIdTariff(long idTariff, long idUser);
+    UserOrderBean findByIdTariffAndIdUser(long idTariff, long idUser);
 }

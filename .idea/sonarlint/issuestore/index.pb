@@ -5,8 +5,6 @@ T
 $src/main/properties/log4j.properties,d\7\d789489fd2768aba2317355671f95de210837155
 J
 WebAppInternetProvider.iml,6\5\65c4d6b1c20820f5701397a8181ae53c3a6f46a0
-Q
-!src/main/java/com/model/Role.java,b\c\bc120b7878940cfca65e043d4b4e2e9601a0a4bb
 \
 ,src/main/webapp/WEB-INF/admin/adminbasis.jsp,1\5\15e83d606da1f56206e70e050da3149c49deec5c
 Z
@@ -15,3 +13,37 @@ Z
 .src/main/java/com/model/db/CreateDataBase.java,0\a\0ac91cb11c505a8e747fe030050f861f790e65ad
 =
 db-create.sql,b\9\b95be46045c1657543c21dd84e34d7ce34ddaa9a
+Z
+*src/main/java/com/model/entity/Tariff.java,3\4\34f2b533ff91355574b40186fa5bc792c3a8b34c
+X
+(src/main/java/com/model/entity/User.java,d\4\d42b2d471a0e87e5e0a28908ad17e24aa77904bb
+a
+1src/main/java/com/controller/command/Command.java,4\7\475bc6feeec009c9b969e84c45194ad13135b8bd
+a
+1src/main/webapp/WEB-INF/user/showListServices.jsp,1\c\1cdac0820114b1c4340c8164dfee2c81de192166
+I
+src/main/webapp/index.jsp,8\e\8e6d3b70c9f5b02570779b0441540d45eceb0ded
+I
+src/main/webapp/login.jsp,8\5\85ee523d01e5e19376db640e846c91bbcb0a1c22
+O
+src/main/webapp/WEB-INF/web.xml,2\e\2e22b6edd746fa3dc40ad7276c87c8d87d72a392
+Z
+*src/main/java/com/model/entity/Entity.java,1\0\10240d95a991ce241cc941e7a2a90addfd36d7f8
+[
++src/main/java/com/model/dao/GenericDao.java,5\a\5ae68b8c21e6b0aa7f72acf380e3f0a570a97587
+d
+4src/main/java/com/model/dao/impl/JDBCDaoFactory.java,4\3\43faf55ee8d52223d75203271052ed0f5fcb3f8c
+h
+8src/main/java/com/controller/command/AddCashCommand.java,9\9\99e859ca5ced9d7d1441a2e59b2c18dc7267403c
+p
+@src/main/java/com/controller/command/GetFileServicesCommand.java,2\e\2ecea7091e3ade80f055a18df89b47a0c318dfbe
+c
+3src/main/java/com/model/dao/impl/JDBCTariffDao.java,c\b\cb45be5caed24344ede457721eea0fd724878d68
+\
+,.idea/inspectionProfiles/Project_Default.xml,4\9\496a238a6afa168dbaf6efd37bb459331589579c
+_
+/src/main/webapp/WEB-INF/user/showListTariff.jsp,d\c\dcab38a2e8f6346aa3e06ff649d0169e84c151c4
+Z
+*src/main/java/com/model/dao/TariffDao.java,4\9\49b8191dde0fd645146944ee541d9a839b6078f0
+b
+2src/main/java/com/model/service/TariffService.java,1\9\19e7e1d668d448c71bd1b3808350b492ff22b5d8

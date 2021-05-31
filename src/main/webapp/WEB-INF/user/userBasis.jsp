@@ -21,12 +21,15 @@
             <li>Послуга - *<c:out value="${order.nameService}"/>*</li>
             <li>Тариф - *<c:out value="${order.nameTariff}"/>*</li>
             <li>Статус - *<c:out value="${order.status}"/>*</li>
-            <form action="${pageContext.request.contextPath}/activateTariff" method="post">
-                <input type="number" hidden name="idTariff" value="${order.id}">
-                <input type="submit" value="Активувати">
-            </form>
+            <c:set var="blocked" scope="session" value="blocked"/>
+            <c:if test="${order.status.toString() == blocked}">
+                <form action="${pageContext.request.contextPath}/activateTariff" method="post">
+                    <input type="number" hidden name="idTariff" value="${order.tariffId}">
+                    <input type="submit" value="Активувати">
+                </form>
+            </c:if>
             <form action="${pageContext.request.contextPath}/deleteTariff" method="post">
-                <input type="number" hidden name="idTariff" value="${order.id}">
+                <input type="number" hidden name="idOrder" value="${order.id}">
                 <input type="submit" value="Видалити послугу">
             </form>
         </ul>

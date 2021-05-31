@@ -5,7 +5,6 @@ import com.model.dao.UserOrderDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.dao.mapper.UserOrderMapper;
 import com.model.entity.Tariff;
-import com.model.entity.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,8 +19,6 @@ public class JDBCUserOrderDao implements UserOrderDao {
         this.connection = connection;
     }
 
-    public static final String SQL_UPDATE_USER =
-            "UPDATE users SET login = ?, password = ?, typeUser = ?, cash = ? WHERE id = ?";
     public static final String SQL_FIND_ALL_TARIFF_BY_ID_USER =
             "SELECT users_orders.user_id, " +
                     "tariff.id_service, tariff.id,tariff.nameTariff,tariff.cost " +
@@ -49,7 +46,12 @@ public class JDBCUserOrderDao implements UserOrderDao {
     public static final String SQL_DELETE_USERS_ORDERS_BY_ID =
             "DELETE FROM users_orders WHERE id=?";
     public static final String SQL_FIND_USER_ORDER_BY_ID_USER_AND_ID_TARIFF =
-            "SELECT * FROM users_orders WHERE user_id=? AND tariff_id=?";
+            "SELECT users_orders .id, users_orders.user_id, " +
+                    "users_orders.tariff_id, users_orders.status, " +
+                    "users_orders.dateAdd, provider.tariff.nameTariff, " +
+                    "provider.services.nameService FROM users_orders " +
+                    "JOIN tariff ON users_orders.tariff_id = tariff.id " +
+                    "JOIN services ON tariff.id_service = services.id WHERE users_orders.user_id=? AND users_orders.tariff_id=?";
     public static final String SQL_FIND_USERS_ORDERS_BY_ID_USER =
             "SELECT users_orders.id, users_orders.user_id, " +
                     "users_orders.tariff_id, users_orders.status," +
@@ -167,44 +169,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
     }
 
     @Override
-    public void withdrawCashAndChangeStatus(UserOrderBean bean, User user) {
-        try (PreparedStatement preparedStatementBean = connection.prepareStatement(SQL_UPDATE_USERS_ORDERS);
-             PreparedStatement preparedStatementUser = connection.prepareStatement(SQL_UPDATE_USER)) {
-//TODO чи працюэ выдлюкченя коміта конекшина ?
-            connection.setAutoCommit(false);
-            preparedStatementBean.setLong(1, bean.getUserId());
-            preparedStatementBean.setLong(2, bean.getTariffId());
-            preparedStatementBean.setString(3, bean.getStatus());
-            preparedStatementBean.setString(4, bean.getDateAdd());
-            preparedStatementBean.execute();
-
-            preparedStatementUser.setString(1, user.getLogin());
-            preparedStatementUser.setString(2, user.getPassword());
-            preparedStatementUser.setString(3, user.getRole().getName());
-            preparedStatementUser.setBigDecimal(4, user.getCash());
-            preparedStatementUser.setLong(5, user.getId());
-            preparedStatementUser.execute();
-
-            connection.commit();
-        } catch (SQLException e) {
-            try {
-                connection.rollback();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-            e.printStackTrace();
-        } finally {
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    @Override
-    public UserOrderBean findByIdTariff(long idTariff, long idUser) {
+    public UserOrderBean findByIdTariffAndIdUser(long idTariff, long idUser) {
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_ORDER_BY_ID_USER_AND_ID_TARIFF)) {
 
@@ -231,6 +196,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
             preparedStatement.setLong(2, bean.getTariffId());
             preparedStatement.setString(3, bean.getStatus());
             preparedStatement.setString(4, bean.getDateAdd());
+            preparedStatement.setLong(5, bean.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());

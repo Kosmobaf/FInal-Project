@@ -19,4 +19,5 @@ public class UserOrderMapper implements ObjectMapper<UserOrderBean> {
                 nameService(rs.getString(TableName.SERVICES__NAME_SERVICE)).
                 build();
     }
+
 }

@@ -85,7 +85,6 @@ public class UserService {
     public boolean withdrawCashFromUser(String login, long idTariff) {
         try (UserDao userDao = daoFactory.createUserDao();
              TariffDao tariffDao = daoFactory.createTariffDao()) {
-//TODO переробити щоб знімало кошти з користувача і повертало назад користувача
             BigDecimal coast = tariffDao.findById(idTariff).getCost();
             User user = userDao.findByLogin(login);
             BigDecimal firstCash = user.getCash();
@@ -95,7 +94,6 @@ public class UserService {
                 userDao.update(user);
                 return true;
             }
-
             //TODO недостатньо коштів для активації послуги
         } catch (Exception e) {
             e.printStackTrace();

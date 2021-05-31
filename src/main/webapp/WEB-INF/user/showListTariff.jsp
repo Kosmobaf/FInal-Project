@@ -21,6 +21,7 @@
         <hr/>
     </c:forEach>
 </h2>
+<a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a>
 <a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>
 </html>

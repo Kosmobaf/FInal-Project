@@ -3,9 +3,7 @@
 <html>
 <head>
     <title>ADMIN THE BASIS</title>
-    <style>
-        body { background: url(../../META-INF/3.jpg); }
-    </style>
+
 </head>
 <body>
 
@@ -24,6 +22,7 @@
 </c:forEach>
 
 <a href="${pageContext.request.contextPath}/createUser">Створити користувача</a>
+
 
 <a href="${pageContext.request.contextPath}/logout">Вихід</a>
 </body>

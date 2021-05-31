@@ -16,7 +16,7 @@
     </form>
 </h1>
 <h3>
-    <p><a href="${pageContext.request.contextPath}/getAllUsers">Повернутись назад</a></p>
+    <p><a href="${pageContext.request.contextPath}/adminBasis">Повернутись назад</a></p>
 </h3>
 </body>
 </html>

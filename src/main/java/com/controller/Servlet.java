@@ -24,7 +24,7 @@ public class Servlet extends HttpServlet {
 
         commands.put("logout", new LogOutCommand());
         commands.put("login", new LoginCommand());
-        commands.put("getAllUsers", new GetAllUsersCommand());
+        commands.put("adminBasis", new AdminBasisCommand());
         commands.put("getFileServices", new GetFileServicesCommand());
         commands.put("createUser", new CreateUserCommand());
         commands.put("getAllService", new GetAllServiceCommand());

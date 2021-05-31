@@ -3,9 +3,7 @@
 <html>
 <head>
     <title>ADMIN THE BASIS</title>
-    <style>
-        body { background: url(../../META-INF/3.jpg); }
-    </style>
+
 </head>
 <body>
 

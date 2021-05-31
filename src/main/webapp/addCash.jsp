@@ -13,5 +13,6 @@
         <input type="submit" value="Поповнити"/>
     </form>
 </h3>
+<a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>
 </html>

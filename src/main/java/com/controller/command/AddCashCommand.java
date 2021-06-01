@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.model.constants.Constants;
 import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,15 +13,25 @@ public class AddCashCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         BigDecimal inputCash;
-        try {
-            inputCash = new BigDecimal(request.getParameter("inputCash"));
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            //TODO повідомлення що не вірно щось із данними
-            return "addCash.jsp";
+
+        if (request.getParameter("inputCash") != null) {
+            try {
+                inputCash = new BigDecimal(request.getParameter("inputCash"));
+                if (inputCash.compareTo(BigDecimal.ZERO) <= 0) {
+                    throw new RuntimeException();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+
+                String errorMessage = "Incorrect input";
+                request.getSession().setAttribute("errorMessage", errorMessage);
+                return Constants.WEB_INF_ERROR_JSP;
+            }
+            String login = (String) request.getSession().getAttribute("login");
+            service.addCashFromUser(login, inputCash);
+
+            return "redirect:/userBasis";
         }
-        String login = (String) request.getSession().getAttribute("login");
-        service.addCashFromUser(login, inputCash);
-        return "redirect:/userBasis";
+        return "/WEB-INF/user/addCash.jsp";
     }
 }

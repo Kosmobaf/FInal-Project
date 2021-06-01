@@ -20,6 +20,7 @@ public class UserBasisCommand implements Command {
         String login = (String) request.getSession().getAttribute("login");
         BigDecimal cash = userService.getUserCash(login);
         List<UserOrderBean> userOrderList = null;
+
         try {
             userOrderList = orderBeanService.getAllOrdersForUserByLogin(login);
         } catch (Exception e) {

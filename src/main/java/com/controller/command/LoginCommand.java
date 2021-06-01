@@ -11,15 +11,29 @@ import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 
 public class LoginCommand implements Command {
+    UserService service = new UserService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String errorMessage = null;
         String forward = Constants.WEB_INF_ERROR_JSP;
+        String login;
+        String password;
+        User user;
+        Role userRole;
 
-// obtain login and password from the request
-        String login = request.getParameter("login");
-        String password = request.getParameter("password");
+        login = (String) request.getSession().getAttribute("login");
+        password = (String) request.getSession().getAttribute("");
+        if (login != null || password != null) {
+            user = service.getUser(login);
+            userRole = user.getRole();
+
+            return moveToMenu(request, login, userRole);
+        }
+
+        // obtain login and password from the request
+        login = request.getParameter("login");
+        password = request.getParameter("password");
 
         if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
             errorMessage = "Login/password cannot be empty";
@@ -30,34 +44,44 @@ public class LoginCommand implements Command {
         System.out.println(login + " " + password);
 
         if (CommandUtility.checkUserIsLogged(request, login)) {
+
             errorMessage = "User is already logged in";
             request.getSession().setAttribute("errorMessage", errorMessage);
+
             return forward;
         }
 
-        UserService service = new UserService();
-
-        if (service.userExist(login, password)) {
-            User user = service.getUser(login);
-            Role userRole = user.getRole();
-            if (userRole == Role.ADMIN) {
-                CommandUtility.setUserRole(request, Role.ADMIN, login);
-                return "/adminBasis";
-            }
-
-            BigDecimal cash = service.getUserCash(login);
-
+        if (service.userIsExist(login, password)) {
             request.getSession().setAttribute("login", login);
-            request.getSession().setAttribute("cash", cash);
+
+            user = service.getUser(login);
+            userRole = user.getRole();
+
+            return moveToMenu(request, login, userRole);
+
+        }
+        errorMessage = "Cannot find user with such login/password";
+        request.getSession().setAttribute("errorMessage", errorMessage);
+        // log.error("errorMessage --> " + errorMessage);
+        CommandUtility.deleteUserFromLogged(request, login);
+
+        return forward;
+    }
+
+    private String moveToMenu(HttpServletRequest request, String login, Role userRole) {
+
+        if (userRole == Role.ADMIN) {
+
+            CommandUtility.setUserRole(request, Role.ADMIN, login);
+
+            return Constants.REDIRECT_ADMIN_BASIS;
+        }
+        if (userRole == Role.USER) {
 
             CommandUtility.setUserRole(request, Role.USER, login);
 
             return Constants.REDIRECT_USER_BASIS;
         }
-        errorMessage = "Cannot find user with such login/password";
-        request.getSession().setAttribute("errorMessage", errorMessage);
-        // log.error("errorMessage --> " + errorMessage);
-        CommandUtility.deleteUserFromLogged(request,login);
-        return forward;
+        return Constants.WEB_INF_ERROR_JSP;
     }
 }

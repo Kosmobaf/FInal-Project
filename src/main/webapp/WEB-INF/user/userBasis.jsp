@@ -37,7 +37,7 @@
     </c:forEach>
 </h3>
 <a href="${pageContext.request.contextPath}/getAllService ">Вибрати послугу</a><br/>
-<a href="${pageContext.request.contextPath}/addCash.jsp">Поповнити рахунок</a><br/>
+<a href="${pageContext.request.contextPath}/WEB-INF/user/addCash.jsp">Поповнити рахунок</a><br/>
 <a href="${pageContext.request.contextPath}/getFileServices ">Скачати прайс лист на послуги</a><br/>
 <a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>

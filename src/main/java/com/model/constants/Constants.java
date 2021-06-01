@@ -12,4 +12,5 @@ public final class Constants {
     public static final String REDIRECT_USER_BASIS = "redirect:/userBasis";
     public static final String REDIRECT_INDEX_JSP = "redirect:/index.jsp";
     public static final String WEB_INF_ERROR_JSP = "/WEB-INF/error.jsp";
+    public static final String REDIRECT_ADMIN_BASIS = "redirect:/adminBasis";
 }

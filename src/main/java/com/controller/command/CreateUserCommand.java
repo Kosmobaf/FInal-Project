@@ -23,6 +23,7 @@ public class CreateUserCommand implements Command {
 
             userList = service.getAllUsers();
             request.getSession().setAttribute("userList", userList);
+            return "redirect:/createUser";
         }
         return Constants.WEB_INF_ADMIN_CREATE_USER_JSP;
     }

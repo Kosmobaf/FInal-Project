@@ -34,6 +34,7 @@ public class Servlet extends HttpServlet {
         commands.put("addCash", new AddCashCommand());
         commands.put("deleteTariff", new DeleteTariff());
         commands.put("activateTariff", new ActivateTariffCommand());
+        commands.put("loginPage", new LoginPageCommand());
     }
 
     public void doGet(HttpServletRequest request,

@@ -51,7 +51,7 @@ public class UserService {
     }
 
 
-    public boolean userExist(String login, String password) {
+    public boolean userIsExist(String login, String password) {
 
         try (UserDao dao = daoFactory.createUserDao()) {
             Optional<User> user = dao.findAll().stream().

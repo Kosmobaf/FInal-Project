@@ -1,6 +1,7 @@
 package com.model.entity;
 
 import com.model.Role;
+import com.model.Status;
 
 import java.math.BigDecimal;
 
@@ -10,15 +11,14 @@ public class User extends Entity {
     private String password;
     private Role role = Role.USER;
     private BigDecimal cash;
+    private Status status;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", cash=" + cash +
-                '}';
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = Status.valueOf(status.toUpperCase());
     }
 
     public String getLogin() {
@@ -51,6 +51,17 @@ public class User extends Entity {
 
     public void setCash(BigDecimal cash) {
         this.cash = cash;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", cash=" + cash +
+                ", status=" + status +
+                '}';
     }
 
 
@@ -86,6 +97,10 @@ public class User extends Entity {
 
         public Builder role(String role) {
             newUser.role = Role.valueOf(role.toUpperCase());
+            return this;
+        }
+        public Builder status(String status){
+            newUser.status = Status.valueOf(status.toUpperCase());
             return this;
         }
 

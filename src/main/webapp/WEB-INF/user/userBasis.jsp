@@ -23,23 +23,23 @@
         </c:otherwise>
     </c:choose>
 
-    <c:forEach var="order" items="${sessionScope.userOrderList}">
+    <c:forEach var="tariff" items="${sessionScope.userOrderList}">
         <ul>
-            <li>Послуга - *<c:out value="${order.nameService}"/>*</li>
-            <li>Тариф - *<c:out value="${order.nameTariff}"/>*</li>
-            <li>Статус - *<c:out value="${order.status}"/>*</li>
+            <li>Послуга - *<c:out value="${tariff.nameService}"/>*</li>
+            <li>Тариф - *<c:out value="${tariff.nameTariff}"/>*</li>
+            <li>Статус - *<c:out value="${tariff.status}"/>*</li>
 
             <c:set var="blocked" scope="session" value="blocked"/>
 
-            <c:if test="${order.status.toString() == blocked}">
+            <c:if test="${tariff.status.toString() == blocked}">
                 <form action="${pageContext.request.contextPath}/activateTariff" method="post">
-                    <input type="number" hidden name="idTariff" value="${order.tariffId}">
+                    <input type="number" hidden name="idTariff" value="${tariff.tariffId}">
                     <input type="submit" value="Активувати">
                 </form>
             </c:if>
 
             <form action="${pageContext.request.contextPath}/deleteTariff" method="post">
-                <input type="number" hidden name="idOrder" value="${order.id}">
+                <input type="number" hidden name="idOrder" value="${tariff.id}">
                 <input type="submit" value="Видалити послугу">
             </form>
         </ul>
@@ -47,7 +47,7 @@
     </c:forEach>
 </h3>
 <a href="${pageContext.request.contextPath}/getAllService ">Вибрати послугу</a><br/>
-<a href="${pageContext.request.contextPath}/WEB-INF/user/addCash.jsp">Поповнити рахунок</a><br/>
+<a href="${pageContext.request.contextPath}/addCash">Поповнити рахунок</a><br/>
 <a href="${pageContext.request.contextPath}/getFileServices ">Скачати прайс лист на послуги</a><br/>
 <a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>

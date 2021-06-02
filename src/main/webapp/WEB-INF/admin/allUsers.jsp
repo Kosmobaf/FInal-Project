@@ -10,14 +10,16 @@
 <h1>Список користувачів</h1>
 <c:forEach var="user" items="${sessionScope.userList}">
     <ul>
-        <li>
-            Id: <c:out value="${user.id}"/>
-            Login: <c:out value="${user.login}"/>
-            Password: <c:out value="${user.password}"/>
-            TypeUser: <c:out value="${user.role.toString()}"/>
-            Cash: <c:out value="${user.cash}"/>
-        </li>
+        <li> Id: <c:out value="${user.id}"/></li>
+        <li> Login: <c:out value="${user.login}"/></li>
+        <li> TypeUser: <c:out value="${user.role.toString()}"/></li>
+        <li> Cash: <c:out value="${user.cash}"/></li>
+
     </ul>
+    <form action="${pageContext.request.contextPath}/showUser" method="get">
+        <input type="number" hidden name="idUser" value="${user.id}">
+        <input type="submit" value="Переглянути деталі користувача">
+    </form>
     <hr/>
 </c:forEach>
 

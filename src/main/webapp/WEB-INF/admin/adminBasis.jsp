@@ -9,7 +9,8 @@
 
 <h1>Привіт Адмін!</h1>
 
-<p> <a href="${pageContext.request.contextPath}/getAllUsers">Подивитись всіх користувачів</a></p>
+<p> <a href="${pageContext.request.contextPath}/getAllUser">Подивитись всіх користувачів</a></p>
+<p> <a href="${pageContext.request.contextPath}/showAllTariff">Подивитись всі тарифи</a></p>
 <a href="${pageContext.request.contextPath}/logout">Вихід</a>
 </body>
 </html>

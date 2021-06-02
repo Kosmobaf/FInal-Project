@@ -22,7 +22,7 @@ public class GetTariffByServiceCommand implements Command {
             e.printStackTrace();
         }
 
-        request.getSession().setAttribute("tariffList", tariffList);
+        request.getSession().setAttribute("tariffListForService", tariffList);
         return Constants.WEB_INF_USER_SHOW_LIST_TARIFF_JSP;
     }
 }

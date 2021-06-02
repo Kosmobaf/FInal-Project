@@ -17,6 +17,12 @@ public class Tariff extends Entity {
                 '}';
     }
 
+    public Tariff(String nameTariff, Long idServices, BigDecimal cost) {
+        this.nameTariff = nameTariff;
+        this.idServices = idServices;
+        this.cost = cost;
+    }
+
     public String getNameTariff() {
         return nameTariff;
     }

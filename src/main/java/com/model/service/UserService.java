@@ -1,5 +1,6 @@
 package com.model.service;
 
+import com.model.Status;
 import com.model.dao.DaoFactory;
 import com.model.dao.TariffDao;
 import com.model.dao.UserDao;
@@ -21,7 +22,7 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        throw new RuntimeException();
+        return null;
     }
 
 
@@ -56,6 +57,7 @@ public class UserService {
         try (UserDao dao = daoFactory.createUserDao()) {
             Optional<User> user = dao.findAll().stream().
                     filter(user1 -> user1.getLogin().equals(login)).findFirst();
+
             if (user.isPresent()) {
                 User user1 = user.get();
                 return password.equals(user1.getPassword());
@@ -68,33 +70,49 @@ public class UserService {
 
     public long getUserId(String login) throws Exception {
         try (UserDao dao = daoFactory.createUserDao()) {
+
             return dao.findByLogin(login).getId();
         }
     }
 
-    public BigDecimal getUserCash(String login) {
+    public String getUserLogin(long id) {
         try (UserDao dao = daoFactory.createUserDao()) {
-            User user = dao.findByLogin(login);
-            return user.getCash();
+
+            return dao.findById(id).getLogin();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        throw new RuntimeException();
+        return null;
+    }
+
+    public BigDecimal getUserCash(String login) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+
+            User user = dao.findByLogin(login);
+
+            return user.getCash();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public boolean withdrawCashFromUser(String login, long idTariff) {
         try (UserDao userDao = daoFactory.createUserDao();
              TariffDao tariffDao = daoFactory.createTariffDao()) {
+
             BigDecimal coast = tariffDao.findById(idTariff).getCost();
             User user = userDao.findByLogin(login);
             BigDecimal firstCash = user.getCash();
             BigDecimal lastCash = firstCash.subtract(coast);
+
             if (lastCash.compareTo(BigDecimal.ZERO) >= 0) {
                 user.setCash(lastCash);
                 userDao.update(user);
                 return true;
             }
-            //TODO недостатньо коштів для активації послуги
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -105,13 +123,29 @@ public class UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             if (incomingCash.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new RuntimeException();
-                //TODO зробити повідомоленян що ввід грошей не позитивний
             }
             User user = userDao.findByLogin(login);
             BigDecimal firstCash = user.getCash();
             BigDecimal lastCash = firstCash.add(incomingCash);
             user.setCash(lastCash);
             userDao.update(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void changeStatusUser(long idUser) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            User user = dao.findById(idUser);
+
+            if (user.getStatus() == Status.ACTIVE) {
+                user.setStatus(Status.BLOCKED.getName());
+                dao.update(user);
+                return;
+            }
+            user.setStatus(Status.ACTIVE.getName());
+            dao.update(user);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

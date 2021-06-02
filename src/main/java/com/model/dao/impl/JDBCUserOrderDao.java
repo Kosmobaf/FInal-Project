@@ -90,7 +90,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
@@ -120,7 +120,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
@@ -144,7 +144,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
@@ -165,7 +165,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
@@ -186,7 +186,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override

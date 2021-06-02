@@ -13,4 +13,13 @@ public final class Constants {
     public static final String REDIRECT_INDEX_JSP = "redirect:/index.jsp";
     public static final String WEB_INF_ERROR_JSP = "/WEB-INF/error.jsp";
     public static final String REDIRECT_ADMIN_BASIS = "redirect:/adminBasis";
+    public static final String SERVICES_TXT = "Services.txt";
+    public static final String SERVICE = "Service: ";
+    public static final String TARIFF = "-Tariff: ";
+    public static final String SPAYS = "         ";
+    public static final String UAH = " UAH";
+    public static final String SPAYS2 = " - ";
+    public static final String SORT_BY_NAME = "sortByName";
+    public static final String SORT_BY_NAME_REVERSE = "sortByNameReverse";
+    public static final String SORT_BY_COAST = "sortByCoast";
 }

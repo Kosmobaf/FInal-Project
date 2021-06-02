@@ -11,12 +11,12 @@ public class SessionListener implements HttpSessionListener {
 
     @Override
     public void sessionCreated(HttpSessionEvent httpSessionEvent) {
-        new CreateDataBase().createDB();
+
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent httpSessionEvent) {
-        HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
+        @SuppressWarnings("unchecked") HashSet<String> loggedUsers = (HashSet<String>) httpSessionEvent
                 .getSession().getServletContext()
                 .getAttribute("loggedUsers");
         String login = (String) httpSessionEvent.getSession()

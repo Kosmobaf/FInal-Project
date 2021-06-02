@@ -6,7 +6,7 @@ import com.model.service.UserOrderBeanService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class DeleteTariff implements Command {
+public class DeleteTariffCommand implements Command {
     UserOrderBeanService beanService = new UserOrderBeanService();
 
     @Override

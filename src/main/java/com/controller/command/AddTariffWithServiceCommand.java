@@ -18,7 +18,7 @@ public class AddTariffWithServiceCommand implements Command {
         String login = (String) request.getSession().getAttribute("login");
         long idTariff = Long.parseLong(request.getParameter("idTariff"));
         try {
-            service.addTariff(idTariff, login);
+            service.addTariffToUserOrder(idTariff, login);
         } catch (Exception e) {
             e.printStackTrace();
         }

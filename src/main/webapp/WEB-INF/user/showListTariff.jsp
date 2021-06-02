@@ -9,12 +9,12 @@
 
 <h1>Список тарифів</h1>
 <h2>
-    <c:forEach var="order" items="${sessionScope.tariffList}">
+    <c:forEach var="tariff" items="${sessionScope.tariffListForService}">
         <ul>
             <li>
                 <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
-                    <input type="number" hidden name="idTariff" value="${order.id}">
-                    <input type="submit" name="tariff" value="<c:out value="${order.nameTariff}"/>">
+                    <input type="number" hidden name="idTariff" value="${tariff.id}">
+                    <input type="submit" name="tariff" value="<c:out value="${tariff.nameTariff}"/>">
                 </form>
             </li>
         </ul>

@@ -15,6 +15,8 @@ public final class TableName {
     public static final String USER__PASSWORD = "password";
     public static final String USER__ROLE = "typeUser";
     public static final String USER__CASH = "cash";
+    public static final String USER__STATUS = "status";
+
 
     public static final String TARIFF__NAME_TARIFF = "nameTariff";
     public static final String TARIFF__ID_SERVICE = "id_service";

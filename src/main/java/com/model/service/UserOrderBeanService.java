@@ -13,6 +13,7 @@ public class UserOrderBeanService {
 
     public List<UserOrderBean> getAllOrdersForUserByLogin(String login) {
         List<UserOrderBean> userOrderBeans;
+
         try (UserDao userDao = daoFactory.createUserDao();
              UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
 
@@ -20,6 +21,7 @@ public class UserOrderBeanService {
             userOrderBeans = orderDao.findAllOrdersByIdUser(id);
 
             return userOrderBeans;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,7 +30,9 @@ public class UserOrderBeanService {
 
     public List<UserOrderBean> getAllOrdersForUserById(Long idUser) {
         try (UserOrderDao userOrderDao = daoFactory.createUserOrderDao()) {
+
             return userOrderDao.findAllOrdersByIdUser(idUser);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -38,9 +42,11 @@ public class UserOrderBeanService {
     public UserOrderBean getOrderForUserByLogin(String login, long idTariff) {
         try (UserOrderDao orderDao = daoFactory.createUserOrderDao();
              UserDao userDao = daoFactory.createUserDao()) {
+
             long idUser = userDao.findByLogin(login).getId();
-            UserOrderBean orderBean = orderDao.findByIdTariffAndIdUser(idTariff, idUser);
-            return orderBean;
+
+            return orderDao.findByIdTariffAndIdUser(idTariff, idUser);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,6 +58,7 @@ public class UserOrderBeanService {
         try (UserOrderDao dao = daoFactory.createUserOrderDao()) {
 
             dao.update(orderBean);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -61,6 +68,7 @@ public class UserOrderBeanService {
         try (UserOrderDao dao = daoFactory.createUserOrderDao()) {
 
             dao.delete(idOrder);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

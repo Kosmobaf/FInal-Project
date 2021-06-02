@@ -15,5 +15,4 @@ public class TariffMapper implements ObjectMapper<Tariff>{
                 rs.getBigDecimal(TableName.TARIFF__COST)
         );
     }
-
 }

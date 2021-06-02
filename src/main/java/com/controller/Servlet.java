@@ -2,6 +2,7 @@ package com.controller;
 
 
 import com.controller.command.*;
+import com.model.db.CreateDataBase;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -18,7 +19,7 @@ public class Servlet extends HttpServlet {
 
     @Override
     public void init(ServletConfig servletConfig) {
-
+        new CreateDataBase().createDB();
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
@@ -32,9 +33,14 @@ public class Servlet extends HttpServlet {
         commands.put("getTariffList", new GetTariffByServiceCommand());
         commands.put("userBasis", new UserBasisCommand());
         commands.put("addCash", new AddCashCommand());
-        commands.put("deleteTariff", new DeleteTariff());
+        commands.put("deleteTariff", new DeleteTariffCommand());
         commands.put("activateTariff", new ActivateTariffCommand());
         commands.put("loginPage", new LoginPageCommand());
+        commands.put("showUser", new ShowUserCommand());
+        commands.put("changeStatusUser", new ChangeStatusUserCommand());
+        commands.put("addTariff", new CreateTariffCommand());
+        commands.put("showAllTariff", new ShowAllTariffCommand());
+        commands.put("getAllUser", new GetAllUserCommand());
     }
 
     public void doGet(HttpServletRequest request,

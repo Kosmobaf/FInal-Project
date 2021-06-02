@@ -8,8 +8,11 @@ import com.model.dao.UserDao;
 import com.model.dao.UserOrderDao;
 import com.model.entity.Tariff;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,7 +33,7 @@ public class TariffService {
         }
     }
 
-    public void addTariff(Long idTariff, String login) throws Exception {
+    public void addTariffToUserOrder(Long idTariff, String login) throws Exception {
         try (UserDao userDao = daoFactory.createUserDao();
              UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
             long idUser = userDao.findByLogin(login).getId();
@@ -61,6 +64,43 @@ public class TariffService {
             List<Tariff> list = orderDao.findAllTariffByIdUser(idUser);
             boolean result = list.stream().anyMatch(tariff -> tariff.getIdServices() == idServices);
             return result;
+        }
+    }
+
+    public List<Tariff> getAllTariff() {
+        List<Tariff> tariffList = new ArrayList<>();
+        try (TariffDao dao = daoFactory.createTariffDao()) {
+            tariffList = dao.findAll();
+            return tariffList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tariffList;
+    }
+
+    public List<Tariff> sortByName(List<Tariff> list) {
+        list.sort(Comparator.comparing(Tariff::getNameTariff));
+        return list;
+    }
+
+    public List<Tariff> sortByNameReverse(List<Tariff> list) {
+        list.sort(Comparator.comparing(Tariff::getNameTariff).reversed());
+        return list;
+    }
+
+    public List<Tariff> sortByCost(List<Tariff> list) {
+        list.sort(Comparator.comparing(Tariff::getCost));
+        return list;
+    }
+
+    public void addTariff(long idService, String nameTariff, BigDecimal cost) {
+        try (TariffDao dao = daoFactory.createTariffDao()) {
+
+            Tariff tariff = new Tariff(nameTariff, idService, cost);
+            dao.create(tariff);
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

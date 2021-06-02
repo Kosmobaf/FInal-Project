@@ -18,6 +18,8 @@ public class LoginPageCommand implements Command {
         User user;
         Role userRole;
 
+// check if the user has logged out
+
         login = (String) request.getSession().getAttribute("login");
         password = (String) request.getSession().getAttribute("password");
 
@@ -26,6 +28,7 @@ public class LoginPageCommand implements Command {
             user = service.getUser(login);
             userRole = user.getRole();
 
+// transition according to the role
             return moveToMenu(userRole);
         }
         return "/WEB-INF/login.jsp";

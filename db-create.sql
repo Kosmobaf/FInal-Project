@@ -29,6 +29,7 @@ CREATE TABLE users
     password VARCHAR(255)   NOT NULL,
     typeUser VARCHAR(255)   NOT NULL,
     cash     DECIMAL(65, 2) NOT NULL,
+    status   VARCHAR(255)   NOT NULL,
     CONSTRAINT login
         UNIQUE (login)
 );
@@ -73,7 +74,9 @@ INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
 VALUES (8, 3, 'Low', 250.00);
 INSERT INTO provider.tariff (`id`, `id_service`, `nameTariff`, `cost`)
 VALUES (9, 3, 'Fast', 300.00);
-INSERT INTO users(id, login, password, typeUser, cash)
-VALUES (1, 'Admin@asd', 1, 'admin', 0);
-INSERT INTO users(id, login, password, typeUser, cash)
-VALUES (2, 'User@asd', 1, 'user', 0);
+INSERT INTO users(id, login, password, typeUser, cash, status)
+VALUES (1, 'Admin@asd', 1, 'admin', 0, 'active');
+INSERT INTO users(id, login, password, typeUser, cash, status)
+VALUES (2, 'User@asd', 1, 'user', 0, 'active');
+INSERT INTO users(id, login, password, typeUser, cash, status)
+VALUES (3, 'User@asd2', 1, 'user', 0, 'active');

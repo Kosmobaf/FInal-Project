@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class GetAllServiceCommand implements Command {
+    ServiceService service = new ServiceService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Service> serviceList;
-        ServiceService service = new ServiceService();
         serviceList = service.getAllService();
 
         request.getSession().setAttribute("serviceList", serviceList);

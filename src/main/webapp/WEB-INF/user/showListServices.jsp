@@ -8,7 +8,7 @@
 <body>
 
 <h1>Список послуг</h1>
-<h2>
+
 <c:forEach var="tariff" items="${sessionScope.serviceList}">
     <ul>
         <li>
@@ -22,7 +22,8 @@
     </ul>
     <hr/>
 </c:forEach>
-</h2>
+
+<a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a>
 <a href="${pageContext.request.contextPath}/logout "> Вихід</a>
 </body>
 </html>

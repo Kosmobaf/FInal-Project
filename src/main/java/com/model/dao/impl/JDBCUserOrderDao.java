@@ -45,6 +45,8 @@ public class JDBCUserOrderDao implements UserOrderDao {
             "UPDATE users_orders SET user_id = ?, tariff_id = ?, status = ?, dateAdd = ? WHERE id = ?";
     public static final String SQL_DELETE_USERS_ORDERS_BY_ID =
             "DELETE FROM users_orders WHERE id=?";
+    public static final String SQL_DELETE_USERS_ORDERS_BY_ID_TARIFF =
+            "DELETE FROM users_orders WHERE tariff_id=?";
     public static final String SQL_FIND_USER_ORDER_BY_ID_USER_AND_ID_TARIFF =
             "SELECT users_orders .id, users_orders.user_id, " +
                     "users_orders.tariff_id, users_orders.status, " +
@@ -79,6 +81,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_ORDERS_BY_ID)) {
             preparedStatement.setLong(1, id);
+
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 UserOrderMapper mapper = new UserOrderMapper();
@@ -187,6 +190,16 @@ public class JDBCUserOrderDao implements UserOrderDao {
             close(resultSet);
         }
         return null;
+    }
+
+    @Override
+    public void deleteByIdTariff(long idTariff) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USERS_ORDERS_BY_ID_TARIFF)) {
+            preparedStatement.setLong(1, idTariff);
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        }
     }
 
     @Override

@@ -25,7 +25,7 @@ public class UserOrderBeanService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException();
     }
 
     public List<UserOrderBean> getAllOrdersForUserById(Long idUser) {
@@ -50,11 +50,12 @@ public class UserOrderBeanService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException();
     }
 
     public void changeStatus(UserOrderBean orderBean) {
         orderBean.setStatus(Status.ACTIVE.getName());
+
         try (UserOrderDao dao = daoFactory.createUserOrderDao()) {
 
             dao.update(orderBean);

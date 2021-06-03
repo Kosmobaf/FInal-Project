@@ -22,4 +22,5 @@ public final class Constants {
     public static final String SORT_BY_NAME = "sortByName";
     public static final String SORT_BY_NAME_REVERSE = "sortByNameReverse";
     public static final String SORT_BY_COAST = "sortByCoast";
+    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
 }

@@ -4,7 +4,6 @@ import com.model.Status;
 import com.model.dao.DaoFactory;
 import com.model.dao.TariffDao;
 import com.model.dao.UserDao;
-import com.model.dao.UserOrderDao;
 import com.model.entity.User;
 
 import java.math.BigDecimal;
@@ -15,14 +14,16 @@ public class UserService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<User> getAllUsers() {
+        List<User> userList;
         try {
             try (UserDao userDao = daoFactory.createUserDao()) {
-                return userDao.findAll();
+                userList = userDao.findAll();
+                return userList;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException();
     }
 
 
@@ -68,13 +69,6 @@ public class UserService {
         return false;
     }
 
-    public long getUserId(String login) throws Exception {
-        try (UserDao dao = daoFactory.createUserDao()) {
-
-            return dao.findByLogin(login).getId();
-        }
-    }
-
     public String getUserLogin(long id) {
         try (UserDao dao = daoFactory.createUserDao()) {
 
@@ -83,7 +77,7 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException();
     }
 
     public BigDecimal getUserCash(String login) {
@@ -96,7 +90,7 @@ public class UserService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        throw new RuntimeException();
     }
 
     public boolean withdrawCashFromUser(String login, long idTariff) {
@@ -121,14 +115,18 @@ public class UserService {
 
     public void addCashFromUser(String login, BigDecimal incomingCash) {
         try (UserDao userDao = daoFactory.createUserDao()) {
+
             if (incomingCash.compareTo(BigDecimal.ZERO) <= 0) {
                 throw new RuntimeException();
             }
+
             User user = userDao.findByLogin(login);
             BigDecimal firstCash = user.getCash();
             BigDecimal lastCash = firstCash.add(incomingCash);
+
             user.setCash(lastCash);
             userDao.update(user);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

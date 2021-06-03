@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class GetFileServicesCommand implements Command {
+public class DownloadFileServicesCommand implements Command {
     private final String filePath = "C:\\Program Files\\apache-tomcat-9.0.46\\apache-tomcat-9.0.46\\bin\\";
     private final String fileName = "Services.txt";
 

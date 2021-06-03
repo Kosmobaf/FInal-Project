@@ -2,6 +2,7 @@ package com.model.service;
 
 import com.model.Status;
 import com.model.bean.UserOrderBean;
+import com.model.constants.Constants;
 import com.model.dao.DaoFactory;
 import com.model.dao.TariffDao;
 import com.model.dao.UserDao;
@@ -17,14 +18,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TariffService {
-    public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     DaoFactory daoFactory = DaoFactory.getInstance();
     UserService userService = new UserService();
 
-    public TariffService() {
-    }
-
-    public List<Tariff> getAllTariffByService(Long id) throws Exception {
+       public List<Tariff> getAllTariffByService(Long id) throws Exception {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
             return dao.findAll().stream().
@@ -36,13 +33,14 @@ public class TariffService {
     public void addTariffToUserOrder(Long idTariff, String login) throws Exception {
         try (UserDao userDao = daoFactory.createUserDao();
              UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
+
             long idUser = userDao.findByLogin(login).getId();
-            String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern(YYYY_MM_DD_HH_MM_SS));
+            String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.YYYY_MM_DD_HH_MM_SS));
 
             if (checkTariff(idTariff, idUser)) {
-                //TODO добавити повідомлення що по цій послузі вже є тариф
                 return;
             }
+
             UserOrderBean userOrderBean = new UserOrderBean.Builder()
                     .tariffId(idTariff)
                     .userId(idUser)
@@ -62,20 +60,19 @@ public class TariffService {
 
             long idServices = tariffDao.findById(idTariff).getIdServices();
             List<Tariff> list = orderDao.findAllTariffByIdUser(idUser);
-            boolean result = list.stream().anyMatch(tariff -> tariff.getIdServices() == idServices);
-            return result;
+            return list.stream().anyMatch(tariff -> tariff.getIdServices() == idServices);
         }
     }
 
     public List<Tariff> getAllTariff() {
-        List<Tariff> tariffList = new ArrayList<>();
+        List<Tariff> tariffList;
         try (TariffDao dao = daoFactory.createTariffDao()) {
             tariffList = dao.findAll();
             return tariffList;
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return tariffList;
+        throw new RuntimeException();
     }
 
     public List<Tariff> sortByName(List<Tariff> list) {
@@ -99,6 +96,17 @@ public class TariffService {
             Tariff tariff = new Tariff(nameTariff, idService, cost);
             dao.create(tariff);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteTariff(long idTariff) {
+        try (TariffDao tariffDao = daoFactory.createTariffDao();
+             UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
+//TODO транзакція ?
+            tariffDao.delete(idTariff);
+            orderDao.deleteByIdTariff(idTariff);
         } catch (Exception e) {
             e.printStackTrace();
         }

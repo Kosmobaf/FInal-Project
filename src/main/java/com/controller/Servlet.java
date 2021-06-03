@@ -26,14 +26,14 @@ public class Servlet extends HttpServlet {
         commands.put("logout", new LogOutCommand());
         commands.put("login", new LoginCommand());
         commands.put("adminBasis", new AdminBasisCommand());
-        commands.put("getFileServices", new GetFileServicesCommand());
+        commands.put("getFileServices", new DownloadFileServicesCommand());
         commands.put("createUser", new CreateUserCommand());
         commands.put("getAllService", new GetAllServiceCommand());
         commands.put("addTariffWithService", new AddTariffWithServiceCommand());
         commands.put("getTariffList", new GetTariffByServiceCommand());
         commands.put("userBasis", new UserBasisCommand());
         commands.put("addCash", new AddCashCommand());
-        commands.put("deleteTariff", new DeleteTariffCommand());
+        commands.put("deleteTariffFromUser", new DeleteTariffForUserCommand());
         commands.put("activateTariff", new ActivateTariffCommand());
         commands.put("loginPage", new LoginPageCommand());
         commands.put("showUser", new ShowUserCommand());
@@ -41,6 +41,7 @@ public class Servlet extends HttpServlet {
         commands.put("addTariff", new CreateTariffCommand());
         commands.put("showAllTariff", new ShowAllTariffCommand());
         commands.put("getAllUser", new GetAllUserCommand());
+        commands.put("deleteTariff" , new DeleteTariffCommand());
     }
 
     public void doGet(HttpServletRequest request,

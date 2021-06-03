@@ -13,6 +13,7 @@
         <input type="submit" value="Поповнити"/>
     </form>
 </h3>
+<a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a>
 <a href="${pageContext.request.contextPath}/logout "> Logout</a>
 </body>
 </html>

@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 public class JDBCTariffDao implements TariffDao {
     private final Connection connection;
+    private int noOfRecords;
 
     public JDBCTariffDao(Connection connection) {
         this.connection = connection;
@@ -41,6 +42,10 @@ public class JDBCTariffDao implements TariffDao {
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         }
+    }
+
+    public int getNoOfRecords() {
+        return noOfRecords;
     }
 
     @Override
@@ -80,6 +85,23 @@ public class JDBCTariffDao implements TariffDao {
         throw new RuntimeException();
     }
 
+    public List<Tariff> findTariffsFromPage() {
+        ResultSet resultSet = null;
+        List<Tariff> tariffList = new ArrayList<>();
+        try (Statement st = connection.createStatement()) {
+            resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS));
+            TariffMapper tariffMapper = new TariffMapper();
+            while (resultSet.next()) {
+                tariffList.add(tariffMapper.extractFromResultSet(resultSet));
+            }
+            return tariffList;
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        } finally {
+            close(resultSet);
+        }
+        throw new RuntimeException();
+    }
     @Override
     public void update(Tariff tariff) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TARIFFS)) {

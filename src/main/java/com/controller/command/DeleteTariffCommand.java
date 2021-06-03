@@ -1,19 +1,17 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
-import com.model.service.UserOrderBeanService;
+import com.model.service.TariffService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class DeleteTariffCommand implements Command {
-    UserOrderBeanService beanService = new UserOrderBeanService();
+    TariffService service = new TariffService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        long idOrder = Long.parseLong(request.getParameter("idOrder"));
-        beanService.deleteTariffForUser(idOrder);
-
-        return Constants.REDIRECT_USER_BASIS;
+        long idTariff = Long.parseLong(request.getParameter("idTariff"));
+        service.deleteTariff(idTariff);
+        return "redirect:/showAllTariff";
     }
 }

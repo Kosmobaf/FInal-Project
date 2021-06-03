@@ -17,7 +17,8 @@ public class ActivateTariffCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String login = (String) request.getSession().getAttribute("login");
         long idTariff = Long.parseLong(request.getParameter("idTariff"));
-//TODO добавити транзакцію
+
+//TODO добавити транзакцію ?
         if (userService.withdrawCashFromUser(login, idTariff)) {
             UserOrderBean orderBean = beanService.getOrderForUserByLogin(login, idTariff);
             beanService.changeStatus(orderBean);

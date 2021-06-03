@@ -4,7 +4,6 @@ import com.model.constants.Constants;
 import com.model.entity.Tariff;
 import com.model.service.TariffService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -14,21 +13,11 @@ public class ShowAllTariffCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-
         List<Tariff> tariffList;
-//TODO переробити на дао по параметрам
-        tariffList = tariff.getAllTariff();
-        String sortCommand = request.getParameter("sortCommand");
 
-        if (Constants.SORT_BY_NAME.equals(sortCommand)){
-            tariffList = tariff.sortByName(tariffList);
-        }
-        else if (Constants.SORT_BY_NAME_REVERSE.equals(sortCommand)){
-            tariffList = tariff.sortByNameReverse(tariffList);
-        }
-        else if (Constants.SORT_BY_COAST.equals(sortCommand)) {
-            tariffList = tariff.sortByCost(tariffList);
-        }
+        String sortCommand = request.getParameter("sortCommand");
+        tariffList = tariff.sortList(sortCommand);
+
 /*
         int page = 1;
         int recordsPerPage = 5;
@@ -49,6 +38,6 @@ public class ShowAllTariffCommand implements Command {
 
         request.getSession().setAttribute("tariffList", tariffList);
 
-        return "WEB-INF/admin/showTariff.jsp";
+        return "WEB-INF/admin/showAllTariff.jsp";
     }
 }

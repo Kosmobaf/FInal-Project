@@ -1,5 +1,6 @@
 package com.model.dao.impl;
 
+import com.model.constants.Constants;
 import com.model.dao.TariffDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.entity.Tariff;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class JDBCTariffDao implements TariffDao {
+
     private final Connection connection;
     private int noOfRecords;
 
@@ -30,6 +32,12 @@ public class JDBCTariffDao implements TariffDao {
             "UPDATE tariff SET nameTariff = ?, id_service = ?, cost = ? WHERE id = ?";
     public static final String SQL_DELETE_TARIFF_BY_ID =
             "DELETE FROM tariff WHERE id=?";
+    private static final String SQL_FIND_ALL_TARIFFS_SORT_BY_NAME =
+            "SELECT * FROM tariff ORDER BY nameTariff";
+    private static final String SQL_FIND_ALL_TARIFFS_SORT_BY_NAME_REVERSE =
+            "SELECT * FROM tariff ORDER BY nameTariff DESC ";
+    private static final String SQL_FIND_ALL_TARIFFS_SORT_BY_COAST =
+            "SELECT * FROM tariff ORDER BY cost";
 
     @Override
     public void create(Tariff tariff) {
@@ -102,6 +110,7 @@ public class JDBCTariffDao implements TariffDao {
         }
         throw new RuntimeException();
     }
+
     @Override
     public void update(Tariff tariff) {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TARIFFS)) {
@@ -135,7 +144,6 @@ public class JDBCTariffDao implements TariffDao {
         }
     }
 
-    @Override
     public Tariff findByName(String nameTariff) {
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_TARIFF_BY_NAME)) {
@@ -145,6 +153,32 @@ public class JDBCTariffDao implements TariffDao {
                 TariffMapper tariffMapper = new TariffMapper();
                 return tariffMapper.extractFromResultSet(resultSet);
             }
+        } catch (SQLException e) {
+            LOGGER.severe(e.getMessage());
+        } finally {
+            close(resultSet);
+        }
+        throw new RuntimeException();
+    }
+
+    public List<Tariff> findAllAndSorted(String sort) {
+        ResultSet resultSet = null;
+        List<Tariff> tariffList = new ArrayList<>();
+        try (Statement st = connection.createStatement()) {
+            if (Constants.SORT_BY_NAME.equals(sort)) {
+                resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME));
+            } else if (Constants.SORT_BY_NAME_REVERSE.equals(sort)) {
+                resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME_REVERSE));
+            } else if (Constants.SORT_BY_COAST.equals(sort)) {
+                resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_COAST));
+            }
+            resultSet = st.executeQuery(SQL_FIND_ALL_TARIFFS);
+
+            TariffMapper tariffMapper = new TariffMapper();
+            while (resultSet.next()) {
+                tariffList.add(tariffMapper.extractFromResultSet(resultSet));
+            }
+            return tariffList;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
         } finally {

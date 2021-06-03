@@ -21,7 +21,7 @@ public class TariffService {
     DaoFactory daoFactory = DaoFactory.getInstance();
     UserService userService = new UserService();
 
-       public List<Tariff> getAllTariffByService(Long id) throws Exception {
+    public List<Tariff> getAllTariffByService(Long id) throws Exception {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
             return dao.findAll().stream().
@@ -75,19 +75,15 @@ public class TariffService {
         throw new RuntimeException();
     }
 
-    public List<Tariff> sortByName(List<Tariff> list) {
-        list.sort(Comparator.comparing(Tariff::getNameTariff));
-        return list;
-    }
+    public List<Tariff> sortList(String sort) {
+        try (TariffDao dao = daoFactory.createTariffDao()) {
 
-    public List<Tariff> sortByNameReverse(List<Tariff> list) {
-        list.sort(Comparator.comparing(Tariff::getNameTariff).reversed());
-        return list;
-    }
+            return dao.findAllAndSorted(sort);
 
-    public List<Tariff> sortByCost(List<Tariff> list) {
-        list.sort(Comparator.comparing(Tariff::getCost));
-        return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException();
     }
 
     public void addTariff(long idService, String nameTariff, BigDecimal cost) {

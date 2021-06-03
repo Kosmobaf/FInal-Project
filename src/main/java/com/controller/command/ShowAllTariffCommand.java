@@ -14,10 +14,11 @@ public class ShowAllTariffCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Tariff> tariffList;
-
-        String sortCommand = request.getParameter("sortCommand");
-        tariffList = tariff.sortList(sortCommand);
-
+        tariffList = tariff.getAllTariff();
+        if (request.getParameter("sortCommand") != null) {
+            String sortCommand = request.getParameter("sortCommand");
+            tariffList = tariff.sortList(sortCommand);
+        }
 /*
         int page = 1;
         int recordsPerPage = 5;

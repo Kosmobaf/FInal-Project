@@ -165,6 +165,8 @@ public class JDBCTariffDao implements TariffDao {
         ResultSet resultSet = null;
         List<Tariff> tariffList = new ArrayList<>();
         try (Statement st = connection.createStatement()) {
+
+            resultSet = st.executeQuery(SQL_FIND_ALL_TARIFFS);
             if (Constants.SORT_BY_NAME.equals(sort)) {
                 resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME));
             } else if (Constants.SORT_BY_NAME_REVERSE.equals(sort)) {
@@ -172,7 +174,7 @@ public class JDBCTariffDao implements TariffDao {
             } else if (Constants.SORT_BY_COAST.equals(sort)) {
                 resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_COAST));
             }
-            resultSet = st.executeQuery(SQL_FIND_ALL_TARIFFS);
+
 
             TariffMapper tariffMapper = new TariffMapper();
             while (resultSet.next()) {

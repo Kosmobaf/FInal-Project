@@ -11,23 +11,25 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class JDBCTariffDao implements TariffDao {
+    private static final Logger LOGGER = Logger.getLogger(JDBCTariffDao.class.getName());
 
     private final Connection connection;
-    private int noOfRecords;
 
     public JDBCTariffDao(Connection connection) {
         this.connection = connection;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(JDBCTariffDao.class.getName());
+    public static final String SELECT_FOUND_ROWS = "SELECT COUNT(id) FROM tariff";
     private static final String SQL_INSERT_TARIFF =
             "INSERT INTO tariff (nameTariff, id_service, cost) VALUES (?,?,?)";
     public static final String SQL_FIND_TARIFF_BY_ID =
             "SELECT * FROM tariff WHERE id LIKE (?)";
+    private static final String SQL_FIND_ALL_TARIFFS =
+            "SELECT * FROM tariff";
     public static final String SQL_FIND_TARIFF_BY_NAME =
             "SELECT * FROM tariff WHERE nameTariff LIKE (?)";
-    public static final String SQL_FIND_ALL_TARIFFS =
-            "SELECT * FROM tariff";
+    public static final String SQL_FIND_ALL_TARIFFS_FOR_PAGE =
+            "SELECT SQL_CALC_FOUND_ROWS * FROM tariff LIMIT ?, ?";
     public static final String SQL_UPDATE_TARIFFS =
             "UPDATE tariff SET nameTariff = ?, id_service = ?, cost = ? WHERE id = ?";
     public static final String SQL_DELETE_TARIFF_BY_ID =
@@ -52,8 +54,22 @@ public class JDBCTariffDao implements TariffDao {
         }
     }
 
+    @Override
     public int getNoOfRecords() {
-        return noOfRecords;
+        ResultSet resultSet = null;
+        try (Statement st = connection.createStatement()) {
+            resultSet = st.executeQuery((SELECT_FOUND_ROWS));
+            if (resultSet.next())
+
+                return resultSet.getInt(1);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            close(resultSet);
+        }
+        throw new RuntimeException();
     }
 
     @Override
@@ -93,15 +109,22 @@ public class JDBCTariffDao implements TariffDao {
         throw new RuntimeException();
     }
 
-    public List<Tariff> findTariffsFromPage() {
-        ResultSet resultSet = null;
+    @Override
+    public List<Tariff> findTariffsFromPage(int offset, int noOfRecords) {
         List<Tariff> tariffList = new ArrayList<>();
-        try (Statement st = connection.createStatement()) {
-            resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS));
+        ResultSet resultSet = null;
+
+        try (PreparedStatement preparedStatement =
+                     connection.prepareStatement(SQL_FIND_ALL_TARIFFS_FOR_PAGE)) {
+            preparedStatement.setInt(1, offset);
+            preparedStatement.setInt(2, noOfRecords);
+            resultSet = preparedStatement.executeQuery();
             TariffMapper tariffMapper = new TariffMapper();
+
             while (resultSet.next()) {
                 tariffList.add(tariffMapper.extractFromResultSet(resultSet));
             }
+
             return tariffList;
         } catch (SQLException e) {
             LOGGER.severe(e.getMessage());
@@ -174,7 +197,6 @@ public class JDBCTariffDao implements TariffDao {
             } else if (Constants.SORT_BY_COAST.equals(sort)) {
                 resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_COAST));
             }
-
 
             TariffMapper tariffMapper = new TariffMapper();
             while (resultSet.next()) {

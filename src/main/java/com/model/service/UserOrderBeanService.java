@@ -53,18 +53,6 @@ public class UserOrderBeanService {
         throw new RuntimeException();
     }
 
-    public void changeStatus(UserOrderBean orderBean) {
-        orderBean.setStatus(Status.ACTIVE.getName());
-
-        try (UserOrderDao dao = daoFactory.createUserOrderDao()) {
-
-            dao.update(orderBean);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void deleteTariffForUser(long idOrder) {
         try (UserOrderDao dao = daoFactory.createUserOrderDao()) {
 

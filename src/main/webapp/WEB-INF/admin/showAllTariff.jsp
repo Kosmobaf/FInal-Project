@@ -9,25 +9,8 @@
 </head>
 <body>
 <h1>Список тарифів</h1>
-<div class="container">
 
-    <div class="row">
-        <div class="col-8"></div>
-        <div class="col-4">
-            <form action="${pageContext.request.contextPath}/showAllTariff" method="get">
-                <select name="sortCommand" class="form-select">
-                    <option selected>Сортування</option>
-                    <option value="sortByName">По назві</option>
-                    <option value="sortByNameReverse">По назві у зворотньому порядку</option>
-                    <option value="sortByCoast">По ціні</option>
-                </select>
-                <button type="submit" class="btn btn-primary mb-3">Сортувати</button>
-            </form>
-        </div>
-    </div>
-</div>
-
-<table class="table table-striped">
+<table class="table table-striped" border="1" cellpadding="5" cellspacing="5">
     <thead>
     <tr>
         <th scope="col">Id</th>
@@ -55,8 +38,32 @@
     </tbody>
 </table>
 <br/>
-<br/>
 
+<c:if test="${sessionScope.currentPage != 1}">
+    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${sessionScope.currentPage - 1}">Previous</a>
+    </td>
+</c:if>
+
+<table border="1" cellpadding="5" cellspacing="5">
+    <tr>
+        <c:forEach begin="1" end="${sessionScope.noOfPages}" var="i">
+            <c:choose>
+                <c:when test="${sessionScope.currentPage eq i}">
+                    <td>${i}</td>
+                </c:when>
+                <c:otherwise>
+                    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${i}">${i}</a></td>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+    </tr>
+</table>
+
+<c:if test="${sessionScope.currentPage lt sessionScope.noOfPages}">
+    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${sessionScope.currentPage + 1}">Next</a></td>
+</c:if>
+
+<br/>
 <form action="${pageContext.request.contextPath}/addTariff" method="post">
     <input type="submit" value="Добавити тариф">
 </form>

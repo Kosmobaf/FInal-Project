@@ -131,7 +131,6 @@ public class UserService {
             try {
                 jdbcUserOrderDao.update(orderBean);
             } catch (Exception e) {
-
             }
 
             try {

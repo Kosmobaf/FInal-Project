@@ -9,12 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetTariffByServiceCommand implements Command {
+public class GetAllTariffByServiceCommand implements Command {
     TariffService tariff = new TariffService();
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Tariff> tariffList = new ArrayList<>();
+        //TODO
+        /*if (request.getParameter("sortCommand") != null) {
+            String sortCommand = request.getParameter("sortCommand");
+            tariffList = tariff.sortList(sortCommand);
+        }*/
         try {
             tariffList = tariff.getAllTariffByService(
                     Long.valueOf(request.getParameter("idService")));

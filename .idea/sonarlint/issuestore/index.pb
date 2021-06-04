@@ -23,8 +23,6 @@ j
 :src/main/java/com/controller/command/UserBasisCommand.java,a\7\a7df3e485ce28646a55d5a23465afb7e17f3caf7
 Q
 !src/main/webapp/WEB-INF/login.jsp,4\a\4ad68415105aeafc8bfd2f975e167d09f6349f7e
-u
-Esrc/main/java/com/controller/command/AddTariffWithServiceCommand.java,2\5\2540e95e0eaa18b258792534effe4ee2811ec767
 k
 ;src/main/java/com/controller/command/AdminBasisCommand.java,9\1\915155d5e61a93d9ffd7c84b1fc441009971983b
 q
@@ -33,8 +31,6 @@ Asrc/main/java/com/controller/command/ChangeStatusUserCommand.java,d\1\d1986f51
 db-create.sql,b\9\b95be46045c1657543c21dd84e34d7ce34ddaa9a
 Z
 *src/main/java/com/model/entity/Entity.java,1\0\10240d95a991ce241cc941e7a2a90addfd36d7f8
-s
-Csrc/main/java/com/controller/command/GetTariffByServiceCommand.java,9\a\9af1bf65d5a512a830f3cec6b00ec716ac5b850c
 f
 6src/main/java/com/controller/command/LoginCommand.java,f\c\fcf6e2934491ae5299fe8a8c713eb3907be64772
 i
@@ -43,8 +39,6 @@ i
 0src/main/java/com/model/constants/TableName.java,5\3\53f3d5259765cdc23deea7fc1e74c5c1b26437ed
 Z
 *src/main/java/com/model/entity/Tariff.java,3\4\34f2b533ff91355574b40186fa5bc792c3a8b34c
-d
-4src/main/java/com/model/dao/mapper/TariffMapper.java,b\4\b46632e8fa56d2ddfdca3cff0f759b397daa794d
 X
 (src/main/java/com/model/entity/User.java,d\4\d42b2d471a0e87e5e0a28908ad17e24aa77904bb
 b
@@ -55,8 +49,6 @@ m
 =src/main/java/com/controller/command/CreateTariffCommand.java,2\7\274d44ec36a1efbace13e61fd2e9f44ac4c3b7bb
 Q
 !src/main/webapp/WEB-INF/error.jsp,9\c\9cff433cd6572c1c2e3dada266b0f79a25f33fa0
-\
-,src/main/webapp/WEB-INF/admin/adminBasis.jsp,1\6\161b79b68a8e39026fee80b1d51353bf2b171846
 d
 4src/main/java/com/controller/filters/AuthFilter.java,4\c\4c598c46092791baa925ad6bf253a1ff0fd14a03
 j

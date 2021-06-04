@@ -33,7 +33,7 @@ public class TariffService {
         }
     }
 
-    public void addTariffToUserOrder(Long idTariff, String login) throws Exception {
+    public void addTariffToUserOrder(Long idTariff, String login) {
         try (UserDao userDao = daoFactory.createUserDao();
              UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
 
@@ -75,6 +75,13 @@ public class TariffService {
             e.printStackTrace();
         }
         throw new RuntimeException();
+    }
+
+    public List<Tariff> getTariffsFromPage(int offset, int noOfRecords) {
+        try (TariffDao dao = daoFactory.createTariffDao()) {
+
+            return dao.findTariffsFromPage(offset, noOfRecords);
+        }
     }
 
     public List<Tariff> sortList(String sort) {
@@ -129,6 +136,12 @@ public class TariffService {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public int getNoOfRecords() {
+        try (TariffDao dao = daoFactory.createTariffDao()){
+            return dao.getNoOfRecords();
         }
     }
 }

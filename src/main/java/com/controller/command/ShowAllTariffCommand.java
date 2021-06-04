@@ -1,10 +1,8 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
 import com.model.entity.Tariff;
 import com.model.service.TariffService;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -23,17 +21,25 @@ public class ShowAllTariffCommand implements Command {
             page = Integer.parseInt(request.getParameter("page"));
         }
 
-        int offset = (page - 1) * recordsPerPage;
+        int offset = getOffset(page, recordsPerPage);
         tariffList = tariff.getTariffsFromPage(offset, recordsPerPage);
 
 
         int noOfRecords = tariff.getNoOfRecords();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+        int noOfPages = getNoOfPages(recordsPerPage, noOfRecords);
 
         request.getSession().setAttribute("tariffList", tariffList);
         request.getSession().setAttribute("noOfPages", noOfPages);
         request.getSession().setAttribute("currentPage", page);
 
         return "WEB-INF/admin/showAllTariff.jsp";
+    }
+
+    public int getNoOfPages(int recordsPerPage, int noOfRecords) {
+        return (int) Math.ceil(noOfRecords * 1.0 / recordsPerPage);
+    }
+
+    public int getOffset(int page, int recordsPerPage) {
+        return (page - 1) * recordsPerPage;
     }
 }

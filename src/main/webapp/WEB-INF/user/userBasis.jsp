@@ -42,23 +42,23 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="tariff" items="${sessionScope.userOrderList}">
+            <c:forEach var="service" items="${sessionScope.userOrderList}">
                 <tr>
-                    <th scope="row"><c:out value="${tariff.nameService}"/></th>
-                    <th><c:out value="${tariff.nameTariff}"/></th>
-                    <th><c:out value="${tariff.status}"/></th>
+                    <th scope="row"><c:out value="${service.nameService}"/></th>
+                    <th><c:out value="${service.nameTariff}"/></th>
+                    <th><c:out value="${service.status}"/></th>
                     <th>
                         <c:set var="blocked" scope="session" value="blocked"/>
-                        <c:if test="${tariff.status.toString() == blocked}">
+                        <c:if test="${service.status.toString() == blocked}">
                             <form action="${pageContext.request.contextPath}/activateTariff" method="post">
-                                <input type="number" hidden name="idTariff" value="${tariff.tariffId}">
+                                <input type="number" hidden name="idTariff" value="${service.tariffId}">
                                 <input type="submit" value="Активувати">
                             </form>
                         </c:if>
                     </th>
                     <th>
                         <form action="${pageContext.request.contextPath}/deleteTariffFromUser" method="post">
-                            <input type="number" hidden name="idOrder" value="${tariff.id}">
+                            <input type="number" hidden name="idOrder" value="${service.id}">
                             <input type="submit" value="Видалити послугу">
                         </form>
                     </th>

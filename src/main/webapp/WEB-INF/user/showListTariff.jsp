@@ -11,7 +11,6 @@
 
 <h1>Список тарифів</h1>
 
-<%--
 <div class="container">
     <div class="row">
         <div class="col-8"></div>
@@ -28,19 +27,30 @@
         </div>
     </div>
 </div>
---%>
-
-    <c:forEach var="tariff" items="${sessionScope.tariffListForService}">
-        <ul>
-            <li>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Назва тарифу</th>
+        <th scope="col">Вартість</th>
+        <th scope="col">Вибрати</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="service" items="${sessionScope.tariffListForService}">
+        <tr>
+            <th scope="row"> <c:out value="${service.nameTariff}"/></th>
+            <td><c:out value="${service.cost}"/> грн </td>
+            <td>
                 <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
-                    <input type="number" hidden name="idTariff" value="${tariff.id}">
-                    <input type="submit" name="tariff" value="<c:out value="${tariff.nameTariff}"/>">
+                    <input type="number" hidden name="idTariff" value="${service.id}">
+                    <input type="submit" name="tariff" value="Вибрати">
                 </form>
-            </li>
-        </ul>
-        <hr/>
+
+            </td>
+        </tr>
     </c:forEach>
+    </tbody>
+</table>
 
 <a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a><br/>
 <a href="${pageContext.request.contextPath}/logout "> Logout</a>

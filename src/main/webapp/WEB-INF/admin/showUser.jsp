@@ -26,11 +26,11 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="tariff" items="${sessionScope.userOrderList}">
+    <c:forEach var="service" items="${sessionScope.userOrderList}">
         <tr>
-            <th scope="row"><c:out value="${tariff.nameService}"/></th>
-            <th><c:out value="${tariff.nameTariff}"/></th>
-            <th><c:out value="${tariff.status}"/></th>
+            <th scope="row"><c:out value="${service.nameService}"/></th>
+            <th><c:out value="${service.nameTariff}"/></th>
+            <th><c:out value="${service.status}"/></th>
         </tr>
     </c:forEach>
     </tbody>

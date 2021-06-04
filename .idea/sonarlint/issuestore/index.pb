@@ -69,13 +69,9 @@ t
 Dsrc/main/java/com/controller/command/DeleteTariffForUserCommand.java,5\f\5fa2c56b0f3bb828418cb8af319385cd300429af
 u
 Esrc/main/java/com/controller/command/DownloadFileServicesCommand.java,5\6\56dcb116d7a6e31924016ecad50d4d05b4f62423
-n
->src/main/java/com/controller/command/GetAllServiceCommand.java,f\6\f640fbd0e23ce0011a6e3585b0e27aeed53af2e1
 7
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 `
 0src/main/java/com/model/constants/Constants.java,9\4\9476d2d83885f704f5ba6ac5f928a6eabcf689b1
 k
 ;src/main/java/com/controller/command/GetAllUserCommand.java,1\1\11916f7ab5fc13067bca4170f163bb949c7144d9
-^
-.src/main/webapp/WEB-INF/admin/showAllUsers.jsp,7\e\7eafecffc9ada5fa051f470bb8dd3c1f02cdd0e0

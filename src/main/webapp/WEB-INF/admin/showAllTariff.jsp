@@ -21,15 +21,15 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="tariff" items="${sessionScope.tariffList}">
+    <c:forEach var="service" items="${sessionScope.tariffList}">
         <tr>
-            <th scope="row"><c:out value="${tariff.id}"/></th>
-            <td><c:out value="${tariff.nameTariff}"/></td>
-            <td><c:out value="${tariff.idServices}"/></td>
-            <td><c:out value="${tariff.cost}"/> грн</td>
+            <th scope="row"><c:out value="${service.id}"/></th>
+            <td><c:out value="${service.nameTariff}"/></td>
+            <td><c:out value="${service.idServices}"/></td>
+            <td><c:out value="${service.cost}"/> грн</td>
             <td>
                 <form action="${pageContext.request.contextPath}/deleteTariff" method="post">
-                    <input type="number" hidden name="idTariff" value="${tariff.id}">
+                    <input type="number" hidden name="idTariff" value="${service.id}">
                     <input type="submit" value="Видалити тариф">
                 </form>
             </td>

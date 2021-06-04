@@ -3,26 +3,36 @@
 <html>
 <head>
     <title>USER</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
 </head>
 <body>
 
 <h1>Список послуг</h1>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Назва послуги</th>
+        <th scope="col">Вибрати</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="service" items="${sessionScope.serviceList}">
+        <tr>
+            <th scope="row"><c:out value="${service.nameService}"/></th>
+            <td>
+                <form method="post" action="${pageContext.request.contextPath}/getAllTariffList">
+                    <input type="number" hidden name="idService" value="${service.id}">
+                    <input type="submit" name="service" value="Вибрати">
+                </form>
+            </td>
+        </tr>
+    </c:forEach>
+    </tbody>
+</table>
 
-<c:forEach var="tariff" items="${sessionScope.serviceList}">
-    <ul>
-        <li>
-            <form method="post" action="${pageContext.request.contextPath}/getTariffList" >
-                <label>
-                    <input type="number" hidden name="idService" value="${tariff.id}">
-                </label>
-                <input type="submit" name="service" value="<c:out value="${tariff.nameService}"/>">
-            </form>
-        </li>
-    </ul>
-    <hr/>
-</c:forEach>
-
+<br/>
 <a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a><br/>
 <a href="${pageContext.request.contextPath}/logout "> Вихід</a>
 </body>

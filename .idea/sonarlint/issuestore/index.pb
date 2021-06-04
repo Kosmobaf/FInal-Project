@@ -67,8 +67,6 @@ a
 +src/main/java/com/model/dao/ServiceDao.java,9\c\9c6b6e32dcb356926eac4befa6ada0c850576a5a
 X
 (src/main/java/com/model/dao/UserDao.java,4\7\47c458d2522ed4f090571d87cb6919fdaf7d8cc5
-o
-?src/main/java/com/controller/command/ActivateTariffCommand.java,6\b\6bc76fb9301af23c887e10aaf55f5059d8764363
 T
 $src/main/webapp/META-INF/context.xml,c\b\cbfb0d2e9b2b9fbf9d54374577c894a38643c6d0
 ^
@@ -89,5 +87,3 @@ k
 ;src/main/java/com/controller/command/GetAllUserCommand.java,1\1\11916f7ab5fc13067bca4170f163bb949c7144d9
 ^
 .src/main/webapp/WEB-INF/admin/showAllUsers.jsp,7\e\7eafecffc9ada5fa051f470bb8dd3c1f02cdd0e0
-i
-9src/main/java/com/model/service/UserOrderBeanService.java,c\0\c0cd00926c8517e4c1d1d9304f9f496613ec4dea

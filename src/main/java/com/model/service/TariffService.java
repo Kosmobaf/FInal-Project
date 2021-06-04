@@ -9,7 +9,6 @@ import com.model.dao.UserDao;
 import com.model.dao.UserOrderDao;
 import com.model.dao.impl.ConnectionPoolHolder;
 import com.model.dao.impl.JDBCTariffDao;
-import com.model.dao.impl.JDBCUserDao;
 import com.model.dao.impl.JDBCUserOrderDao;
 import com.model.entity.Tariff;
 
@@ -24,9 +23,8 @@ import java.util.stream.Collectors;
 
 public class TariffService {
     DaoFactory daoFactory = DaoFactory.getInstance();
-    UserService userService = new UserService();
 
-    public List<Tariff> getAllTariffByService(Long id) throws Exception {
+    public List<Tariff> getAllTariffByService(Long id) {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
             return dao.findAll().stream().
@@ -52,14 +50,13 @@ public class TariffService {
                     .dateAdd(date)
                     .status(Status.BLOCKED.getName())
                     .build();
-            if (userService.withdrawCashFromUser(login, idTariff)) {
-                userOrderBean.setStatus(Status.ACTIVE.getName());
-            }
             orderDao.create(userOrderBean);
+
+            new UserService().withdrawCashFromUser(login, idTariff);
         }
     }
 
-    private boolean checkTariff(long idTariff, long idUser) throws Exception {
+    private boolean checkTariff(long idTariff, long idUser) {
         try (UserOrderDao orderDao = daoFactory.createUserOrderDao();
              TariffDao tariffDao = daoFactory.createTariffDao()) {
 

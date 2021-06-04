@@ -7,14 +7,19 @@ import com.model.dao.DaoFactory;
 import com.model.dao.TariffDao;
 import com.model.dao.UserDao;
 import com.model.dao.UserOrderDao;
+import com.model.dao.impl.ConnectionPoolHolder;
+import com.model.dao.impl.JDBCTariffDao;
+import com.model.dao.impl.JDBCUserDao;
+import com.model.dao.impl.JDBCUserOrderDao;
 import com.model.entity.Tariff;
 
 import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class TariffService {
@@ -98,13 +103,35 @@ public class TariffService {
     }
 
     public void deleteTariff(long idTariff) {
-        try (TariffDao tariffDao = daoFactory.createTariffDao();
-             UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
-//TODO транзакція ?
-            tariffDao.delete(idTariff);
-            orderDao.deleteByIdTariff(idTariff);
+        Connection connection = null;
+        try {
+            connection = ConnectionPoolHolder.getDataSource().getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        try (JDBCTariffDao jdbcTariffDao = new JDBCTariffDao(connection);
+             JDBCUserOrderDao jdbcUserOrderDao = new JDBCUserOrderDao(connection)) {
+
+            Objects.requireNonNull(connection).setAutoCommit(false);
+
+            jdbcUserOrderDao.deleteByIdTariff(idTariff);
+            jdbcTariffDao.delete(idTariff);
+
+            connection.commit();
         } catch (Exception e) {
             e.printStackTrace();
+            try {
+                Objects.requireNonNull(connection).rollback();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        } finally {
+            try {
+                Objects.requireNonNull(connection).close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

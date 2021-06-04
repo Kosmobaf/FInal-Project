@@ -16,8 +16,8 @@ public class CreateDataBase {
 
 
     public void createDB() {
-        try (Statement statement = Objects.requireNonNull(ConnectionPoolHolder.getDataSource().getConnection().
-                createStatement())) {
+        try (Statement statement = Objects.requireNonNull(
+                ConnectionPoolHolder.getDataSource().getConnection().createStatement())) {
             for (String s : getScenario()) {
                 statement.executeUpdate(s);
             }

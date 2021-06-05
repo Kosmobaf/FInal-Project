@@ -13,7 +13,16 @@
 <h2>
     Error Page<br/>
 </h2>
-<h3>Message: ${errorMessage}</h3>
+<h3>
+    <c:choose>
+        <c:when test="${errorMessage != null}">
+            Message: ${errorMessage}
+        </c:when>
+        <c:otherwise>
+            Message: Something went wrong
+        </c:otherwise>
+    </c:choose>
+    </h3>
 <br>
 <a href="${pageContext.request.contextPath}/index.jsp">Index</a>
 

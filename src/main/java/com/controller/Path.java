@@ -4,7 +4,10 @@ public final class Path {
     private Path() {
     }
 
+
     // pages
+    public static final String WEB_INF_USER_ADD_CASH_JSP = "/WEB-INF/user/addCash.jsp";
+    public static final String WEB_INF_ADMIN_CREATE_TARIFF_JSP = "WEB-INF/admin/createTariff.jsp";
     public static final String WEB_INF_USER_SHOW_LIST_TARIFF_JSP = "/WEB-INF/user/showListTariff.jsp";
     public static final String WEB_INF_USER_USERBASIS_JSP = "/WEB-INF/user/userBasis.jsp";
     public static final String WEB_INF_USER_SHOW_LIST_SERVICES_JSP = "/WEB-INF/user/showListServices.jsp";
@@ -13,6 +16,8 @@ public final class Path {
     public static final String WEB_INF_ERROR_JSP = "/WEB-INF/error.jsp";
 
     //commands
+    public static final String REDIRECT_SHOW_ALL_TARIFF = "redirect:/showAllTariff";
+    public static final String REDIRECT_CREATE_USER = "redirect:/createUser";
     public static final String REDIRECT_ADMIN_BASIS = "redirect:/adminBasis";
     public static final String REDIRECT_USER_BASIS = "redirect:/userBasis";
 }

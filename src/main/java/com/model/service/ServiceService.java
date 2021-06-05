@@ -1,18 +1,19 @@
 package com.model.service;
 
-import com.model.dao.DaoFactory;
-import com.model.dao.ServiceDao;
-import com.model.dao.TariffDao;
+import com.model.dao.dao_factory.DaoFactory;
+import com.model.dao.dao_factory.ServiceDao;
+import com.model.dao.dao_factory.TariffDao;
 import com.model.entity.Service;
 import com.model.entity.Tariff;
+import org.apache.log4j.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class ServiceService {
-    private static final Logger LOGGER = Logger.getLogger(ServiceService.class.getName());
 
     private static final String SPAYS2 = " - ";
     private static final String UAH = " UAH";
@@ -23,7 +24,7 @@ public class ServiceService {
 
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public void exportServicesToFile() {
+    public void exportServicesToFile()  {
 
         File file = new File(SERVICES_TXT);
         file.delete();
@@ -47,20 +48,15 @@ public class ServiceService {
                 }
                 writer.println();
             }
-        } catch (Exception e) {
-            LOGGER.severe(e.getMessage());
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public List<Service> getAllService() {
         try (ServiceDao dao = daoFactory.createServiceDao()) {
-            return dao.findAll();
 
-        } catch (Exception e) {
-            LOGGER.severe(e.getMessage());
-            e.printStackTrace();
+            return dao.findAll();
         }
-        throw new RuntimeException();
     }
 }

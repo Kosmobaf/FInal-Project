@@ -1,4 +1,4 @@
-package com.model.dao;
+package com.model.dao.dao_factory;
 
 
 import com.model.dao.impl.JDBCDaoFactory;

@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.controller.MyException;
 import com.controller.Path;
 import com.model.dao.TableName;
 import com.model.entity.User;
@@ -13,18 +14,18 @@ public class CreateUserCommand implements Command {
     UserService service = new UserService();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws MyException {
         List<User> userList;
-        if (request.getParameter("login") != null) {
-
-            service.createUser(
-                    request.getParameter(TableName.USER__LOGIN),
-                    request.getParameter(TableName.USER__PASSWORD));
-
-            userList = service.getAllUsers();
-            request.getSession().setAttribute("userList", userList);
-            return "redirect:/createUser";
+        if (request.getParameter("login") == null) {
+            return Path.WEB_INF_ADMIN_CREATE_USER_JSP;
         }
-        return Path.WEB_INF_ADMIN_CREATE_USER_JSP;
+        service.createUser(
+                request.getParameter(TableName.USER__LOGIN),
+                request.getParameter(TableName.USER__PASSWORD));
+
+        userList = service.getAllUsers();
+        request.getSession().setAttribute("userList", userList);
+        return Path.REDIRECT_CREATE_USER;
     }
 }
+

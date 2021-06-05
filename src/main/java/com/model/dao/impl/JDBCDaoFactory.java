@@ -1,6 +1,7 @@
 package com.model.dao.impl;
 
-import com.model.dao.*;
+import com.model.dao.ConnectionPoolHolder;
+import com.model.dao.dao_factory.*;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

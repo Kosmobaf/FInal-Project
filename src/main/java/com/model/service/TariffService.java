@@ -1,12 +1,13 @@
 package com.model.service;
 
+import com.controller.MyException;
 import com.model.Status;
 import com.model.bean.UserOrderBean;
-import com.model.dao.DaoFactory;
-import com.model.dao.TariffDao;
-import com.model.dao.UserDao;
-import com.model.dao.UserOrderDao;
-import com.model.dao.impl.ConnectionPoolHolder;
+import com.model.dao.dao_factory.DaoFactory;
+import com.model.dao.dao_factory.TariffDao;
+import com.model.dao.dao_factory.UserDao;
+import com.model.dao.dao_factory.UserOrderDao;
+import com.model.dao.ConnectionPoolHolder;
 import com.model.dao.impl.JDBCTariffDao;
 import com.model.dao.impl.JDBCUserOrderDao;
 import com.model.entity.Tariff;
@@ -23,14 +24,15 @@ public class TariffService {
     private static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     DaoFactory daoFactory = DaoFactory.getInstance();
 
+
     public List<Tariff> getAllTariffByServiceAndSort(Long idService, String sortCommand) {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
-            return dao.findAllTariffFromOneServiceAndSorted(idService,sortCommand);
+            return dao.findAllTariffFromOneServiceAndSorted(idService, sortCommand);
         }
     }
 
-    public void addTariffToUserOrder(Long idTariff, String login) {
+    public void addTariffToUserOrder(Long idTariff, String login) throws MyException {
         try (UserDao userDao = daoFactory.createUserDao();
              UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
 
@@ -38,8 +40,8 @@ public class TariffService {
             String date = LocalDateTime.now().
                     format(DateTimeFormatter.ofPattern(YYYY_MM_DD_HH_MM_SS));
 
-            if (checkTariff(idTariff, idUser)) {
-                return;
+            if (checkOnTariffForServiceAlreadyOrdered(idTariff, idUser)) {
+                throw new MyException("Tariff for this service has already been ordered");
             }
 
             UserOrderBean userOrderBean = new UserOrderBean.Builder()
@@ -51,30 +53,18 @@ public class TariffService {
             orderDao.create(userOrderBean);
 
             new UserService().withdrawCashFromUser(login, idTariff);
-        } catch (com.controller.MyException e) {
-            e.printStackTrace();
         }
     }
 
-    private boolean checkTariff(long idTariff, long idUser) {
+    private boolean checkOnTariffForServiceAlreadyOrdered(long idTariff, long idUser) {
         try (UserOrderDao orderDao = daoFactory.createUserOrderDao();
              TariffDao tariffDao = daoFactory.createTariffDao()) {
 
             long idServices = tariffDao.findById(idTariff).getIdServices();
             List<Tariff> list = orderDao.findAllTariffByIdUser(idUser);
+
             return list.stream().anyMatch(tariff -> tariff.getIdServices() == idServices);
         }
-    }
-
-    public List<Tariff> getAllTariff() {
-        List<Tariff> tariffList;
-        try (TariffDao dao = daoFactory.createTariffDao()) {
-            tariffList = dao.findAll();
-            return tariffList;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        throw new RuntimeException();
     }
 
     public List<Tariff> getTariffsFromPage(int offset, int noOfRecords) {
@@ -84,23 +74,21 @@ public class TariffService {
         }
     }
 
-      public void addTariff(long idService, String nameTariff, BigDecimal cost) {
+    public void addTariff(long idService, String nameTariff, BigDecimal cost) throws MyException {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
             Tariff tariff = new Tariff(nameTariff, idService, cost);
             dao.create(tariff);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 
-    public void deleteTariff(long idTariff) {
+    public void deleteTariff(long idTariff) throws MyException {
         Connection connection = null;
         try {
             connection = ConnectionPoolHolder.getDataSource().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException();
         }
 
         try (JDBCTariffDao jdbcTariffDao = new JDBCTariffDao(connection);
@@ -112,7 +100,7 @@ public class TariffService {
             jdbcTariffDao.delete(idTariff);
 
             connection.commit();
-        } catch (Exception e) {
+        } catch ( SQLException e) {
             e.printStackTrace();
             try {
                 Objects.requireNonNull(connection).rollback();
@@ -129,7 +117,7 @@ public class TariffService {
     }
 
     public int getNoOfRecords() {
-        try (TariffDao dao = daoFactory.createTariffDao()){
+        try (TariffDao dao = daoFactory.createTariffDao()) {
             return dao.getNoOfRecords();
         }
     }

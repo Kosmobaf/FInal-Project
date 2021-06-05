@@ -2,13 +2,12 @@ package com.model.dao.impl;
 
 import com.controller.MyException;
 import com.model.bean.UserOrderBean;
-import com.model.dao.UserOrderDao;
+import com.model.dao.dao_factory.UserOrderDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.dao.mapper.UserOrderMapper;
 import com.model.entity.Tariff;
 import org.apache.log4j.Logger;
 
-import javax.ws.rs.InternalServerErrorException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

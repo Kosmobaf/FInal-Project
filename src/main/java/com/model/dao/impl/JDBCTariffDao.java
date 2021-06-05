@@ -1,7 +1,7 @@
 package com.model.dao.impl;
 
 import com.controller.MyException;
-import com.model.dao.TariffDao;
+import com.model.dao.dao_factory.TariffDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.entity.Tariff;
 import org.apache.log4j.Logger;

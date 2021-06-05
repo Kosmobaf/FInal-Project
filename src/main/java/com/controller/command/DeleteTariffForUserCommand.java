@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.controller.MyException;
 import com.controller.Path;
 import com.model.service.UserOrderBeanService;
 
@@ -10,7 +11,7 @@ public class DeleteTariffForUserCommand implements Command {
     UserOrderBeanService beanService = new UserOrderBeanService();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws MyException {
         long idOrder = Long.parseLong(request.getParameter("idOrder"));
         beanService.deleteTariffForUser(idOrder);
 

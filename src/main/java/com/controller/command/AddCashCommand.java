@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.controller.MyException;
 import com.controller.Path;
 import com.model.service.UserService;
 
@@ -11,27 +12,30 @@ public class AddCashCommand implements Command {
     UserService service = new UserService();
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String execute(HttpServletRequest request, HttpServletResponse response) throws MyException {
         BigDecimal inputCash;
 
-        if (request.getParameter("inputCash") != null) {
-            try {
-                inputCash = new BigDecimal(request.getParameter("inputCash"));
-                if (inputCash.compareTo(BigDecimal.ZERO) <= 0) {
-                    throw new RuntimeException();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-
-                String errorMessage = "Incorrect input";
-                request.getSession().setAttribute("errorMessage", errorMessage);
-                return Path.WEB_INF_ERROR_JSP;
-            }
-            String login = (String) request.getSession().getAttribute("login");
-            service.addCashFromUser(login, inputCash);
-
-            return "redirect:/userBasis";
+//check value is not empty or null
+        String inputStringCash = request.getParameter("inputCash");
+        if (inputStringCash == null || inputStringCash.isEmpty()) {
+            return Path.WEB_INF_USER_ADD_CASH_JSP;
         }
-        return "/WEB-INF/user/addCash.jsp";
+
+//check value is number
+        try {
+            inputCash = new BigDecimal(inputStringCash);
+        } catch (NumberFormatException e) {
+            throw new MyException("Value entered must be a number greater than 0");
+        }
+
+//check value > 0
+        if (inputCash.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new MyException("Value must be greater than 0");
+        }
+// add value to user
+        String login = (String) request.getSession().getAttribute("login");
+        service.addCashToUser(login, inputCash);
+
+        return Path.REDIRECT_USER_BASIS;
     }
 }

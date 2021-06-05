@@ -1,10 +1,11 @@
 package com.model.service;
 
+import com.controller.MyException;
 import com.model.Status;
 import com.model.bean.UserOrderBean;
-import com.model.dao.DaoFactory;
-import com.model.dao.UserDao;
-import com.model.dao.impl.ConnectionPoolHolder;
+import com.model.dao.dao_factory.DaoFactory;
+import com.model.dao.dao_factory.UserDao;
+import com.model.dao.ConnectionPoolHolder;
 import com.model.dao.impl.JDBCTariffDao;
 import com.model.dao.impl.JDBCUserDao;
 import com.model.dao.impl.JDBCUserOrderDao;
@@ -26,11 +27,7 @@ public class UserService {
         try (UserDao userDao = daoFactory.createUserDao()) {
             userList = userDao.findAll();
             return userList;
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        throw new RuntimeException();
     }
 
 
@@ -38,14 +35,10 @@ public class UserService {
         try (UserDao dao = daoFactory.createUserDao()) {
 
             return dao.findByLogin(login);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        throw new RuntimeException();
-
     }
 
-    public void createUser(String login, String password) {
+    public void createUser(String login, String password) throws MyException {
         try (UserDao dao = daoFactory.createUserDao()) {
 
             User user = new User.Builder().
@@ -54,11 +47,8 @@ public class UserService {
                     build();
 
             dao.create(user);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
-
 
     public boolean userIsExist(String login, String password) {
 
@@ -70,8 +60,6 @@ public class UserService {
                 User user1 = user.get();
                 return password.equals(user1.getPassword());
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         return false;
     }
@@ -80,32 +68,24 @@ public class UserService {
         try (UserDao dao = daoFactory.createUserDao()) {
 
             return dao.findById(id).getLogin();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        throw new RuntimeException();
     }
 
     public BigDecimal getUserCash(String login) {
         try (UserDao dao = daoFactory.createUserDao()) {
 
             User user = dao.findByLogin(login);
-
             return user.getCash();
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        throw new RuntimeException();
     }
 
-    public void withdrawCashFromUser(String login, long idTariff) {
+    public void withdrawCashFromUser(String login, long idTariff) throws MyException {
         Connection connection = null;
         try {
             connection = ConnectionPoolHolder.getDataSource().getConnection();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException();
         }
         try (JDBCUserDao jdbcUserDao = new JDBCUserDao(connection);
              JDBCTariffDao jdbcTariffDao = new JDBCTariffDao(connection);
@@ -121,19 +101,18 @@ public class UserService {
             BigDecimal lastCash = firstCash.subtract(coast);
 
             if (lastCash.compareTo(BigDecimal.ZERO) < 0) {
-                return;
+                throw new MyException("Not enough cash, please top up your cash account");
             }
             user.setCash(lastCash);
 
             Objects.requireNonNull(connection).setAutoCommit(false);
 
-                jdbcUserOrderDao.update(orderBean);
-
-                jdbcUserDao.update(user);
+            jdbcUserOrderDao.update(orderBean);
+            jdbcUserDao.update(user);
 
             connection.commit();
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
             try {
                 Objects.requireNonNull(connection).rollback();
             } catch (SQLException throwables) {
@@ -149,12 +128,8 @@ public class UserService {
         }
     }
 
-    public void addCashFromUser(String login, BigDecimal incomingCash) {
+    public void addCashToUser(String login, BigDecimal incomingCash) throws MyException {
         try (UserDao userDao = daoFactory.createUserDao()) {
-
-            if (incomingCash.compareTo(BigDecimal.ZERO) <= 0) {
-                throw new RuntimeException();
-            }
 
             User user = userDao.findByLogin(login);
             BigDecimal firstCash = user.getCash();
@@ -162,9 +137,6 @@ public class UserService {
 
             user.setCash(lastCash);
             userDao.update(user);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 

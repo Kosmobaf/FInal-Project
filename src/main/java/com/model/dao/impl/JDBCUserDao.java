@@ -2,7 +2,7 @@ package com.model.dao.impl;
 
 import com.controller.MyException;
 import com.model.Status;
-import com.model.dao.UserDao;
+import com.model.dao.dao_factory.UserDao;
 import com.model.dao.mapper.UserMapper;
 import com.model.entity.User;
 import org.apache.log4j.Logger;

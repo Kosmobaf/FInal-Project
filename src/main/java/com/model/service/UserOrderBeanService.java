@@ -1,12 +1,11 @@
 package com.model.service;
 
-import com.model.Status;
+import com.controller.MyException;
 import com.model.bean.UserOrderBean;
-import com.model.dao.DaoFactory;
-import com.model.dao.UserDao;
-import com.model.dao.UserOrderDao;
+import com.model.dao.dao_factory.DaoFactory;
+import com.model.dao.dao_factory.UserDao;
+import com.model.dao.dao_factory.UserOrderDao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserOrderBeanService {
@@ -25,17 +24,6 @@ public class UserOrderBeanService {
         }
     }
 
-    public List<UserOrderBean> getAllOrdersForUserById(Long idUser) {
-        try (UserOrderDao userOrderDao = daoFactory.createUserOrderDao()) {
-
-            return userOrderDao.findAllOrdersByIdUser(idUser);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        throw new RuntimeException();
-    }
-
     public UserOrderBean getOrderForUserByLogin(String login, long idTariff) {
         try (UserOrderDao orderDao = daoFactory.createUserOrderDao();
              UserDao userDao = daoFactory.createUserDao()) {
@@ -50,13 +38,10 @@ public class UserOrderBeanService {
         throw new RuntimeException();
     }
 
-    public void deleteTariffForUser(long idOrder) {
+    public void deleteTariffForUser(long idOrder) throws MyException {
         try (UserOrderDao dao = daoFactory.createUserOrderDao()) {
 
             dao.delete(idOrder);
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

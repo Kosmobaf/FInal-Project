@@ -2,7 +2,7 @@ package com.controller;
 
 
 import com.controller.command.*;
-import com.model.db.CreateDataBase;
+import com.model.dao.CreateDataBase;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -44,12 +44,14 @@ public class Servlet extends HttpServlet {
         commands.put("deleteTariff", new DeleteTariffCommand());
     }
 
+    @Override
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response)
             throws IOException, ServletException {
         processRequest(request, response);
     }
 
+    @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
@@ -64,15 +66,13 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path,
                 (r, b) -> "/index.jsp");
         System.out.println(command.getClass().getName());
-      //  try {
-            String page = command.execute(request, response);
- /*       } catch (RuntimeException e) {
-            //TODO кастомний екс
-            e.printStackTrace();
+        String page = Path.WEB_INF_ERROR_JSP;
+        try {
+            page = command.execute(request, response);
+        } catch (MyException e) {
+            request.setAttribute("errorMessage",e.getMessage());
+        } catch (Exception e) {
         }
-        catch (Exception e){
-            //thms when wrong
-      }*/
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/provider"));
         } else {

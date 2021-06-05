@@ -1,7 +1,7 @@
 package com.model.dao.impl;
 
 import com.controller.MyException;
-import com.model.dao.ServiceDao;
+import com.model.dao.dao_factory.ServiceDao;
 import com.model.dao.mapper.ServiceMapper;
 import com.model.entity.Service;
 

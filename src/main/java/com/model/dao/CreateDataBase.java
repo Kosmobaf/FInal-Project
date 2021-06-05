@@ -1,6 +1,4 @@
-package com.model.db;
-
-import com.model.dao.impl.ConnectionPoolHolder;
+package com.model.dao;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

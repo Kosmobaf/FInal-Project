@@ -1,13 +1,16 @@
-package com.model.dao.impl;
+package com.model.dao;
+
+import org.apache.log4j.Logger;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
-import java.util.logging.Logger;
 
 public final class ConnectionPoolHolder {
+    private ConnectionPoolHolder() {
+    }
 
-    private static final Logger LOGGER = Logger.getLogger(ConnectionPoolHolder.class.getName());
+    private static final Logger log = Logger.getLogger(ConnectionPoolHolder.class);
     private static volatile DataSource dataSource;
 
     public static DataSource getDataSource() {
@@ -20,7 +23,9 @@ public final class ConnectionPoolHolder {
                         context = new InitialContext();
                         dataSource = (DataSource) context.lookup("java:comp/env/jdbc/provider");
                     } catch (Exception e) {
-                        LOGGER.severe(e.getMessage());
+                        e.printStackTrace();
+                        log.error(e.getMessage(), e);
+                        throw new RuntimeException();
                     }
                 }
             }

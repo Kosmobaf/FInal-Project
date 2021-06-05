@@ -16,7 +16,7 @@ public class GetAllServiceCommand implements Command {
         List<Service> serviceList;
         serviceList = service.getAllService();
 
-        request.getSession().setAttribute("serviceList", serviceList);
+        request.setAttribute("serviceList", serviceList);
         return Path.WEB_INF_USER_SHOW_LIST_SERVICES_JSP;
     }
 }

@@ -1,5 +1,6 @@
 package com.controller.command;
 
+import com.controller.Path;
 import com.model.entity.User;
 import com.model.service.UserService;
 
@@ -14,7 +15,8 @@ public class GetAllUserCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<User> userList;
         userList = service.getAllUsers();
-        request.getSession().setAttribute("userList", userList);
-        return "WEB-INF/admin/showAllUsers.jsp";
+        request.setAttribute("userList", userList);
+
+        return Path.WEB_INF_ADMIN_SHOW_ALL_USERS_JSP;
     }
 }

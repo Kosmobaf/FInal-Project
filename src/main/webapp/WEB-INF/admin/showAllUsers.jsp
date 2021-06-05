@@ -22,7 +22,8 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="user" items="${sessionScope.userList}">
+    <%--@elvariable id="userList" type="java.util.List"--%>
+    <c:forEach var="user" items="${userList}">
         <tr>
             <td><c:out value="${user.id}"/></td>
             <td><c:out value="${user.login}"/></td>

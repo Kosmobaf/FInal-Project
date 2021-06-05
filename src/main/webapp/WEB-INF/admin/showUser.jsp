@@ -8,15 +8,16 @@
 
 </head>
 <body>
-
-<c:choose>
-    <c:when test="${sessionScope.userOrderList.size() > 0}">
-        Замовлені послуги<br/>
-    </c:when>
-    <c:otherwise>
-        Послуги ще не замовлені
-    </c:otherwise>
-</c:choose>
+<h3>
+    <c:choose>
+        <c:when test="${userOrderList.size() > 0}">
+            Замовлені послуги<br/>
+        </c:when>
+        <c:otherwise>
+            Послуги ще не замовлені
+        </c:otherwise>
+    </c:choose>
+</h3>
 <table class="table table-striped">
     <thead>
     <tr>
@@ -26,30 +27,30 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="service" items="${sessionScope.userOrderList}">
+    <c:forEach var="tariff" items="${userOrderList}">
         <tr>
-            <th scope="row"><c:out value="${service.nameService}"/></th>
-            <th><c:out value="${service.nameTariff}"/></th>
-            <th><c:out value="${service.status}"/></th>
+            <th scope="row"><c:out value="${ tariff .nameService}"/></th>
+            <td><c:out value="${ tariff .nameTariff}"/></td>
+            <td><c:out value="${ tariff .status}"/></td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
 <br/>
-
-Cтатус користувача - ${sessionScope.statusUser}
+<%--@elvariable id="user" type="com.model.entity.User"--%>
+Cтатус користувача - ${user.status.name()}
 <br/>
 
 <c:choose>
-    <c:when test="${sessionScope.statusUser == 'blocked'}">
+    <c:when test="${user.status.name() == 'blocked'}">
         <form action="${pageContext.request.contextPath}/changeStatusUser" method="post">
-            <input type="number" hidden name="idUser" value="${sessionScope.idUser}">
+            <input type="number" hidden name="idUser" value="${user.id}">
             <input type="submit" value="Активувати">
         </form>
     </c:when>
     <c:otherwise>
         <form action="${pageContext.request.contextPath}/changeStatusUser" method="post">
-            <input type="number" hidden name="idUser" value="${sessionScope.idUser}">
+            <input type="number" hidden name="idUser" value="${user.id}">
             <input type="submit" value="Заблокувати">
         </form>
     </c:otherwise>

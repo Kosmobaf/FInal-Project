@@ -13,6 +13,8 @@ public class DeleteTariffForUserCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws MyException {
         long idOrder = Long.parseLong(request.getParameter("idOrder"));
+
+//delete tariff from user-order
         beanService.deleteTariffForUser(idOrder);
 
         return Path.REDIRECT_USER_BASIS;

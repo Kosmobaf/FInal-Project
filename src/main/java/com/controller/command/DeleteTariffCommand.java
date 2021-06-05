@@ -13,6 +13,8 @@ public class DeleteTariffCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws MyException {
         long idTariff = Long.parseLong(request.getParameter("idTariff"));
+
+//delete tariff from all tariffs
         service.deleteTariff(idTariff);
         return Path.REDIRECT_SHOW_ALL_TARIFF;
     }

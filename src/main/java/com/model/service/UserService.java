@@ -19,6 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class UserService {
+
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<User> getAllUsers() {
@@ -79,8 +80,8 @@ public class UserService {
         }
     }
 
-    public void withdrawCashFromUser(String login, long idTariff) throws MyException {
-        Connection connection = null;
+    public boolean withdrawCashFromUser(String login, long idTariff) throws MyException {
+        Connection connection;
         try {
             connection = ConnectionPoolHolder.getDataSource().getConnection();
         } catch (SQLException e) {
@@ -101,7 +102,7 @@ public class UserService {
             BigDecimal lastCash = firstCash.subtract(coast);
 
             if (lastCash.compareTo(BigDecimal.ZERO) < 0) {
-                throw new MyException("Not enough cash, please top up your cash account");
+                return false;
             }
             user.setCash(lastCash);
 
@@ -111,7 +112,7 @@ public class UserService {
             jdbcUserDao.update(user);
 
             connection.commit();
-
+            return true;
         } catch (SQLException e) {
             try {
                 Objects.requireNonNull(connection).rollback();
@@ -126,6 +127,7 @@ public class UserService {
                 e.printStackTrace();
             }
         }
+        return false;
     }
 
     public void addCashToUser(String login, BigDecimal incomingCash) throws MyException {
@@ -154,6 +156,12 @@ public class UserService {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public User getUser(long idUser) {
+        try (UserDao dao = daoFactory.createUserDao()) {
+            return dao.findById(idUser);
         }
     }
 }

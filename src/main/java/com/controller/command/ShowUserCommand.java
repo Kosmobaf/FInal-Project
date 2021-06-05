@@ -1,6 +1,8 @@
 package com.controller.command;
 
+import com.controller.Path;
 import com.model.bean.UserOrderBean;
+import com.model.entity.User;
 import com.model.service.UserOrderBeanService;
 import com.model.service.UserService;
 
@@ -16,24 +18,21 @@ public class ShowUserCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        String stringIdUser = request.getParameter("idUser");
         long idUser;
-        if (request.getParameter("idUser") == null) {
+        if (stringIdUser == null) {
             idUser = (long) request.getSession().getAttribute("idUser");
+
         } else {
-            idUser = Long.parseLong(request.getParameter("idUser"));
+            idUser = Long.parseLong(stringIdUser);
         }
 
-        String login = userService.getUserLogin(idUser);
-        BigDecimal cash = userService.getUserCash(login);
-        String statusUser = userService.getUser(login).getStatus().getName();
+        User user = userService.getUser(idUser);
+        List<UserOrderBean> userOrderList = orderBeanService.getAllOrdersForUserByLogin(user.getLogin());
 
-        List<UserOrderBean> userOrderList = orderBeanService.getAllOrdersForUserByLogin(login);
+        request.setAttribute("userOrderList", userOrderList);
+        request.setAttribute("user", user);
 
-        request.getSession().setAttribute("statusUser", statusUser);
-        request.getSession().setAttribute("cash", cash);
-        request.getSession().setAttribute("userOrderList", userOrderList);
-        request.getSession().setAttribute("idUser", idUser);
-
-        return "WEB-INF/admin/showUser.jsp";
+        return Path.WEB_INF_ADMIN_SHOW_USER_JSP;
     }
 }

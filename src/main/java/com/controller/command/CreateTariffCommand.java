@@ -13,14 +13,17 @@ public class CreateTariffCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) throws MyException {
+        String stringIdService = request.getParameter("id_service");
 
-        if (request.getParameter("id_service") == null) {
+        if (stringIdService == null) {
             return Path.WEB_INF_ADMIN_CREATE_TARIFF_JSP;
         }
 
-        long idService = Long.parseLong(request.getParameter("id_service"));
+        long idService = Long.parseLong(stringIdService);
         String nameTariff = request.getParameter("nameTariff");
         BigDecimal cost = new BigDecimal(request.getParameter("cost"));
+
+// add tariff to all tariffs
         service.addTariff(idService, nameTariff, cost);
 
         return Path.REDIRECT_SHOW_ALL_TARIFF;

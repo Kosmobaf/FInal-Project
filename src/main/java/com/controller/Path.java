@@ -1,6 +1,13 @@
 package com.controller;
 
 public final class Path {
+    public static final String WEB_INF_ADMIN_ADMIN_BASIS_JSP = "/WEB-INF/admin/adminBasis.jsp";
+    public static final String REDIRECT_SHOW_USER = "redirect:/showUser";
+    public static final String WEB_INF_ADMIN_SHOW_ALL_USERS_JSP = "WEB-INF/admin/showAllUsers.jsp";
+    public static final String WEB_INF_ADMIN_SHOW_ALL_TARIFF_JSP = "WEB-INF/admin/showAllTariff.jsp";
+    public static final String WEB_INF_ADMIN_SHOW_USER_JSP = "WEB-INF/admin/showUser.jsp";
+    public static final String INDEX_JSP = "index.jsp";
+
     private Path() {
     }
 

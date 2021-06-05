@@ -18,7 +18,8 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="service" items="${sessionScope.serviceList}">
+    <%--@elvariable id="serviceList" type="java.util.List"--%>
+    <c:forEach var="service" items="${serviceList}">
         <tr>
             <th scope="row"><c:out value="${service.nameService}"/></th>
             <td>

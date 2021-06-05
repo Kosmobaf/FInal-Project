@@ -14,12 +14,14 @@
 </h1>
 <br/>
 <h2>
-    Баланс коштів: ${sessionScope.cash} грн <br/>
+    <%--@elvariable id="cash" type="java.math.BigDecimal"--%>
+    Баланс коштів: ${cash} грн <br/>
 </h2>
 <br/>
 <h3>
     <c:choose>
-        <c:when test="${sessionScope.userOrderList.size() > 0}">
+        <%--@elvariable id="userOrderList" type="java.util.List"--%>
+        <c:when test="${userOrderList.size() > 0}">
             Замовлені послуги:<br/>
         </c:when>
         <c:otherwise>
@@ -30,7 +32,8 @@
 </h3>
 <br/>
 <c:choose>
-    <c:when test="${sessionScope.userOrderList.size() > 0}">
+    <%--@elvariable id="userOrderList" type="java.util.List"--%>
+    <c:when test="${userOrderList.size() > 0}">
         <table class="table table-striped">
             <thead>
             <tr>
@@ -42,26 +45,27 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="service" items="${sessionScope.userOrderList}">
+            <%--@elvariable id="userOrderList" type="java.util.List"--%>
+            <c:forEach var="user_order" items="${userOrderList}">
                 <tr>
-                    <th scope="row"><c:out value="${service.nameService}"/></th>
-                    <th><c:out value="${service.nameTariff}"/></th>
-                    <th><c:out value="${service.status}"/></th>
-                    <th>
+                    <th scope="row"><c:out value="${user_order.nameService}"/></th>
+                    <td><c:out value="${user_order.nameTariff}"/></td>
+                    <td><c:out value="${user_order.status}"/></td>
+                    <td>
                         <c:set var="blocked" scope="session" value="blocked"/>
-                        <c:if test="${service.status.toString() == blocked}">
+                        <c:if test="${user_order.status.toString() == blocked}">
                             <form action="${pageContext.request.contextPath}/activateTariff" method="post">
-                                <input type="number" hidden name="idTariff" value="${service.tariffId}">
+                                <input type="number" hidden name="idTariff" value="${user_order.tariffId}">
                                 <input type="submit" value="Оплатити">
                             </form>
                         </c:if>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                         <form action="${pageContext.request.contextPath}/deleteTariffFromUser" method="post">
-                            <input type="number" hidden name="idOrder" value="${service.id}">
+                            <input type="number" hidden name="idOrder" value="${user_order.id}">
                             <input type="submit" value="Видалити послугу">
                         </form>
-                    </th>
+                    </td>
                 </tr>
             </c:forEach>
             </tbody>

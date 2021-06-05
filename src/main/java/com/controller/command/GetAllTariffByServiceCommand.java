@@ -14,9 +14,11 @@ public class GetAllTariffByServiceCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         List<Tariff> tariffList;
+        String stringIdService = request.getParameter("idService");
         long idService;
-        if (request.getParameter("idService") != null) {
-            idService = Long.parseLong(request.getParameter("idService"));
+
+        if (stringIdService != null) {
+            idService = Long.parseLong(stringIdService);
         } else {
             idService = (long) request.getSession().getAttribute("idService");
         }
@@ -25,7 +27,7 @@ public class GetAllTariffByServiceCommand implements Command {
         String sortCommand = request.getParameter("sortCommand");
         tariffList = tariff.getAllTariffByServiceAndSort(idService, sortCommand);
 
-        request.getSession().setAttribute("tariffListForService", tariffList);
+        request.setAttribute("tariffListForService", tariffList);
         return Path.WEB_INF_USER_SHOW_LIST_TARIFF_JSP;
     }
 }

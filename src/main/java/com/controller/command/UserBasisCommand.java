@@ -19,7 +19,7 @@ public class UserBasisCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String login = (String) request.getSession().getAttribute("login");
         BigDecimal cash = userService.getUserCash(login);
-        List<UserOrderBean> userOrderList = null;
+        List<UserOrderBean> userOrderList ;
 
         try {
             userOrderList = orderBeanService.getAllOrdersForUserByLogin(login);
@@ -29,8 +29,8 @@ public class UserBasisCommand implements Command {
             return Path.WEB_INF_ERROR_JSP;
         }
 
-        request.getSession().setAttribute("cash", cash);
-        request.getSession().setAttribute("userOrderList", userOrderList);
+        request.setAttribute("cash", cash);
+        request.setAttribute("userOrderList", userOrderList);
         return Path.WEB_INF_USER_USERBASIS_JSP;
     }
 }

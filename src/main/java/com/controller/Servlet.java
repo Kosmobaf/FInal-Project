@@ -66,12 +66,14 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path,
                 (r, b) -> "/index.jsp");
         System.out.println(command.getClass().getName());
-        String page = Path.WEB_INF_ERROR_JSP;
+        String page = Path.INDEX_JSP;
         try {
             page = command.execute(request, response);
         } catch (MyException e) {
             request.setAttribute("errorMessage",e.getMessage());
+            page = Path.WEB_INF_ERROR_JSP;
         } catch (Exception e) {
+            page = Path.WEB_INF_ERROR_JSP;
         }
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/provider"));

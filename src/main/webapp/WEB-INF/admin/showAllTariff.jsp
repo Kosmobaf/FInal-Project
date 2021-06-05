@@ -21,15 +21,16 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="service" items="${sessionScope.tariffList}">
+    <%--@elvariable id="tariffList" type="java.util.List"--%>
+    <c:forEach var="tariff" items="${tariffList}">
         <tr>
-            <th scope="row"><c:out value="${service.id}"/></th>
-            <td><c:out value="${service.nameTariff}"/></td>
-            <td><c:out value="${service.idServices}"/></td>
-            <td><c:out value="${service.cost}"/> грн</td>
+            <th scope="row"><c:out value="${tariff.id}"/></th>
+            <td><c:out value="${tariff.nameTariff}"/></td>
+            <td><c:out value="${tariff.idServices}"/></td>
+            <td><c:out value="${tariff.cost}"/> грн</td>
             <td>
                 <form action="${pageContext.request.contextPath}/deleteTariff" method="post">
-                    <input type="number" hidden name="idTariff" value="${service.id}">
+                    <input type="number" hidden name="idTariff" value="${tariff.id}">
                     <input type="submit" value="Видалити тариф">
                 </form>
             </td>
@@ -39,16 +40,18 @@
 </table>
 <br/>
 
-<c:if test="${sessionScope.currentPage != 1}">
-    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${sessionScope.currentPage - 1}">Previous</a>
+<%--@elvariable id="currentPage" type="java.lang.Integer"--%>
+<c:if test="${currentPage != 1}">
+    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${currentPage - 1}">Previous</a>
     </td>
 </c:if>
 
 <table border="1" cellpadding="5" cellspacing="5">
     <tr>
-        <c:forEach begin="1" end="${sessionScope.noOfPages}" var="i">
+        <%--@elvariable id="noOfPages" type="java.lang.Integer"--%>
+        <c:forEach begin="1" end="${noOfPages}" var="i">
             <c:choose>
-                <c:when test="${sessionScope.currentPage eq i}">
+                <c:when test="${currentPage eq i}">
                     <td>${i}</td>
                 </c:when>
                 <c:otherwise>
@@ -58,9 +61,8 @@
         </c:forEach>
     </tr>
 </table>
-
-<c:if test="${sessionScope.currentPage lt sessionScope.noOfPages}">
-    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${sessionScope.currentPage + 1}">Next</a></td>
+<c:if test="${currentPage lt noOfPages}">
+    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${currentPage + 1}">Next</a></td>
 </c:if>
 
 <br/>

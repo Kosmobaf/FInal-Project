@@ -36,16 +36,16 @@
     </tr>
     </thead>
     <tbody>
-    <c:forEach var="service" items="${sessionScope.tariffListForService}">
+    <%--@elvariable id="tariffListForService" type="java.util.List"--%>
+    <c:forEach var="tariff" items="${tariffListForService}">
         <tr>
-            <th scope="row"> <c:out value="${service.nameTariff}"/></th>
-            <td><c:out value="${service.cost}"/> грн </td>
+            <th scope="row"> <c:out value="${tariff.nameTariff}"/></th>
+            <td><c:out value="${tariff.cost}"/> грн </td>
             <td>
                 <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
-                    <input type="number" hidden name="idTariff" value="${service.id}">
-                    <input type="submit" name="tariff" value="Вибрати">
+                    <input type="number" hidden name="idTariff" value="${tariff.id}">
+                    <input type="submit" value="Вибрати">
                 </form>
-
             </td>
         </tr>
     </c:forEach>

@@ -10,5 +10,5 @@ public interface TariffDao extends GenericDao<Tariff> {
 
     List<Tariff> findTariffsFromPage(int offset, int noOfRecords);
 
-    List<Tariff> findAllAndSorted(String sort);
+    List<Tariff> findAllTariffFromOneServiceAndSorted(long idService, String sort);
 }

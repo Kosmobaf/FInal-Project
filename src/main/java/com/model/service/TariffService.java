@@ -19,17 +19,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class TariffService {
     DaoFactory daoFactory = DaoFactory.getInstance();
 
-    public List<Tariff> getAllTariffByService(Long id) {
+    public List<Tariff> getAllTariffByServiceAndSort(Long idService, String sortCommand) {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
-            return dao.findAll().stream().
-                    filter(tariff -> tariff.getIdServices().equals(id)).
-                    collect(Collectors.toList());
+            return dao.findAllTariffFromOneServiceAndSorted(idService,sortCommand);
         }
     }
 
@@ -38,7 +35,8 @@ public class TariffService {
              UserOrderDao orderDao = daoFactory.createUserOrderDao()) {
 
             long idUser = userDao.findByLogin(login).getId();
-            String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern(Constants.YYYY_MM_DD_HH_MM_SS));
+            String date = LocalDateTime.now().
+                    format(DateTimeFormatter.ofPattern(Constants.YYYY_MM_DD_HH_MM_SS));
 
             if (checkTariff(idTariff, idUser)) {
                 return;
@@ -84,18 +82,7 @@ public class TariffService {
         }
     }
 
-    public List<Tariff> sortList(String sort) {
-        try (TariffDao dao = daoFactory.createTariffDao()) {
-
-            return dao.findAllAndSorted(sort);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        throw new RuntimeException();
-    }
-
-    public void addTariff(long idService, String nameTariff, BigDecimal cost) {
+      public void addTariff(long idService, String nameTariff, BigDecimal cost) {
         try (TariffDao dao = daoFactory.createTariffDao()) {
 
             Tariff tariff = new Tariff(nameTariff, idService, cost);

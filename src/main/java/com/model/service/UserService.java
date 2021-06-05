@@ -3,7 +3,6 @@ package com.model.service;
 import com.model.Status;
 import com.model.bean.UserOrderBean;
 import com.model.dao.DaoFactory;
-import com.model.dao.TariffDao;
 import com.model.dao.UserDao;
 import com.model.dao.impl.ConnectionPoolHolder;
 import com.model.dao.impl.JDBCTariffDao;
@@ -23,11 +22,11 @@ public class UserService {
 
     public List<User> getAllUsers() {
         List<User> userList;
-        try {
-            try (UserDao userDao = daoFactory.createUserDao()) {
-                userList = userDao.findAll();
-                return userList;
-            }
+
+        try (UserDao userDao = daoFactory.createUserDao()) {
+            userList = userDao.findAll();
+            return userList;
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,15 +127,9 @@ public class UserService {
 
             Objects.requireNonNull(connection).setAutoCommit(false);
 
-            try {
                 jdbcUserOrderDao.update(orderBean);
-            } catch (Exception e) {
-            }
 
-            try {
                 jdbcUserDao.update(user);
-            } catch (Exception e) {
-            }
 
             connection.commit();
 

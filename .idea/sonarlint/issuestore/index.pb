@@ -31,8 +31,6 @@ Asrc/main/java/com/controller/command/ChangeStatusUserCommand.java,d\1\d1986f51
 db-create.sql,b\9\b95be46045c1657543c21dd84e34d7ce34ddaa9a
 Z
 *src/main/java/com/model/entity/Entity.java,1\0\10240d95a991ce241cc941e7a2a90addfd36d7f8
-f
-6src/main/java/com/controller/command/LoginCommand.java,f\c\fcf6e2934491ae5299fe8a8c713eb3907be64772
 i
 9src/main/java/com/controller/command/ShowUserCommand.java,b\d\bd985bcab83c77b2170ddf0763a0ab839921c7b2
 `
@@ -47,10 +45,6 @@ g
 7src/main/java/com/model/dao/mapper/UserOrderMapper.java,4\7\47d7164e619a9eab80f3b8ec815fe98dbd4bb409
 m
 =src/main/java/com/controller/command/CreateTariffCommand.java,2\7\274d44ec36a1efbace13e61fd2e9f44ac4c3b7bb
-Q
-!src/main/webapp/WEB-INF/error.jsp,9\c\9cff433cd6572c1c2e3dada266b0f79a25f33fa0
-d
-4src/main/java/com/controller/filters/AuthFilter.java,4\c\4c598c46092791baa925ad6bf253a1ff0fd14a03
 j
 :src/main/java/com/controller/command/LoginPageCommand.java,a\1\a162555fffa5fa8544a2a2e4b1ead8b8ccf3e7cd
 a
@@ -69,8 +63,6 @@ t
 Dsrc/main/java/com/controller/command/DeleteTariffForUserCommand.java,5\f\5fa2c56b0f3bb828418cb8af319385cd300429af
 u
 Esrc/main/java/com/controller/command/DownloadFileServicesCommand.java,5\6\56dcb116d7a6e31924016ecad50d4d05b4f62423
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 `
 0src/main/java/com/model/constants/Constants.java,9\4\9476d2d83885f704f5ba6ac5f928a6eabcf689b1
 k

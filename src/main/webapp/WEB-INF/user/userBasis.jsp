@@ -52,7 +52,7 @@
                         <c:if test="${service.status.toString() == blocked}">
                             <form action="${pageContext.request.contextPath}/activateTariff" method="post">
                                 <input type="number" hidden name="idTariff" value="${service.tariffId}">
-                                <input type="submit" value="Активувати">
+                                <input type="submit" value="Оплатити">
                             </form>
                         </c:if>
                     </th>

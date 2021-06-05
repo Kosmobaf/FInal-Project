@@ -26,6 +26,8 @@ public class JDBCTariffDao implements TariffDao {
             "SELECT * FROM tariff WHERE id LIKE (?)";
     private static final String SQL_FIND_ALL_TARIFFS =
             "SELECT * FROM tariff";
+    private static final String SQL_FIND_ALL_TARIFFS_BY_SERVICE =
+            "SELECT * FROM tariff WHERE id_service = ?";
     public static final String SQL_FIND_TARIFF_BY_NAME =
             "SELECT * FROM tariff WHERE nameTariff LIKE (?)";
     public static final String SQL_FIND_ALL_TARIFFS_FOR_PAGE =
@@ -35,11 +37,11 @@ public class JDBCTariffDao implements TariffDao {
     public static final String SQL_DELETE_TARIFF_BY_ID =
             "DELETE FROM tariff WHERE id=?";
     private static final String SQL_FIND_ALL_TARIFFS_SORT_BY_NAME =
-            "SELECT * FROM tariff ORDER BY nameTariff";
+            "SELECT * FROM tariff WHERE id_service = ? ORDER BY nameTariff";
     private static final String SQL_FIND_ALL_TARIFFS_SORT_BY_NAME_REVERSE =
-            "SELECT * FROM tariff ORDER BY nameTariff DESC ";
+            "SELECT * FROM tariff WHERE id_service = ? ORDER BY nameTariff DESC ";
     private static final String SQL_FIND_ALL_TARIFFS_SORT_BY_COAST =
-            "SELECT * FROM tariff ORDER BY cost";
+            "SELECT * FROM tariff WHERE id_service = ? ORDER BY cost";
 
     @Override
     public void create(Tariff tariff) {
@@ -65,8 +67,7 @@ public class JDBCTariffDao implements TariffDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             close(resultSet);
         }
         throw new RuntimeException();
@@ -184,20 +185,22 @@ public class JDBCTariffDao implements TariffDao {
         throw new RuntimeException();
     }
 
-    public List<Tariff> findAllAndSorted(String sort) {
+    @Override
+    public List<Tariff> findAllTariffFromOneServiceAndSorted(long idService, String sort) {
         ResultSet resultSet = null;
         List<Tariff> tariffList = new ArrayList<>();
-        try (Statement st = connection.createStatement()) {
-
-            resultSet = st.executeQuery(SQL_FIND_ALL_TARIFFS);
+        PreparedStatement pst = null;
+        try {
+            pst = connection.prepareStatement(SQL_FIND_ALL_TARIFFS_BY_SERVICE);
             if (Constants.SORT_BY_NAME.equals(sort)) {
-                resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME));
+                pst = connection.prepareStatement((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME));
             } else if (Constants.SORT_BY_NAME_REVERSE.equals(sort)) {
-                resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME_REVERSE));
+                pst = connection.prepareStatement((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME_REVERSE));
             } else if (Constants.SORT_BY_COAST.equals(sort)) {
-                resultSet = st.executeQuery((SQL_FIND_ALL_TARIFFS_SORT_BY_COAST));
+                pst = connection.prepareStatement((SQL_FIND_ALL_TARIFFS_SORT_BY_COAST));
             }
-
+            pst.setLong(1,idService);
+            resultSet = pst.executeQuery();
             TariffMapper tariffMapper = new TariffMapper();
             while (resultSet.next()) {
                 tariffList.add(tariffMapper.extractFromResultSet(resultSet));
@@ -207,6 +210,8 @@ public class JDBCTariffDao implements TariffDao {
             LOGGER.severe(e.getMessage());
         } finally {
             close(resultSet);
+            close(pst);
+            close(connection);
         }
         throw new RuntimeException();
     }

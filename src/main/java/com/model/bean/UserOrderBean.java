@@ -4,7 +4,7 @@ import com.model.Status;
 import com.model.entity.Entity;
 
 /**
- * Records for virtual table: users_tariff
+ * Bean for virtual table: users_tariff
  */
 public class UserOrderBean extends Entity {
 

@@ -1,6 +1,6 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
+import com.controller.Path;
 import com.model.service.UserOrderBeanService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +14,6 @@ public class DeleteTariffForUserCommand implements Command {
         long idOrder = Long.parseLong(request.getParameter("idOrder"));
         beanService.deleteTariffForUser(idOrder);
 
-        return Constants.REDIRECT_USER_BASIS;
+        return Path.REDIRECT_USER_BASIS;
     }
 }

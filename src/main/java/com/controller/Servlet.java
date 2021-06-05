@@ -41,7 +41,7 @@ public class Servlet extends HttpServlet {
         commands.put("addTariff", new CreateTariffCommand());
         commands.put("showAllTariff", new ShowAllTariffCommand());
         commands.put("getAllUser", new GetAllUserCommand());
-        commands.put("deleteTariff" , new DeleteTariffCommand());
+        commands.put("deleteTariff", new DeleteTariffCommand());
     }
 
     public void doGet(HttpServletRequest request,
@@ -64,7 +64,15 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path,
                 (r, b) -> "/index.jsp");
         System.out.println(command.getClass().getName());
-        String page = command.execute(request, response);
+      //  try {
+            String page = command.execute(request, response);
+ /*       } catch (RuntimeException e) {
+            //TODO кастомний екс
+            e.printStackTrace();
+        }
+        catch (Exception e){
+            //thms when wrong
+      }*/
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/provider"));
         } else {

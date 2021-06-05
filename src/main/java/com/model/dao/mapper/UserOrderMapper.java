@@ -1,6 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.constants.TableName;
+import com.model.dao.TableName;
 import com.model.bean.UserOrderBean;
 
 import java.sql.ResultSet;

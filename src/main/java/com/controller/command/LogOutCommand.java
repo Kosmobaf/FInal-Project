@@ -1,7 +1,7 @@
 package com.controller.command;
 
+import com.controller.Path;
 import com.model.Role;
-import com.model.constants.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +25,6 @@ public class LogOutCommand implements Command {
             session.invalidate();
 
         CommandUtility.setUserRole(request, Role.UNKNOWN, "Guest");
-        return Constants.REDIRECT_INDEX_JSP;
+        return Path.REDIRECT_INDEX_JSP;
     }
 }

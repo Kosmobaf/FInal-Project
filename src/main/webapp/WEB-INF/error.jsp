@@ -12,11 +12,8 @@
 <body>
 <h2>
     Error Page<br/>
-    <i>Error <%= exception %></i>
-
 </h2>
-<c:set var="message" value="${sessionScope.errorMessage}"/>
-<h3>Message: ${message}</h3>
+<h3>Message: ${errorMessage}</h3>
 <br>
 <a href="${pageContext.request.contextPath}/index.jsp">Index</a>
 

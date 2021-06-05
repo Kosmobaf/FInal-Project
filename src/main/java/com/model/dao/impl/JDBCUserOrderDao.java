@@ -1,18 +1,21 @@
 package com.model.dao.impl;
 
+import com.controller.MyException;
 import com.model.bean.UserOrderBean;
 import com.model.dao.UserOrderDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.dao.mapper.UserOrderMapper;
 import com.model.entity.Tariff;
+import org.apache.log4j.Logger;
 
+import javax.ws.rs.InternalServerErrorException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 public class JDBCUserOrderDao implements UserOrderDao {
-    private static final Logger LOGGER = Logger.getLogger(JDBCUserOrderDao.class.getName());
+    private static final Logger log = Logger.getLogger(JDBCUserOrderDao.class);
     private final Connection connection;
 
     public JDBCUserOrderDao(Connection connection) {
@@ -63,7 +66,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
                     "JOIN services ON tariff.id_service = services.id WHERE users_orders.user_id LIKE (?)";
 
     @Override
-    public void create(UserOrderBean bean) {
+    public void create(UserOrderBean bean) throws MyException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_USERS_ORDERS)) {
             preparedStatement.setLong(1, bean.getUserId());
@@ -72,7 +75,9 @@ public class JDBCUserOrderDao implements UserOrderDao {
             preparedStatement.setString(4, bean.getDateAdd());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot create user-order " + bean, e);
         }
     }
 
@@ -88,8 +93,9 @@ public class JDBCUserOrderDao implements UserOrderDao {
                 return mapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
-
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
@@ -97,12 +103,14 @@ public class JDBCUserOrderDao implements UserOrderDao {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USERS_ORDERS_BY_ID)) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot delete user-order " + id, e);
         }
     }
 
@@ -119,11 +127,12 @@ public class JDBCUserOrderDao implements UserOrderDao {
             }
             return beans;
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        return null;
     }
 
     @Override
@@ -132,6 +141,7 @@ public class JDBCUserOrderDao implements UserOrderDao {
         List<UserOrderBean> beans = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USERS_ORDERS_BY_ID_USER)) {
+
             preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
             UserOrderMapper orderMapper = new UserOrderMapper();
@@ -142,12 +152,12 @@ public class JDBCUserOrderDao implements UserOrderDao {
             return beans;
 
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
             e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        return null;
     }
 
     @Override
@@ -156,19 +166,23 @@ public class JDBCUserOrderDao implements UserOrderDao {
         List<Tariff> tariffs = new ArrayList<>();
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_ALL_TARIFF_BY_ID_USER)) {
+
             preparedStatement.setLong(1, idUser);
             resultSet = preparedStatement.executeQuery();
             TariffMapper mapper = new TariffMapper();
+
             while (resultSet.next()) {
                 tariffs.add(mapper.extractFromResultSet(resultSet));
             }
             return tariffs;
+
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        return null;
     }
 
     @Override
@@ -180,12 +194,15 @@ public class JDBCUserOrderDao implements UserOrderDao {
             preparedStatement.setLong(2, idTariff);
             resultSet = preparedStatement.executeQuery();
             UserOrderMapper orderMapper = new UserOrderMapper();
+
             if (resultSet.next()) {
                 return orderMapper.extractFromResultSet(resultSet);
             }
+
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
             e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
@@ -193,17 +210,19 @@ public class JDBCUserOrderDao implements UserOrderDao {
     }
 
     @Override
-    public void deleteByIdTariff(long idTariff) {
+    public void deleteByIdTariff(long idTariff) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USERS_ORDERS_BY_ID_TARIFF)) {
             preparedStatement.setLong(1, idTariff);
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot delete user-order from idTariff " + idTariff, e);
         }
     }
 
     @Override
-    public void update(UserOrderBean bean) {
+    public void update(UserOrderBean bean) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USERS_ORDERS)) {
             preparedStatement.setLong(1, bean.getUserId());
             preparedStatement.setLong(2, bean.getTariffId());
@@ -212,7 +231,9 @@ public class JDBCUserOrderDao implements UserOrderDao {
             preparedStatement.setLong(5, bean.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot update user-order " + bean, e);
         }
     }
 
@@ -221,6 +242,8 @@ public class JDBCUserOrderDao implements UserOrderDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }

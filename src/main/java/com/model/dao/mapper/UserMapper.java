@@ -1,6 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.constants.TableName;
+import com.model.dao.TableName;
 import com.model.entity.User;
 
 import java.sql.ResultSet;

@@ -1,6 +1,6 @@
 package com.model.dao.mapper;
 
-import com.model.constants.TableName;
+import com.model.dao.TableName;
 import com.model.entity.Service;
 import java.sql.ResultSet;
 import java.sql.SQLException;

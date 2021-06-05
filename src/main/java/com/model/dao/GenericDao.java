@@ -1,18 +1,20 @@
 package com.model.dao;
 
+import com.controller.MyException;
+
 import java.util.List;
 
 
 public interface GenericDao<T> extends AutoCloseable {
-    void create(T entity);
+    void create(T entity) throws MyException;
 
     T findById(long id);
 
     List<T> findAll();
 
-    void update(T entity);
+    void update(T entity) throws MyException;
 
-    void delete(long id);
+    void delete(long id) throws MyException;
 
     void close();
 

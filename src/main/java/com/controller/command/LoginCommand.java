@@ -1,9 +1,9 @@
 package com.controller.command;
 
 
+import com.controller.Path;
 import com.model.Role;
 import com.model.Status;
-import com.model.constants.Constants;
 import com.model.entity.User;
 import com.model.service.UserService;
 
@@ -16,7 +16,7 @@ public class LoginCommand implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String errorMessage;
-        String forward = Constants.WEB_INF_ERROR_JSP;
+        String forward = Path.WEB_INF_ERROR_JSP;
         String login;
         String password;
         User user;
@@ -94,15 +94,15 @@ public class LoginCommand implements Command {
 
             CommandUtility.setUserRole(request, Role.ADMIN, login);
 
-            return Constants.REDIRECT_ADMIN_BASIS;
+            return Path.REDIRECT_ADMIN_BASIS;
         }
         if (userRole == Role.USER) {
 
             CommandUtility.setUserRole(request, Role.USER, login);
 
-            return Constants.REDIRECT_USER_BASIS;
+            return Path.REDIRECT_USER_BASIS;
         }
 
-        return Constants.WEB_INF_ERROR_JSP;
+        return Path.WEB_INF_ERROR_JSP;
     }
 }

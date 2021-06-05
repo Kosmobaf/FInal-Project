@@ -1,7 +1,7 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
-import com.model.constants.TableName;
+import com.controller.Path;
+import com.model.dao.TableName;
 import com.model.entity.User;
 import com.model.service.UserService;
 
@@ -25,6 +25,6 @@ public class CreateUserCommand implements Command {
             request.getSession().setAttribute("userList", userList);
             return "redirect:/createUser";
         }
-        return Constants.WEB_INF_ADMIN_CREATE_USER_JSP;
+        return Path.WEB_INF_ADMIN_CREATE_USER_JSP;
     }
 }

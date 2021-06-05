@@ -1,6 +1,6 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
+import com.controller.Path;
 import com.model.service.TariffService;
 import com.model.service.UserOrderBeanService;
 import com.model.service.UserService;
@@ -24,6 +24,6 @@ public class AddTariffWithServiceCommand implements Command {
         }
         //TODO добавити повідомлення якщо не достатньо коштів і послуга заблокована
 
-        return Constants.REDIRECT_USER_BASIS;
+        return Path.REDIRECT_USER_BASIS;
     }
 }

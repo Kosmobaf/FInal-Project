@@ -1,6 +1,6 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
+import com.controller.Path;
 import com.model.service.UserOrderBeanService;
 import com.model.service.UserService;
 
@@ -18,6 +18,6 @@ public class ActivateTariffCommand implements Command {
 
         userService.withdrawCashFromUser(login, idTariff);
 
-        return Constants.REDIRECT_USER_BASIS;
+        return Path.REDIRECT_USER_BASIS;
     }
 }

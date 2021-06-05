@@ -1,7 +1,7 @@
 package com.controller.command;
 
+import com.controller.Path;
 import com.model.Role;
-import com.model.constants.Constants;
 import com.model.entity.User;
 import com.model.service.UserService;
 
@@ -37,11 +37,11 @@ public class LoginPageCommand implements Command {
     private String moveToMenu(Role userRole) {
 
         if (userRole == Role.ADMIN) {
-            return Constants.REDIRECT_ADMIN_BASIS;
+            return Path.REDIRECT_ADMIN_BASIS;
         }
         if (userRole == Role.USER) {
-            return Constants.REDIRECT_USER_BASIS;
+            return Path.REDIRECT_USER_BASIS;
         }
-        return Constants.WEB_INF_ERROR_JSP;
+        return Path.WEB_INF_ERROR_JSP;
     }
 }

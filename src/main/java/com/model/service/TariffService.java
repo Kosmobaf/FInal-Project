@@ -2,7 +2,6 @@ package com.model.service;
 
 import com.model.Status;
 import com.model.bean.UserOrderBean;
-import com.model.constants.Constants;
 import com.model.dao.DaoFactory;
 import com.model.dao.TariffDao;
 import com.model.dao.UserDao;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class TariffService {
+    private static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     DaoFactory daoFactory = DaoFactory.getInstance();
 
     public List<Tariff> getAllTariffByServiceAndSort(Long idService, String sortCommand) {
@@ -36,7 +36,7 @@ public class TariffService {
 
             long idUser = userDao.findByLogin(login).getId();
             String date = LocalDateTime.now().
-                    format(DateTimeFormatter.ofPattern(Constants.YYYY_MM_DD_HH_MM_SS));
+                    format(DateTimeFormatter.ofPattern(YYYY_MM_DD_HH_MM_SS));
 
             if (checkTariff(idTariff, idUser)) {
                 return;
@@ -51,6 +51,8 @@ public class TariffService {
             orderDao.create(userOrderBean);
 
             new UserService().withdrawCashFromUser(login, idTariff);
+        } catch (com.controller.MyException e) {
+            e.printStackTrace();
         }
     }
 

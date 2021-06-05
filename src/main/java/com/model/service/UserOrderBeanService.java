@@ -6,6 +6,7 @@ import com.model.dao.DaoFactory;
 import com.model.dao.UserDao;
 import com.model.dao.UserOrderDao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserOrderBeanService {
@@ -21,11 +22,7 @@ public class UserOrderBeanService {
             userOrderBeans = orderDao.findAllOrdersByIdUser(id);
 
             return userOrderBeans;
-
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        throw new RuntimeException();
     }
 
     public List<UserOrderBean> getAllOrdersForUserById(Long idUser) {

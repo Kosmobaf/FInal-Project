@@ -1,7 +1,7 @@
 package com.controller.command;
 
+import com.controller.Path;
 import com.model.bean.UserOrderBean;
-import com.model.constants.Constants;
 import com.model.service.UserOrderBeanService;
 import com.model.service.UserService;
 
@@ -23,12 +23,14 @@ public class UserBasisCommand implements Command {
 
         try {
             userOrderList = orderBeanService.getAllOrdersForUserByLogin(login);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
+            request.setAttribute("errorMessage",e.getMessage());
+            return Path.WEB_INF_ERROR_JSP;
         }
 
         request.getSession().setAttribute("cash", cash);
         request.getSession().setAttribute("userOrderList", userOrderList);
-        return Constants.WEB_INF_USER_USERBASIS_JSP;
+        return Path.WEB_INF_USER_USERBASIS_JSP;
     }
 }

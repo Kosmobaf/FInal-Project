@@ -1,17 +1,21 @@
 package com.model.dao.impl;
 
-import com.model.constants.Constants;
+import com.controller.MyException;
 import com.model.dao.TariffDao;
 import com.model.dao.mapper.TariffMapper;
 import com.model.entity.Tariff;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class JDBCTariffDao implements TariffDao {
-    private static final Logger LOGGER = Logger.getLogger(JDBCTariffDao.class.getName());
+    private static final Logger log = Logger.getLogger(JDBCTariffDao.class);
+
+    private static final String SORT_BY_NAME = "sortByName";
+    private static final String SORT_BY_NAME_REVERSE = "sortByNameReverse";
+    private static final String SORT_BY_COAST = "sortByCoast";
 
     private final Connection connection;
 
@@ -44,7 +48,7 @@ public class JDBCTariffDao implements TariffDao {
             "SELECT * FROM tariff WHERE id_service = ? ORDER BY cost";
 
     @Override
-    public void create(Tariff tariff) {
+    public void create(Tariff tariff) throws MyException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_TARIFF)) {
             preparedStatement.setString(1, tariff.getNameTariff());
@@ -52,7 +56,9 @@ public class JDBCTariffDao implements TariffDao {
             preparedStatement.setBigDecimal(3, tariff.getCost());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot create tariff" + tariff, e);
         }
     }
 
@@ -67,6 +73,8 @@ public class JDBCTariffDao implements TariffDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
@@ -84,11 +92,13 @@ public class JDBCTariffDao implements TariffDao {
                 return tariffMapper.extractFromResultSet(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
@@ -103,11 +113,12 @@ public class JDBCTariffDao implements TariffDao {
             }
             return tariffList;
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
     }
 
     @Override
@@ -128,15 +139,16 @@ public class JDBCTariffDao implements TariffDao {
 
             return tariffList;
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
     }
 
     @Override
-    public void update(Tariff tariff) {
+    public void update(Tariff tariff) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_TARIFFS)) {
             preparedStatement.setString(1, tariff.getNameTariff());
             preparedStatement.setLong(2, tariff.getIdServices());
@@ -144,18 +156,21 @@ public class JDBCTariffDao implements TariffDao {
             preparedStatement.setLong(3, tariff.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot update tariff " + tariff, e);
         }
-        throw new RuntimeException();
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_TARIFF_BY_ID)) {
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot update tariff " + id, e);
         }
     }
 
@@ -164,25 +179,10 @@ public class JDBCTariffDao implements TariffDao {
         try {
             connection.close();
         } catch (SQLException e) {
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
-    }
-
-    public Tariff findByName(String nameTariff) {
-        ResultSet resultSet = null;
-        try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_TARIFF_BY_NAME)) {
-            preparedStatement.setString(1, nameTariff);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                TariffMapper tariffMapper = new TariffMapper();
-                return tariffMapper.extractFromResultSet(resultSet);
-            }
-        } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
-        } finally {
-            close(resultSet);
-        }
-        throw new RuntimeException();
     }
 
     @Override
@@ -191,28 +191,34 @@ public class JDBCTariffDao implements TariffDao {
         List<Tariff> tariffList = new ArrayList<>();
         PreparedStatement pst = null;
         try {
-            pst = connection.prepareStatement(SQL_FIND_ALL_TARIFFS_BY_SERVICE);
-            if (Constants.SORT_BY_NAME.equals(sort)) {
+
+            if (SORT_BY_NAME.equals(sort)) {
                 pst = connection.prepareStatement((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME));
-            } else if (Constants.SORT_BY_NAME_REVERSE.equals(sort)) {
+            } else if (SORT_BY_NAME_REVERSE.equals(sort)) {
                 pst = connection.prepareStatement((SQL_FIND_ALL_TARIFFS_SORT_BY_NAME_REVERSE));
-            } else if (Constants.SORT_BY_COAST.equals(sort)) {
+            } else if (SORT_BY_COAST.equals(sort)) {
                 pst = connection.prepareStatement((SQL_FIND_ALL_TARIFFS_SORT_BY_COAST));
+            } else {
+                pst = connection.prepareStatement(SQL_FIND_ALL_TARIFFS_BY_SERVICE);
             }
-            pst.setLong(1,idService);
+
+            pst.setLong(1, idService);
             resultSet = pst.executeQuery();
+
             TariffMapper tariffMapper = new TariffMapper();
             while (resultSet.next()) {
                 tariffList.add(tariffMapper.extractFromResultSet(resultSet));
             }
             return tariffList;
+
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
             close(pst);
             close(connection);
         }
-        throw new RuntimeException();
     }
 }

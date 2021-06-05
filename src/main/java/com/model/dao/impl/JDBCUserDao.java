@@ -1,25 +1,28 @@
 package com.model.dao.impl;
 
+import com.controller.MyException;
 import com.model.Status;
 import com.model.dao.UserDao;
 import com.model.dao.mapper.UserMapper;
 import com.model.entity.User;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class JDBCUserDao implements UserDao {
+    private static final Logger log = Logger.getLogger(JDBCUserDao.class);
+
     private final Connection connection;
+
 
     public JDBCUserDao(Connection connection) {
         this.connection = connection;
     }
 
-    private static final Logger LOGGER = Logger.getLogger(JDBCUserDao.class.getName());
     private static final String SQL_INSERT_USER =
-            "INSERT INTO users (login,password,typeUser,cash) VALUES (?,?,?,?,?)";
+            "INSERT INTO users (login,password,typeUser,cash,status) VALUES (?,?,?,?,?)";
     public static final String SQL_FIND_USER_BY_ID =
             "SELECT * FROM users WHERE id LIKE (?)";
     public static final String SQL_FIND_USER_BY_LOGIN =
@@ -32,7 +35,7 @@ public class JDBCUserDao implements UserDao {
             "DELETE FROM users WHERE id=?";
 
     @Override
-    public void create(User user) {
+    public void create(User user) throws MyException {
         try (PreparedStatement preparedStatement =
                      connection.prepareStatement(SQL_INSERT_USER)) {
             preparedStatement.setString(1, user.getLogin());
@@ -42,7 +45,9 @@ public class JDBCUserDao implements UserDao {
             preparedStatement.setString(5, Status.ACTIVE.getName());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot create user " + user, e);
         }
     }
 
@@ -50,32 +55,38 @@ public class JDBCUserDao implements UserDao {
     public User findById(long id) {
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_ID)) {
+
             preparedStatement.setLong(1, id);
             resultSet = preparedStatement.executeQuery();
+
             if (resultSet.next()) {
                 UserMapper userMapper = new UserMapper();
                 return userMapper.extractFromResultSet(resultSet);
             }
-        } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_DELETE_USER_BY_ID)) {
+
             preparedStatement.setLong(1, id);
             preparedStatement.execute();
 
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot delete user " + id, e);
         }
     }
-
 
     @Override
     public List<User> findAll() {
@@ -92,26 +103,30 @@ public class JDBCUserDao implements UserDao {
             return userList;
 
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
-
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RuntimeException();
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
     }
 
     @Override
-    public void update(User entity) {
+    public void update(User user) throws MyException {
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_USER)) {
-            preparedStatement.setString(1, entity.getLogin());
-            preparedStatement.setString(2, entity.getPassword());
-            preparedStatement.setString(3, entity.getRole().getName());
-            preparedStatement.setBigDecimal(4, entity.getCash());
-            preparedStatement.setString(5,entity.getStatus().getName());
-            preparedStatement.setLong(6, entity.getId());
+
+            preparedStatement.setString(1, user.getLogin());
+            preparedStatement.setString(2, user.getPassword());
+            preparedStatement.setString(3, user.getRole().getName());
+            preparedStatement.setBigDecimal(4, user.getCash());
+            preparedStatement.setString(5, user.getStatus().getName());
+            preparedStatement.setLong(6, user.getId());
             preparedStatement.execute();
+
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new MyException("Cannot update user " + user, e);
         }
     }
 
@@ -119,6 +134,7 @@ public class JDBCUserDao implements UserDao {
     public User findByLogin(String login) {
         ResultSet resultSet = null;
         try (PreparedStatement preparedStatement = connection.prepareStatement(SQL_FIND_USER_BY_LOGIN)) {
+
             preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
 
@@ -128,12 +144,12 @@ public class JDBCUserDao implements UserDao {
             }
 
         } catch (SQLException e) {
-            LOGGER.severe(e.getMessage());
-
+            e.printStackTrace();
+            log.error(e.getMessage(), e);
         } finally {
             close(resultSet);
         }
-        throw new RuntimeException();
+        return null;
     }
 
     @Override
@@ -142,6 +158,7 @@ public class JDBCUserDao implements UserDao {
             connection.close();
         } catch (SQLException e) {
             e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
     }
 }

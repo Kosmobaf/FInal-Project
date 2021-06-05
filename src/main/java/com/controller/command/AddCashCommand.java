@@ -1,6 +1,6 @@
 package com.controller.command;
 
-import com.model.constants.Constants;
+import com.controller.Path;
 import com.model.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class AddCashCommand implements Command {
 
                 String errorMessage = "Incorrect input";
                 request.getSession().setAttribute("errorMessage", errorMessage);
-                return Constants.WEB_INF_ERROR_JSP;
+                return Path.WEB_INF_ERROR_JSP;
             }
             String login = (String) request.getSession().getAttribute("login");
             service.addCashFromUser(login, inputCash);

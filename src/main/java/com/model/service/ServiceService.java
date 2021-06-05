@@ -1,6 +1,5 @@
 package com.model.service;
 
-import com.model.constants.Constants;
 import com.model.dao.DaoFactory;
 import com.model.dao.ServiceDao;
 import com.model.dao.TariffDao;
@@ -13,13 +12,20 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class ServiceService {
+    private static final Logger LOGGER = Logger.getLogger(ServiceService.class.getName());
+
+    private static final String SPAYS2 = " - ";
+    private static final String UAH = " UAH";
+    private static final String SPAYS = "         ";
+    private static final String TARIFF = "-Tariff: ";
+    private static final String SERVICE = "Service: ";
+    private static final String SERVICES_TXT = "Services.txt";
 
     DaoFactory daoFactory = DaoFactory.getInstance();
-    private static final Logger LOGGER = Logger.getLogger(ServiceService.class.getName());
 
     public void exportServicesToFile() {
 
-        File file = new File(Constants.SERVICES_TXT);
+        File file = new File(SERVICES_TXT);
         file.delete();
 
         try (PrintWriter writer = new PrintWriter(file);
@@ -30,13 +36,13 @@ public class ServiceService {
             List<Service> serviceList = serviceDao.findAll();
 
             for (Service service : serviceList) {
-                writer.println(Constants.SERVICE + service.getNameService());
-                writer.println(Constants.TARIFF);
+                writer.println(SERVICE + service.getNameService());
+                writer.println(TARIFF);
                 List<Tariff> tariffList = tariffDao.findAll();
 
                 for (Tariff tariff : tariffList) {
                     if (tariff.getIdServices().equals(service.getId())) {
-                        writer.println(Constants.SPAYS + tariff.getNameTariff() + Constants.SPAYS2 + tariff.getCost() + Constants.UAH);
+                        writer.println(SPAYS + tariff.getNameTariff() + SPAYS2 + tariff.getCost() + UAH);
                     }
                 }
                 writer.println();

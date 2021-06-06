@@ -93,13 +93,11 @@ public class LoginCommand implements Command {
         if (userRole == Role.ADMIN) {
 
             CommandUtility.setUserRole(request, Role.ADMIN, login);
-
             return Path.REDIRECT_ADMIN_BASIS;
         }
         if (userRole == Role.USER) {
 
             CommandUtility.setUserRole(request, Role.USER, login);
-
             return Path.REDIRECT_USER_BASIS;
         }
 

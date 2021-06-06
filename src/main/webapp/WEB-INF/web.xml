@@ -1,12 +1,18 @@
-<web-app  version="3.0">
+<web-app version="3.0">
     <display-name>Archetype Created Web Application</display-name>
 
+    <!--============================================================
+        Data Source
+    =============================================================-->
     <resource-ref>
         <description>MySQL Datasource</description>
         <res-ref-name>jdbc/provider</res-ref-name>
         <res-type>javax.sql.DataSource</res-type>
         <res-auth>Container</res-auth>
     </resource-ref>
+    <!--============================================================
+	    Controller
+    =============================================================-->
     <servlet>
         <servlet-name>Servlet</servlet-name>
         <servlet-class>com.controller.Servlet</servlet-class>
@@ -18,42 +24,49 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <error-page>
-        <exception-type>java.lang.Exception</exception-type>
-        <location>/WEB-INF/error.jsp</location>
-    </error-page>
+
+    <!--============================================================
+        Filter
+    =============================================================-->
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>com.controller.filters.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>com.controller.filters.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>/</url-pattern>
+    </filter-mapping>
+    <!--============================================================
+        Session listener
+    =============================================================-->
+    <listener>
+        <listener-class>
+            com.controller.listener.ContextListener
+        </listener-class>
+    </listener>
+    <!--============================================================
+        Context listener
+    =============================================================-->
     <listener>
         <listener-class>
             com.controller.listener.SessionListener
         </listener-class>
     </listener>
-     <filter>
-         <filter-name>EncodingFilter</filter-name>
-         <filter-class>com.controller.filters.EncodingFilter</filter-class>
-     </filter>
-     <filter-mapping>
-         <filter-name>EncodingFilter</filter-name>
-         <url-pattern>/</url-pattern>
-     </filter-mapping>
-     <filter>
-         <filter-name>AuthFilter</filter-name>
-         <filter-class>com.controller.filters.AuthFilter</filter-class>
-     </filter>
-     <filter-mapping>
-         <filter-name>AuthFilter</filter-name>
-         <url-pattern>/*</url-pattern>
-     </filter-mapping>
 
-    <!-- this way we set the default locale (optional) -->
-    <!-- the (preferable) browser's locale will be used if we don't set the default locale -->
-    <context-param>
-        <param-name>javax.servlet.jsp.jstl.fmt.locale</param-name>
-        <param-value>ua</param-value>
-    </context-param>
-    <!-- supported locales -->
-    <context-param>
-        <param-name>locales</param-name>
-        <param-value>ua en</param-value>
-    </context-param>
-
+    <!--============================================================
+        Error page
+    =============================================================-->
+    <error-page>
+        <exception-type>java.lang.Exception</exception-type>
+        <location>/WEB-INF/error.jsp</location>
+    </error-page>
 </web-app>

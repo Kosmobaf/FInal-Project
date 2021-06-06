@@ -66,7 +66,7 @@ public class Servlet extends HttpServlet {
         Command command = commands.getOrDefault(path,
                 (r, b) -> "/index.jsp");
         System.out.println(command.getClass().getName());
-        String page = Path.INDEX_JSP;
+        String page;
         try {
             page = command.execute(request, response);
         } catch (MyException e) {

@@ -13,7 +13,7 @@ class CommandUtility {
         HttpSession session = request.getSession();
         ServletContext context = request.getServletContext();
         context.setAttribute("login", login);
-        session.setAttribute("role", role);
+        session.setAttribute("userRole", role);
     }
 
     static boolean checkUserIsLogged(HttpServletRequest request, String login) {

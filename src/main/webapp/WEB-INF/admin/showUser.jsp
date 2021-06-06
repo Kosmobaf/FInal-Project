@@ -1,5 +1,5 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
+<%@ include file="/WEB-INF/directive/taglib.jspf" %>
 <html>
 <head>
     <title>Create User</title>
@@ -27,6 +27,7 @@
     </tr>
     </thead>
     <tbody>
+    <%--@elvariable id="userOrderList" type="java.util.List"--%>
     <c:forEach var="tariff" items="${userOrderList}">
         <tr>
             <th scope="row"><c:out value="${ tariff .nameService}"/></th>

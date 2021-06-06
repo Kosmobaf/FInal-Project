@@ -1,6 +1,5 @@
 package com.controller.listener;
 
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import javax.servlet.ServletContext;
@@ -13,8 +12,6 @@ import javax.servlet.ServletContextListener;
  * @author V.Lytvynuk
  */
 public class ContextListener implements ServletContextListener {
-
-    private static final Logger log = Logger.getLogger(ContextListener.class);
 
     @Override
     public void contextDestroyed(ServletContextEvent event) {

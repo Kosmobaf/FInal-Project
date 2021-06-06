@@ -3,7 +3,7 @@ package com.model;
 import com.model.entity.User;
 
 public enum Role {
-    ADMIN, USER, UNKNOWN;
+    ADMIN, USER;
 
     public static Role getRole(User user) {
         String role = user.getRole().getName();

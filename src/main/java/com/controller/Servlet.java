@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+/**
+ * Main servlet controller.
+ *
+ * @author V.Lytvynuk
+ */
 public class Servlet extends HttpServlet {
     private final Map<String, Command> commands = new HashMap<>();
 
@@ -23,25 +28,24 @@ public class Servlet extends HttpServlet {
         servletConfig.getServletContext()
                 .setAttribute("loggedUsers", new HashSet<String>());
 
-        commands.put("logout", new LogOutCommand());
         commands.put("login", new LoginCommand());
+        commands.put("logout", new LogOutCommand());
+        commands.put("getAllUser", new GetAllUserCommand());
+        commands.put("changeStatusUser", new ChangeStatusUserCommand());
         commands.put("adminBasis", new AdminBasisCommand());
-        commands.put("getFileServices", new DownloadFileServicesCommand());
+        commands.put("showUser", new ShowUserCommand());
+        commands.put("showAllTariff", new ShowAllTariffCommand());
         commands.put("createUser", new CreateUserCommand());
-        commands.put("getAllService", new GetAllServiceCommand());
+        commands.put("addTariff", new CreateTariffCommand());
+        commands.put("userBasis", new UserBasisCommand());
+        commands.put("deleteTariff", new DeleteTariffCommand());
         commands.put("addTariffWithService", new AddTariffWithServiceCommand());
         commands.put("getAllTariffList", new GetAllTariffByServiceCommand());
-        commands.put("userBasis", new UserBasisCommand());
         commands.put("addCash", new AddCashCommand());
         commands.put("deleteTariffFromUser", new DeleteTariffForUserCommand());
         commands.put("activateTariff", new ActivateTariffCommand());
-        commands.put("loginPage", new LoginPageCommand());
-        commands.put("showUser", new ShowUserCommand());
-        commands.put("changeStatusUser", new ChangeStatusUserCommand());
-        commands.put("addTariff", new CreateTariffCommand());
-        commands.put("showAllTariff", new ShowAllTariffCommand());
-        commands.put("getAllUser", new GetAllUserCommand());
-        commands.put("deleteTariff", new DeleteTariffCommand());
+        commands.put("getFileServices", new DownloadFileServicesCommand());
+        commands.put("getAllService", new GetAllServiceCommand());
     }
 
     @Override
@@ -58,6 +62,9 @@ public class Servlet extends HttpServlet {
         processRequest(request, response);
     }
 
+    /**
+     * Main method of this controller.
+     */
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String path = request.getRequestURI();
@@ -70,7 +77,7 @@ public class Servlet extends HttpServlet {
         try {
             page = command.execute(request, response);
         } catch (MyException e) {
-            request.setAttribute("errorMessage",e.getMessage());
+            request.setAttribute("errorMessage", e.getMessage());
             page = Path.WEB_INF_ERROR_JSP;
         } catch (Exception e) {
             page = Path.WEB_INF_ERROR_JSP;

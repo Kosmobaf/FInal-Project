@@ -11,7 +11,7 @@
 <body>
 <h1>Головна сторінка</h1><br/>
 <br/>
-<h3><a href="${pageContext.request.contextPath}/loginPage">Вхід до особистого кабінету</a></h3>
+<h3><a href="${pageContext.request.contextPath}/login">Вхід до особистого кабінету</a></h3>
 
 </body>
 </html>

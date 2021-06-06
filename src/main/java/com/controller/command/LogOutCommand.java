@@ -24,7 +24,6 @@ public class LogOutCommand implements Command {
         if (session != null)
             session.invalidate();
 
-        CommandUtility.setUserRole(request, Role.UNKNOWN, "Guest");
         return Path.REDIRECT_INDEX_JSP;
     }
 }

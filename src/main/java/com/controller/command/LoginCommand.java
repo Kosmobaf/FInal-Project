@@ -17,30 +17,19 @@ public class LoginCommand implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         String errorMessage;
         String forward = Path.WEB_INF_ERROR_JSP;
-        String login;
-        String password;
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
         User user;
         Role userRole;
 
-// check whether the user has logged out
 
-        login = (String) request.getSession().getAttribute("login");
-        password = (String) request.getSession().getAttribute("");
-        if (login != null || password != null) {
-            user = service.getUser(login);
-            userRole = user.getRole();
-
-            return moveToMenu(request, login, userRole);
+        if (login == null || password == null) {
+            return Path.WEB_INF_LOGIN_JSP;
         }
-
-// obtain login and password from the request
-
-        login = request.getParameter("login");
-        password = request.getParameter("password");
 
 // data validation check
 
-        if (login == null || password == null || login.isEmpty() || password.isEmpty()) {
+        if (login.isEmpty() || password.isEmpty()) {
             errorMessage = "Login/password cannot be empty";
             request.getSession().setAttribute("errorMessage", errorMessage);
 

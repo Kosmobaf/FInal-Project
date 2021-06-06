@@ -47,22 +47,24 @@ public class CommandAccessFilter implements Filter {
             request.getRequestDispatcher(Path.WEB_INF_ERROR_JSP)
                     .forward(request, response);
         }
+
     }
 
     private boolean accessAllowed(ServletRequest request) {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpSession session = httpRequest.getSession(false);
 
         String commandName = httpRequest.getRequestURI();
         commandName = commandName.replaceAll(".*/", "");
 
-        if (outOfControl.contains(commandName))
-            return true;
-
-        HttpSession session = httpRequest.getSession(false);
         if (session == null)
             return false;
 
         Role userRole = (Role) session.getAttribute("userRole");
+
+        if (outOfControl.contains(commandName) && userRole == null)
+            return true;
+
         if (userRole == null)
             return false;
 

@@ -7,6 +7,7 @@ public final class Path {
     public static final String WEB_INF_ADMIN_SHOW_ALL_TARIFF_JSP = "WEB-INF/admin/showAllTariff.jsp";
     public static final String WEB_INF_ADMIN_SHOW_USER_JSP = "WEB-INF/admin/showUser.jsp";
     public static final String INDEX_JSP = "index.jsp";
+    public static final String WEB_INF_LOGIN_JSP = "/WEB-INF/login.jsp";
 
     private Path() {
     }

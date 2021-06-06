@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" language="java" %>
-<%@ include file="/WEB-INF/directive/taglib.jspf" %>
+<%@ include file="/WEB-INF/jspf/taglib.jspf" %>
 <html>
 <head>
     <title>Login in system</title>

@@ -9,16 +9,16 @@
 </head>
 <body>
 
-<h1>Список користувачів</h1>
+<h1><fmt:message key="showAllUsers_jsp.header.list_users"/></h1>
 
 <table class="table table-striped">
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Логин</th>
-        <th scope="col">Тип користувача</th>
-        <th scope="col">Кошти</th>
-        <th scope="col">Деталі</th>
+        <th scope="col"><fmt:message key="showAllUsers_jsp.table.login"/></th>
+        <th scope="col"><fmt:message key="showAllUsers_jsp.table.role"/></th>
+        <th scope="col"><fmt:message key="showAllUsers_jsp.table.cash"/></th>
+        <th scope="col"><fmt:message key="showAllUsers_jsp.button.show"/></th>
     </tr>
     </thead>
     <tbody>
@@ -28,11 +28,11 @@
             <td><c:out value="${user.id}"/></td>
             <td><c:out value="${user.login}"/></td>
             <td><c:out value="${user.role.toString()}"/></td>
-            <td><c:out value="${user.cash}"/> грн</td>
+            <td><c:out value="${user.cash}"/> <fmt:message key="currency"/></td>
             <td>
                 <form action="${pageContext.request.contextPath}/showUser" method="get">
                     <input type="number" hidden name="idUser" value="${user.id}">
-                    <input type="submit" value="Деталі">
+                    <input type="submit" value="<fmt:message key="showAllUsers_jsp.button.show"/>">
                 </form>
 
             </td>
@@ -40,9 +40,9 @@
     </c:forEach>
     </tbody>
 </table>
-<a href="${pageContext.request.contextPath}/createUser">Створити користувача</a>
+<a href="${pageContext.request.contextPath}/createUser"><fmt:message key="showAllUsers_jsp.href.create_user"/></a>
 
-<p><a href="${pageContext.request.contextPath}/adminBasis">Повернутись на головну сторінку</a></p>
-<a href="${pageContext.request.contextPath}/logout">Вихід</a>
+<p><a href="${pageContext.request.contextPath}/adminBasis"><fmt:message key="admin_main"/></a></p>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
 </body>
 </html>

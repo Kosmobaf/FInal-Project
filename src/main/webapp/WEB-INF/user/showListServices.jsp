@@ -9,12 +9,12 @@
 </head>
 <body>
 
-<h1>Список послуг</h1>
+<h1><fmt:message key="showListServices_jsp.header.list_services"/></h1>
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Назва послуги</th>
-        <th scope="col">Вибрати</th>
+        <th scope="col"><fmt:message key="table.name"/></th>
+        <th scope="col"><fmt:message key="choose"/></th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
             <td>
                 <form method="post" action="${pageContext.request.contextPath}/getAllTariffList">
                     <input type="number" hidden name="idService" value="${service.id}">
-                    <input type="submit" name="service" value="Вибрати">
+                    <input type="submit" name="service" value="<fmt:message key="choose"/>">
                 </form>
             </td>
         </tr>
@@ -34,7 +34,7 @@
 </table>
 
 <br/>
-<a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a><br/>
-<a href="${pageContext.request.contextPath}/logout "> Вихід</a>
+<a href="${pageContext.request.contextPath}/userBasis "><fmt:message key="user_main"/></a><br/>
+<a href="${pageContext.request.contextPath}/logout "><fmt:message key="logout"/></a>
 </body>
 </html>

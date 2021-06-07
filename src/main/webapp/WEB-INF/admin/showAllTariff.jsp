@@ -14,10 +14,10 @@
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Назва тарифу</th>
-        <th scope="col">Id сервіса</th>
-        <th scope="col">Вартість</th>
-        <th scope="col">Видалити тариф</th>
+        <th scope="col"><fmt:message key="table.name"/></th>
+        <th scope="col"><fmt:message key="showAllTariff_jsp.table.id_service"/></th>
+        <th scope="col"><fmt:message key="showListTariff_jsp.table.cost"/></th>
+        <th scope="col"><fmt:message key="showAllTariff_jsp.table.id_service"/></th>
     </tr>
     </thead>
     <tbody>
@@ -27,11 +27,11 @@
             <th scope="row"><c:out value="${tariff.id}"/></th>
             <td><c:out value="${tariff.nameTariff}"/></td>
             <td><c:out value="${tariff.idServices}"/></td>
-            <td><c:out value="${tariff.cost}"/> грн</td>
+            <td><c:out value="${tariff.cost}"/> <fmt:message key="currency"/></td>
             <td>
                 <form action="${pageContext.request.contextPath}/deleteTariff" method="post">
                     <input type="number" hidden name="idTariff" value="${tariff.id}">
-                    <input type="submit" value="Видалити тариф">
+                    <input type="submit" value="<fmt:message key="showAllTariff_jsp.button.del_tariff"/>">
                 </form>
             </td>
         </tr>
@@ -42,7 +42,7 @@
 
 <%--@elvariable id="currentPage" type="java.lang.Integer"--%>
 <c:if test="${currentPage != 1}">
-    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${currentPage - 1}">Previous</a>
+    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${currentPage - 1}"><fmt:message key="previous"/></a>
     </td>
 </c:if>
 
@@ -62,16 +62,16 @@
     </tr>
 </table>
 <c:if test="${currentPage lt noOfPages}">
-    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${currentPage + 1}">Next</a></td>
+    <td><a href="${pageContext.request.contextPath}/showAllTariff?page=${currentPage + 1}"><fmt:message key="next"/></a></td>
 </c:if>
 
 <br/>
 <form action="${pageContext.request.contextPath}/addTariff" method="post">
-    <input type="submit" value="Добавити тариф">
+    <input type="submit" value="<fmt:message key="showAllTariff_jsp.button.add_tariff"/>">
 </form>
 <br/>
-<p><a href="${pageContext.request.contextPath}/adminBasis">Повернутись на головну сторінку</a></p>
-<a href="${pageContext.request.contextPath}/logout">Вихід</a>
+<p><a href="${pageContext.request.contextPath}/adminBasis"><fmt:message key="admin_main"/></a></p>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
 
 </body>
 </html>

@@ -1,7 +1,5 @@
 package com.model.dao;
 
-import org.apache.log4j.Logger;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
@@ -10,7 +8,6 @@ public final class ConnectionPoolHolder {
     private ConnectionPoolHolder() {
     }
 
-    private static final Logger log = Logger.getLogger(ConnectionPoolHolder.class);
     private static volatile DataSource dataSource;
 
     public static DataSource getDataSource() {
@@ -24,7 +21,6 @@ public final class ConnectionPoolHolder {
                         dataSource = (DataSource) context.lookup("java:comp/env/jdbc/provider");
                     } catch (Exception e) {
                         e.printStackTrace();
-                        log.error(e.getMessage(), e);
                         throw new RuntimeException();
                     }
                 }

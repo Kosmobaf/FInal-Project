@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>Список тарифів</h1>
+<h1><fmt:message key="showListTariff_jsp.header.list_tariffs"/></h1>
 
 <div class="container">
     <div class="row">
@@ -17,12 +17,12 @@
         <div class="col-4">
             <form action="${pageContext.request.contextPath}/getAllTariffList" method="get">
                 <select name="sortCommand" class="form-select">
-                    <option selected>Сортування</option>
-                    <option value="sortByName">По назві</option>
-                    <option value="sortByNameReverse">По назві у зворотньому порядку</option>
-                    <option value="sortByCoast">По ціні</option>
+                    <option selected><fmt:message key="showListTariff_jsp.selected.sorting"/></option>
+                    <option value="sortByName"><fmt:message key="showListTariff_jsp.selected.sortByName"/></option>
+                    <option value="sortByNameReverse"><fmt:message key="showListTariff_jsp.selected.sortByNameReverse"/></option>
+                    <option value="sortByCoast"><fmt:message key="showListTariff_jsp.selected.sortByCost"/></option>
                 </select>
-                <button type="submit" class="btn btn-primary mb-3">Сортувати</button>
+                <button type="submit" class="btn btn-primary mb-3"><fmt:message key="showListTariff_jsp.selected.sort"/></button>
             </form>
         </div>
     </div>
@@ -30,9 +30,9 @@
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Назва тарифу</th>
-        <th scope="col">Вартість</th>
-        <th scope="col">Вибрати</th>
+        <th scope="col"><fmt:message key="table.name"/></th>
+        <th scope="col"><fmt:message key="showListTariff_jsp.table.cost"/></th>
+        <th scope="col"><fmt:message key="choose"/></th>
     </tr>
     </thead>
     <tbody>
@@ -40,11 +40,11 @@
     <c:forEach var="tariff" items="${tariffListForService}">
         <tr>
             <th scope="row"> <c:out value="${tariff.nameTariff}"/></th>
-            <td><c:out value="${tariff.cost}"/> грн </td>
+            <td><c:out value="${tariff.cost}"/> <fmt:message key="currency"/> </td>
             <td>
                 <form action="${pageContext.request.contextPath}/addTariffWithService" method="post">
                     <input type="number" hidden name="idTariff" value="${tariff.id}">
-                    <input type="submit" value="Вибрати">
+                    <input type="submit" value="<fmt:message key="choose"/>">
                 </form>
             </td>
         </tr>
@@ -52,7 +52,7 @@
     </tbody>
 </table>
 
-<a href="${pageContext.request.contextPath}/userBasis "> На головну сторінку користувача</a><br/>
-<a href="${pageContext.request.contextPath}/logout "> Logout</a>
+<a href="${pageContext.request.contextPath}/userBasis "><fmt:message key="user_main"/></a><br/>
+<a href="${pageContext.request.contextPath}/logout "> <fmt:message key="logout"/></a>
 </body>
 </html>

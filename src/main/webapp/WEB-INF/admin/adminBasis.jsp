@@ -7,10 +7,10 @@
 </head>
 <body>
 
-<h1>Привіт Адмін!</h1>
+<h1><fmt:message key="adminBasis_jsp.header.main_page"/></h1>
 
-<p> <a href="${pageContext.request.contextPath}/getAllUser">Подивитись всіх користувачів</a></p>
-<p> <a href="${pageContext.request.contextPath}/showAllTariff">Подивитись всі тарифи</a></p>
-<a href="${pageContext.request.contextPath}/logout">Вихід</a>
+<p> <a href="${pageContext.request.contextPath}/getAllUser"><fmt:message key="adminBasis_jsp.ref.show_all_user"/></a></p>
+<p> <a href="${pageContext.request.contextPath}/showAllTariff"><fmt:message key="adminBasis_jsp.ref.show_all_tariff"/></a></p>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
 </body>
 </html>

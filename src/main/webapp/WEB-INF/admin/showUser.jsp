@@ -11,19 +11,19 @@
 <h3>
     <c:choose>
         <c:when test="${userOrderList.size() > 0}">
-            Замовлені послуги<br/>
+            <fmt:message key="userBasis_jsp.header.ordered"/><br/>
         </c:when>
         <c:otherwise>
-            Послуги ще не замовлені
+            <fmt:message key="userBasis_jsp.header.unordered"/>
         </c:otherwise>
     </c:choose>
 </h3>
 <table class="table table-striped">
     <thead>
     <tr>
-        <th scope="col">Послуга</th>
-        <th scope="col">Тариф</th>
-        <th scope="col">Статус</th>
+        <th scope="col"><fmt:message key="showUser_jsp.table.service"/></th>
+        <th scope="col"><fmt:message key="showUser_jsp.table.tariff"/></th>
+        <th scope="col"><fmt:message key="showUser_jsp.table.status"/></th>
     </tr>
     </thead>
     <tbody>
@@ -39,27 +39,27 @@
 </table>
 <br/>
 <%--@elvariable id="user" type="com.model.entity.User"--%>
-Cтатус користувача - ${user.status.name()}
+<fmt:message key="showUser_jsp.header.status"/> - ${user.status.name()}
 <br/>
 
 <c:choose>
     <c:when test="${user.status.name() == 'blocked'}">
         <form action="${pageContext.request.contextPath}/changeStatusUser" method="post">
             <input type="number" hidden name="idUser" value="${user.id}">
-            <input type="submit" value="Активувати">
+            <input type="submit" value="<fmt:message key="showUser_jsp.button.activate"/>">
         </form>
     </c:when>
     <c:otherwise>
         <form action="${pageContext.request.contextPath}/changeStatusUser" method="post">
             <input type="number" hidden name="idUser" value="${user.id}">
-            <input type="submit" value="Заблокувати">
+            <input type="submit" value="<fmt:message key="showUser_jsp.button.block"/>">
         </form>
     </c:otherwise>
 </c:choose>
 <br/>
 
-<p><a href="${pageContext.request.contextPath}/adminBasis">Повернутись на головну сторінку</a></p>
-<a href="${pageContext.request.contextPath}/logout">Вихід</a>
+<p><a href="${pageContext.request.contextPath}/adminBasis"><fmt:message key="admin_main"/></a></p>
+<a href="${pageContext.request.contextPath}/logout"><fmt:message key="logout"/></a>
 
 </body>
 </html>

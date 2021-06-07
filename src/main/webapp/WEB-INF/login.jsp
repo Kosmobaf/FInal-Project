@@ -9,18 +9,17 @@
 </head>
 <body>
 
-<h1>Вход в систему</h1><br/>
 
 <form method="post" action="${pageContext.request.contextPath}/login">
     <div class="mb-3">
-        <label for="InputEmail" class="form-label">Email address</label>
-        <input type="email" name="login" id="InputEmail" aria-describedby="emailHelp">
+        <label for="InputEmail" class="form-label"><fmt:message key="login_jsp.label.login"/></label>
+        <input type="text" name="login" id="InputEmail" aria-describedby="emailHelp">
     </div>
     <div class="mb-3">
-        <label for="InputPassword" class="form-label">Password</label>
+        <label for="InputPassword" class="form-label"><fmt:message key="login_jsp.label.password"/></label>
         <input type="password" name="password" id="InputPassword">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary"><fmt:message key="login_jsp.button.submit"/></button>
 </form>
 
 

@@ -24,6 +24,12 @@ public class TariffService {
     private static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     DaoFactory daoFactory = DaoFactory.getInstance();
 
+    public TariffService() {
+    }
+
+    TariffService(DaoFactory daoFactory) {
+        this.daoFactory = daoFactory;
+    }
 
     public List<Tariff> getAllTariffByServiceAndSort(Long idService, String sortCommand) {
         try (TariffDao dao = daoFactory.createTariffDao()) {
